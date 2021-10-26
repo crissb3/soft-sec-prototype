@@ -17,13 +17,16 @@
 <div class="center">
     <div class="container">
         <div class="center">
-            <div class="button-3d"><div class="button_text">Start Quiz</div></div>
+            <div class="button-3d" onclick="window.location.href='/searchQA'"><div class="button_text">Start Quiz</div></div>
             <div class="divider_in_menu"></div>
             <div class="button-3d"><div class="button_text">Create Quiz</div></div>
             <div class="divider_in_menu"></div>
             <div class="button-3d"><div class="button_text">Load Quiz</div></div>
             <div class="divider_in_menu"></div>
             <div class="button-3d"><div class="button_text">Delete Quiz</div></div>
+        </div>
+        <div class=message>
+            <p><span class=message th:text="${message}"></span></p>
         </div>
     </div>
 </div>
