@@ -9,15 +9,17 @@ import javax.persistence.Id;
 @Entity
 public class User {
     @Id
-    private String uId;
+    private Long uId;
 
     private String username;
+    private String email;
     private int score;
     private boolean isAdmin;
 
-    public User(String uId, String username, int score, boolean isAdmin){
+    public User(Long uId, String username, String email, int score, boolean isAdmin){
         this.uId = uId;
         this.username = username;
+        this.email = email;
         this.score = score;
         this.isAdmin = isAdmin;
     }

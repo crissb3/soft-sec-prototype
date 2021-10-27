@@ -7,10 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Repository("qaRepository")
 public interface QARepositoryImpl extends JpaRepository<QA, Long> {
     List<QA> findByQuestionContainingIgnoreCase(@Param("question") String question);
-
-
 
 }

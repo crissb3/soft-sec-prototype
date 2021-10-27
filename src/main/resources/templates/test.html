@@ -19,25 +19,14 @@
         <div class="center">
             <div class="button-3d" onclick="window.location.href='/searchQA'"><div class="button_text">Start Quiz</div></div>
             <div class="divider_in_menu"></div>
-            <div class="button-3d" onclick="window.location.href='/addQuiz'"><div class="button_text">Create Quiz</div></div>
+            <div class="button-3d"><div class="button_text">Create Quiz</div></div>
             <div class="divider_in_menu"></div>
             <div class="button-3d"><div class="button_text">Load Quiz</div></div>
             <div class="divider_in_menu"></div>
             <div class="button-3d"><div class="button_text">Delete Quiz</div></div>
         </div>
-        <form th:action="@{/searchQA}">
-            <h3>Search for Question/Answer:</h3>
-            Search:<input type="text" name="question"><br><br>
-            <input type="submit" name="submit" value="Search">
-        </form><br>
         <div class=message>
             <p><span class=message th:text="${message}"></span></p>
-            <tr th:each="qa : ${qas}">
-                <td th:text="${qa.qaId}">QA Id</td>
-                <td th:text="${qa.question}">Question</td>
-                <td th:text="${qa.answer}">Answer</td>
-                <br>
-            </tr>
         </div>
     </div>
 </div>

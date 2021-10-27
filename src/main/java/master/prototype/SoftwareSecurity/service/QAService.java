@@ -11,7 +11,16 @@ public class QAService {
 
     private QARepositoryImpl qaRepository;
 
+    public QAService(QARepositoryImpl qaRepository) {
+        this.qaRepository = qaRepository;
+    }
+
     public List<QA> findByWord(String question){
         return qaRepository.findByQuestionContainingIgnoreCase(question);
+    }
+
+    public QA save(QA newQA){
+        qaRepository.save(newQA);
+        return newQA;
     }
 }
