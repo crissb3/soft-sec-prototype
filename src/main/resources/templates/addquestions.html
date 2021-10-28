@@ -35,7 +35,7 @@
                 <tr th:each="qa : ${qas}">
                     <td align="center" th:text="${qa.qaId}"></td>
                     <td class="DescMit" th:text="${qa.question}"></td>
-                    <td class="DescMit" th:text="${qa.answer}"></td>
+                    <td class="DescMit" align="right" th:text="${qa.answer}"></td>
             </table>
 
         </div>

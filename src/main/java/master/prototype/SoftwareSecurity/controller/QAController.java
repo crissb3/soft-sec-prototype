@@ -16,37 +16,41 @@ public class QAController {
     @Autowired
     private QAService qaService;
 
-    @GetMapping("/searchQA")
-    public String searchQA(@RequestParam String question, Model model){
-        QA qa = new QA("Fruit?", "Apple");
-        QA qa1 = new QA("cc?", "Banana");
-        QA qa2 = new QA("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-                "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" +
-                "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc" +
-                "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd" +
-                "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
-                "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" +
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
-                "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh" +
-                "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii", "answer");
-        QA qa3 = new QA(4L, "Frua", "22");
-        QA qa4 = new QA(5L, "qwe?", "12323");
-        QA qa5 = new QA(6L, "Fruit?", "qwe");
-        QA qa6 = new QA(7L, "Fruit?", "ewq");
-        QA qa7 = new QA(8L, "badqwe?", "asd");
-        QA qa8 = new QA("das?", "xesea");
-        QA qa9 = new QA(10L, "weq?", "se");
+    @GetMapping("/populateTemporary")
+    public String populateDBtemp(){
+        QA qa = new QA("What is 1+1?", "2");
+        QA qa1 = new QA("Fruit?", "Banana");
+//        QA qa2 = new QA("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+//                "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" +
+//                "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc" +
+//                "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd" +
+//                "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+//                "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" +
+//                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" +
+//                "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh" +
+//                "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii", "answer");
+        QA qa3 = new QA( "Language?", "Spanish");
+        QA qa4 = new QA( "asd?", "qwe");
+        QA qa5 = new QA( "test?", "test");
+//        QA qa6 = new QA( "Fruit?", "ewq");
+//        QA qa7 = new QA( "badqwe?", "asd");
+//        QA qa8 = new QA("das?", "xesea");
+//        QA qa9 = new QA( "weq?", "se");
 
         qaService.save(qa);
         qaService.save(qa1);
-        qaService.save(qa2);
+//        qaService.save(qa2);
         qaService.save(qa3);
         qaService.save(qa4);
         qaService.save(qa5);
-        qaService.save(qa6);
-        qaService.save(qa7);
-        qaService.save(qa8);
-        qaService.save(qa9);
+//        qaService.save(qa6);
+//        qaService.save(qa7);
+//        qaService.save(qa8);
+//        qaService.save(qa9);
+        return "index";
+    }
+    @GetMapping("/searchQA")
+    public String searchQA(@RequestParam String question, Model model){
 
         List<QA> qas = qaService.findByWord(question);
         model.addAttribute("qas", qas);

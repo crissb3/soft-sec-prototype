@@ -18,6 +18,7 @@ html{
 table.DescMit {
     table-layout: fixed;
     width: 100%;
+    border-spacing: 15px;
 }
 table.DescMit td{
     word-wrap: break-word;
