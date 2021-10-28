@@ -10,5 +10,4 @@ import java.util.List;
 @Repository("qaRepository")
 public interface QARepositoryImpl extends JpaRepository<QA, Long> {
     List<QA> findByQuestionContainingIgnoreCase(@Param("question") String question);
-
 }

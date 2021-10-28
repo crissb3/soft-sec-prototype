@@ -18,6 +18,7 @@ public class QAService {
     public List<QA> findByWord(String question){
         return qaRepository.findByQuestionContainingIgnoreCase(question);
     }
+    public List<QA> findAll(){return qaRepository.findAll();}
 
     public QA save(QA newQA){
         qaRepository.save(newQA);
