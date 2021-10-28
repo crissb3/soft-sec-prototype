@@ -24,4 +24,7 @@ public class QAService {
         qaRepository.save(newQA);
         return newQA;
     }
+    public void deleteAll(){
+        qaRepository.deleteAll();
+    }
 }

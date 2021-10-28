@@ -4,10 +4,7 @@ import master.prototype.SoftwareSecurity.service.QAService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import master.prototype.SoftwareSecurity.entity.QA;
 
@@ -70,6 +67,13 @@ public class QAController {
         model.addAttribute("qas", qas);
         model.addAttribute("message", "Create questions page....");
         return "addquestions";
+    }
+
+    @GetMapping("/deleteQ")
+    public String deleteQtemp(Model model){
+        model.addAttribute("message", "Successfully deleted");
+        qaService.deleteAll(); // TEMPORARY
+        return "index";
     }
 
 //    @GetMapping("/register")
