@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository("userRepository")
-public interface UserRepositoryImpl extends JpaRepository<User, String> {
+public interface UserRepositoryImpl extends JpaRepository<User, Long> {
     User findByUsername(@Param("username") String username);
     User findByEmail(@Param("email") String email);
 }

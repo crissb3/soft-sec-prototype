@@ -9,7 +9,6 @@ body{
     background-image: url('../images/background_frontend.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
-
 }
 html{
     height: 100%;
@@ -19,6 +18,9 @@ table.DescMit {
     table-layout: fixed;
     width: 100%;
     border-spacing: 15px;
+    overflow: scroll;
+    color: white;
+    border: 1px solid black;
 }
 table.DescMit td{
     word-wrap: break-word;
