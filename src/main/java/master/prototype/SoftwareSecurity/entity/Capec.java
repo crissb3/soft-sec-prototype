@@ -1,10 +1,6 @@
 package master.prototype.SoftwareSecurity.entity;
 
 import lombok.Data;
-import master.prototype.SoftwareSecurity.service.CapecService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

@@ -17,11 +17,11 @@ public class CapecController {
     @Autowired
     private CapecService capecService;
 
-    @GetMapping("/testCapec")
-    public String testCapec(Model model){
-        List<Capec> capecslist = capecService.findAll();  // This replaced with Description & Answer text from CAPEC/CWE/...
-        model.addAttribute("capecs", capecslist);
-        model.addAttribute("message", "Capec test page....");
+    @GetMapping("/CapecDomainsOfAttack")
+    public String capecDomainsOfAttack(Model model){
+        List<Capec> capecs = capecService.findAll();
+        model.addAttribute("capecs", capecs);
+
         return "testcapec";
     }
     @GetMapping("/searchCapecDomainsOfAttack")
@@ -34,10 +34,10 @@ public class CapecController {
 
         return "testcapec";
     }
-    @GetMapping("/CapecDomainsOfAttack")
-    public String createQuestionCapecDomainsOfAttack(Model model){
-        return "testcapec";
-    }
+//    @GetMapping("/CreateCapecDomainsOfAttack")
+//    public String createQuestionCapecDomainsOfAttack(Model model){
+//        return "testcapec";
+//    }
 
 
     @EventListener(ApplicationReadyEvent.class)
