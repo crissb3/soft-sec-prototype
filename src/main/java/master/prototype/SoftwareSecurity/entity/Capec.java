@@ -27,6 +27,7 @@ public class Capec {
     @Lob
     private String mitigation;
     private String name;
+    // private String choiceOfAttack;
     private static final String FILENAME_DOMAINS_OF_ATTACK = "src/main/resources/datafiles/CAPECDomainsOfAttack.xml";
 
     @ElementCollection(fetch = FetchType.EAGER)

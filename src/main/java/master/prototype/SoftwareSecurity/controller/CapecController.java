@@ -17,7 +17,7 @@ public class CapecController {
     @Autowired
     private CapecService capecService;
 
-    @GetMapping("/CapecDomainsOfAttack")
+    @GetMapping("/capecDomainsOfAttack")
     public String capecDomainsOfAttack(Model model){
         List<Capec> capecs = capecService.findAll();
         model.addAttribute("capecs", capecs);
