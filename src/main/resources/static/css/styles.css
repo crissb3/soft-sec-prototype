@@ -26,6 +26,10 @@ table.DescMit td{
     word-wrap: break-word;
 }
 
+ul.allCapec {
+    color: white;
+}
+
 .logo_text {
     top: 30px;
     right: 300px;

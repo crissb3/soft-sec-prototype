@@ -11,6 +11,6 @@ import java.util.List;
 @Repository("quizRepository")
 public interface QuizRepositoryImpl extends JpaRepository<Quiz, Long> {
 
-    List<Quiz> findByQuizNameContainingIgnoreCase(@Param("name") String name);
+    List<Quiz> findByNameContainingIgnoreCase(@Param("name") String name);
     List<Quiz> findByOwner(@Param("owner") User user);
 }

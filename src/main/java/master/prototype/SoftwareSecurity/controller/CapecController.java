@@ -34,10 +34,13 @@ public class CapecController {
 
         return "testcapec";
     }
-//    @GetMapping("/CreateCapecDomainsOfAttack")
-//    public String createQuestionCapecDomainsOfAttack(Model model){
-//        return "testcapec";
-//    }
+    @GetMapping("/allCapecs")
+    public String allCapecDomOfAttack(Model model){
+        List<Capec> capecs = capecService.findAll();
+        model.addAttribute("capecs", capecs);
+
+        return "allcapecnames";
+    }
 
 
     @EventListener(ApplicationReadyEvent.class)

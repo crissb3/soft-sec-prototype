@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SecQuiz</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+    <div class="text_frame_menu">
+        <div class="single_text_in_menu" onclick="window.location.href='/'">Home</div>
+        <div class="single_text_in_menu">Achievements</div>
+        <div class="single_text_in_menu">Leaderboard</div>
+    </div>
+    <div class="logo_text">SoftSec Quiz</div>
+
+<div class="center">
+    <div class="container">
+        <form th:action="@{/searchQuiz}">
+            <h3>Search for Quiz:</h3>
+            Search:<input type="text" name="quizname"><br><br>
+<!--            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>-->
+            <input type="submit" name="submit" value="Search">
+        </form><br>
+        <div class=message>
+            <p><span class=message th:text="${message}"></span></p>
+            <tr th:each="quiz : ${quizzes}">
+                <td>ID:</td>
+                <td th:text="${quiz.getQId()}">Quiz ID</td>
+                <td>Quiz name:</td>
+                <td th:text="${quiz.getName()}">Quiz name</td>
+                <br>
+            </tr>
+        </div>
+        <form th:action="@{/createQuiz}">
+            Name:
+            <input type="text" name="addname">
+            <input type="submit" name="addnamesubmit" value="Create quiz">
+        </form>
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+function onloadCookie(){
+        var thisSkin = $("#SkinSelector option:selected").val();
+        var thisSkinCheckbox = $("div#SkinSelector input");
+        var thisSkinSummary = $("div#summary div#Filter_Menu #SkinSelector option:selected").val();
+        if(typeof thisSkinSummary !='undefined') {
+                var filter = readCookie("filter");
+                if (filter != "") {
+                        onloadSelector(filter);
+                } else {
+                        writeCookie("filter", "basic_default", 365);
+                }
+        }else if(thisSkinCheckbox.length !=0) {
+                var filter = readCookie("checkboxfilter");
+                if (filter != "") {
+                        onloadSelector(filter);
+                } else {
+                        writeCookie("checkboxfilter", "false", 365);
+                }
+        } else if(typeof thisSkin !='undefined'){
+                var filter = readCookie("filter");
+                if (filter != "") {
+                        onloadSelector(filter);
+                } else {
+                        writeCookie("filter", "basic_default", 365);
+                }
+        } else {
+        }
+}
+
+function readCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function writeCookie(cname, cvalue, expdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (expdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function onloadSelector(thisSkin) {
+        $("link[href*='user_skins']").remove();
+        if(thisSkin !='basic_default' && thisSkin !='complete') {
+                return;
+        }
+        var skinSelector = document.querySelector("#SkinSelector");
+
+        if(skinSelector !== null){
+                skinSelector.value = thisSkin;
+                halfDisplay(thisSkin);
+                $("head").append('<link rel="stylesheet" href="/css/user_skins/' + thisSkin + '.css" type="text/css" />');
+        }
+        else {
+            //nothing found to assign filter
+        }
+}
+

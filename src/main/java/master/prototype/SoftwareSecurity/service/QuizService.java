@@ -1,5 +1,6 @@
 package master.prototype.SoftwareSecurity.service;
 
+import master.prototype.SoftwareSecurity.entity.QA;
 import master.prototype.SoftwareSecurity.entity.Quiz;
 import master.prototype.SoftwareSecurity.entity.User;
 import master.prototype.SoftwareSecurity.repository.QuizRepositoryImpl;
@@ -23,4 +24,7 @@ public class QuizService {
         quizRepository.save(newQuiz);
         return newQuiz;
     }
+    public List<Quiz> findAll(){return quizRepository.findAll();}
+
+    public List<Quiz> findByName(String name){return quizRepository.findByNameContainingIgnoreCase(name);}
 }
