@@ -4,6 +4,7 @@ import master.prototype.SoftwareSecurity.entity.Capec;
 import master.prototype.SoftwareSecurity.entity.QA;
 import master.prototype.SoftwareSecurity.repository.CapecRepositoryImpl;
 import master.prototype.SoftwareSecurity.repository.QARepositoryImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

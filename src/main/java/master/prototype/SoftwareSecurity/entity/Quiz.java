@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 public class Quiz {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long qId;
 
     private String name;
@@ -22,7 +22,7 @@ public class Quiz {
     public Quiz(String name) {
         this.name = name;
     }
-    public Quiz(Long qId, String quizName, List<QA> qas) {
+    public Quiz(Long qId, String name, List<QA> qas) {
         this.qId = qId;
         this.name = name;
         this.qas = qas;

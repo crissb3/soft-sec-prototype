@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -37,6 +39,7 @@ public class CapecController {
     @GetMapping("/allCapecs")
     public String allCapecDomOfAttack(Model model){
         List<Capec> capecs = capecService.findAll();
+        Collections.sort(capecs, Comparator.comparing(Capec::getName));
         model.addAttribute("capecs", capecs);
 
         return "allcapecnames";

@@ -52,8 +52,7 @@ public class QAController {
 
     @GetMapping("/addQuestion")
     public String createQuestion(Model model) {
-        List<QA> qas = qaService.findAll();  // This replaced with Description & Answer text from CAPEC/CWE/...
-        model.addAttribute("qas", qas);
+
         model.addAttribute("message", "Create questions page....");
         return "addquestions";
     }
@@ -66,22 +65,31 @@ public class QAController {
     }
 
     @GetMapping("/addQA")
-    public String addQAtest(@RequestParam String addquestion, @RequestParam String fakeanswers,
+    public String addQAtest(@RequestParam String addquestion, @RequestParam String fakeanswer1,
+                            @RequestParam String fakeanswer2, @RequestParam String fakeanswer3,
                             @RequestParam String correctanswer, Model model) {
-        QA qa = new QA();
-        qa.setQuestion(addquestion);
-        qa.setCorrectAnswer(correctanswer);
-        List<String> answers = new ArrayList<>();
-        String[] fakes = fakeanswers.split(" ");
-        for(String fake : fakes){
-            answers.add(fake);
-        }
-        answers.add(qa.getCorrectAnswer());
-        Collections.shuffle(answers);
-        qa.setAnswers(answers);
-        qaService.save(qa);
 
-        model.addAttribute("message", "Created question: " + addquestion);
+        if(addquestion.isEmpty() || fakeanswer1.isEmpty() || fakeanswer2.isEmpty() || fakeanswer3.isEmpty() ||
+                correctanswer.isEmpty()) {
+            model.addAttribute("message", "You can't leave an empty field.");
+        }
+        else {
+            String[] fakes ={fakeanswer1, fakeanswer2, fakeanswer3};
+            QA qa = new QA();
+            qa.setQuestion(addquestion);
+            qa.setCorrectAnswer(correctanswer);
+            List<String> answers = new ArrayList<>();
+            for(String fake : fakes){
+                answers.add(fake);
+            }
+            answers.add(qa.getCorrectAnswer());
+            Collections.shuffle(answers);
+            qa.setAnswers(answers);
+            qaService.save(qa);
+
+            model.addAttribute("message", "Created question: " + addquestion);
+        }
+
         return "index";
     }
 }

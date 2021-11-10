@@ -74,15 +74,24 @@ public class Capec {
 
                     Element element = (Element) node;
 
-
                     int id = Integer.valueOf((element.getAttribute("ID")));
-                    String description = element.getElementsByTagName("Description").item(0).getTextContent();
-                    String mitigation = "";
-                    String name = element.getAttribute("Name");
+                    String description;
+                    String mitigation;
+                    String name;
                     if(element.getElementsByTagName("Mitigations").item(0) == null){
                         mitigation = "No mitigation found.";
                     }else{
                         mitigation = element.getElementsByTagName("Mitigations").item(0).getTextContent();
+                    }
+                    if(element.getElementsByTagName("Description").item(0) == null){
+                        description = "No description found.";
+                    }else{
+                        description = element.getElementsByTagName("Description").item(0).getTextContent();
+                    }
+                    if(element.getAttribute("Name") == null){
+                        name = "No name found.";
+                    }else{
+                        name = element.getAttribute("Name");
                     }
 
                     Capec capec = new Capec(id, description, mitigation, name);

@@ -26,10 +26,6 @@
             <div class="button-3d"><div class="button_text">Load Quiz</div></div>
             <div class="divider_in_menu"></div>
             <div class="button-3d"><div class="button_text">Delete Quiz</div></div>
-            <div class="divider_in_menu"></div>
-            <div class="button-3d" onclick="window.location.href='/populateTemporary'"><div class="button_text">Temporary populate DB button</div></div>
-            <div class="divider_in_menu"></div>
-            <div class="button-3d" onclick="window.location.href='/deleteQ'"><div class="button_text">Temporary delete button</div></div>
         </div>
         <form th:action="@{/searchQA}">
             <h3>Search for Question/Answer:</h3>
@@ -58,13 +54,20 @@
         </div>
         <form th:action="@{/addQA}">
             Question:
+            <br>
             <input type="text" name="addquestion">
             <input type="submit" name="addquestionsubmit" value="Add question">
             <br>
             Add 3 fake answers:
-            <input type="text" name="fakeanswers">
+            <br>
+            <input type="text" name="fakeanswer1">
+            <br>
+            <input type="text" name="fakeanswer2">
+            <br>
+            <input type="text" name="fakeanswer3">
             <br>
             Add 1 correct answer:
+            <br>
             <input type="text" name="correctanswer">
         </form>
     </div>

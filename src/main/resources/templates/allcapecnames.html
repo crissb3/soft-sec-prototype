@@ -17,13 +17,6 @@
 <div class="center">
     <div class="container">
         <div class="center">
-            <!--            <div class="button-3d"><div class="button_text">Start Quiz</div></div>-->
-            <!--            <div class="divider_in_menu"></div>-->
-            <!--            <div class="button-3d" onclick="window.location.href='/addQuestion'"><div class="button_text">Create questions</div></div>-->
-            <!--            <div class="divider_in_menu"></div>-->
-            <!--            <div class="button-3d"><div class="button_text">Load Quiz</div></div>-->
-            <!--            <div class="divider_in_menu"></div>-->
-            <!--            <div class="button-3d"><div class="button_text">Delete Quiz</div></div>-->
             <div style="height:400px; width: 1000px; margin-left: 200px; overflow: auto; border: 1px solid black; font-size: 18px;">
                 <ul th:each="capec : ${capecs}">
                         <li align="center" th:text="${capec.name}"></li>
@@ -39,6 +32,17 @@
         <div class=message>
             <p><span class=message th:text="${message_hits}"></span></p>
             <p><span class=message th:text="${message_searched}"></span></p>
+            <table>
+                <tr>
+                    <td>A</td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

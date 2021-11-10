@@ -20,7 +20,7 @@ table.DescMit {
     border-spacing: 15px;
     overflow: scroll;
     color: white;
-    border: 1px solid black;
+    border: none;
 }
 table.DescMit td{
     word-wrap: break-word;
