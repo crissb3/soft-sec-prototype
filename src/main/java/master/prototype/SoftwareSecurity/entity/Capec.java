@@ -31,6 +31,7 @@ public class Capec {
     private String name;
     // private String choiceOfAttack;
     private static final String FILENAME_DOMAINS_OF_ATTACK = "src/main/resources/datafiles/CAPECDomainsOfAttack.xml";
+//    private static final String FILENAME_MECHANISMS_OF_ATTACK = "src/main/resources/datafiles/CAPECMechanismsOfAttack.xml";
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<Category> categories = new ArrayList<>();
@@ -64,17 +65,20 @@ public class Capec {
             factory.setNamespaceAware(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(new File(FILENAME_DOMAINS_OF_ATTACK));
+//            Document doc1 = builder.parse(new File(FILENAME_MECHANISMS_OF_ATTACK));
 
             doc.getDocumentElement().normalize();
+//            doc1.getDocumentElement().normalize(); Mech. of attack.
 
             NodeList list = doc.getElementsByTagName("Attack_Pattern");
+//            NodeList list1 = doc1.getElementsByTagName("Attack_Pattern"); Mechanisms of attack - same id, desc, mit tho.
             for (int i = 0; i < list.getLength(); i++){
                 Node node = list.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element element = (Element) node;
 
-                    int id = Integer.valueOf((element.getAttribute("ID")));
+                    int id = Integer.parseInt((element.getAttribute("ID")));
                     String description;
                     String mitigation;
                     String name;
@@ -97,6 +101,41 @@ public class Capec {
                     Capec capec = new Capec(id, description, mitigation, name);
                     capecs.add(capec);
                 }}
+
+//            for(int i = 0; i< list1.getLength(); i++) {
+//                Node node = list1.item(i);
+//                if (node.getNodeType() == Node.ELEMENT_NODE) {
+//
+//                    Element element = (Element) node;
+//
+//                    int id = Integer.parseInt((element.getAttribute("ID")));
+//
+//                    String description;
+//                    String mitigation;
+//                    String name;
+//                    if(element.getElementsByTagName("Mitigations").item(0) == null){
+//                        mitigation = "No mitigation found.";
+//                    }else{
+//                        mitigation = element.getElementsByTagName("Mitigations").item(0).getTextContent();
+//                    }
+//                    if(element.getElementsByTagName("Description").item(0) == null){
+//                        description = "No description found.";
+//                    }else{
+//                        description = element.getElementsByTagName("Description").item(0).getTextContent();
+//                    }
+//                    if(element.getAttribute("Name") == null){
+//                        name = "No name found.";
+//                    }else{
+//                        name = element.getAttribute("Name");
+//                    }
+//
+//                    Capec capec = new Capec(id, description, mitigation, name);
+//                    if(!capecs.contains(capec)) {
+//                        System.out.println(id);
+//                        capecs.add(capec);
+//                    }
+//                }
+//            }
 
         } catch(IOException | ParserConfigurationException | SAXException e){
             e.printStackTrace();
