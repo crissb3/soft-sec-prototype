@@ -46,10 +46,6 @@ public class CodingStandards {
         this.name = name;
     }
 
-    public static void main(String[] args) {
-        CodingStandards codingStandard = new CodingStandards();
-        List<CodingStandards> codingStandards = codingStandard.createCodingStandards();
-    }
     public CodingStandards() {}
 
     public List<CodingStandards> createCodingStandards() {
@@ -110,10 +106,8 @@ public class CodingStandards {
                     else {
                         example_code = element.getElementsByTagName("Example_Code").item(0).getTextContent();
                     }
-
-                    CodingStandards codingStandard = new CodingStandards(id,name, description, mitigation, detection, example_code);
+                    CodingStandards codingStandard = new CodingStandards(id, name, description, mitigation, detection, example_code);
                     codingStandards.add(codingStandard);
-
                 }}
 
         } catch(IOException | ParserConfigurationException | SAXException e){
@@ -121,5 +115,4 @@ public class CodingStandards {
         }
         return codingStandards;
     }
-
 }

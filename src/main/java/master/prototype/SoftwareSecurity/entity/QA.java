@@ -1,5 +1,4 @@
 package master.prototype.SoftwareSecurity.entity;
-
 import lombok.Data;
 
 import javax.persistence.*;

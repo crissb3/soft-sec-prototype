@@ -22,8 +22,7 @@ public class Quiz {
     public Quiz(String name) {
         this.name = name;
     }
-    public Quiz(Long qId, String name, List<QA> qas) {
-        this.qId = qId;
+    public Quiz(String name, List<QA> qas) {
         this.name = name;
         this.qas = qas;
     }

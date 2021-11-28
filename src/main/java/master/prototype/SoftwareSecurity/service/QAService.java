@@ -27,4 +27,5 @@ public class QAService {
     public void deleteAll(){
         qaRepository.deleteAll();
     }
+    public QA findByQaId(Long qaId){return qaRepository.findByQaId(qaId);}
 }

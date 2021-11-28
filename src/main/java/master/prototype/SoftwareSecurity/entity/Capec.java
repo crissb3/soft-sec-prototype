@@ -97,10 +97,13 @@ public class Capec {
                     }else{
                         name = element.getAttribute("Name");
                     }
-
-                    Capec capec = new Capec(id, description, mitigation, name);
-                    capecs.add(capec);
-                }}
+                    if(!(mitigation == "No mitigation found.")) // Comment out if want to include Capecs without mitigation.
+                    {
+                        Capec capec = new Capec(id, description, mitigation, name);
+                        capecs.add(capec);
+                    }
+                }
+            }
 
 //            for(int i = 0; i< list1.getLength(); i++) {
 //                Node node = list1.item(i);

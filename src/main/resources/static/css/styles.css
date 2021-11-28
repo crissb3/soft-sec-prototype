@@ -13,7 +13,6 @@ body{
 html{
     height: 100%;
 }
-
 table.DescMit {
     table-layout: fixed;
     width: 100%;
@@ -69,6 +68,7 @@ ul.allCapec {
     border-radius: 140px;
     background-color: #10647e;
 }
+
 .center {
     margin: 0;
     position: absolute;

@@ -1,9 +1,11 @@
 package master.prototype.SoftwareSecurity.controller;
 
+import master.prototype.SoftwareSecurity.entity.Capec;
+import master.prototype.SoftwareSecurity.entity.CodingStandards;
+import master.prototype.SoftwareSecurity.service.CapecService;
+import master.prototype.SoftwareSecurity.service.CodingStandardsService;
 import master.prototype.SoftwareSecurity.service.QAService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,20 +21,10 @@ public class QAController {
 
     @Autowired
     private QAService qaService;
-
-    @GetMapping("/populateTemporary")
-    public String populateDBtemp() {
-        List<String> answers = new ArrayList<>();
-        answers.add("3");
-        answers.add("4");
-        answers.add("5");
-        QA qa = new QA("What is 1+1?", "2", answers);
-        answers.add(qa.getCorrectAnswer());
-        Collections.shuffle(answers);
-        qa.setAnswers(answers);
-        qaService.save(qa);
-        return "index";
-    }
+    @Autowired
+    private CapecService capecService;
+    @Autowired
+    private CodingStandardsService codingStandardsService;
 
     @GetMapping("/searchQA")
     public String searchQA(@RequestParam String question, Model model) {
@@ -43,11 +35,6 @@ public class QAController {
                 + question);
 
         return "index";
-    }
-
-    @GetMapping("/test")
-    public String test(Model model) {
-        return "test";
     }
 
     @GetMapping("/addQuestion")
@@ -64,14 +51,28 @@ public class QAController {
         return "index";
     }
 
-    @GetMapping("/addQA")
-    public String addQAtest(@RequestParam String addquestion, @RequestParam String fakeanswer1,
-                            @RequestParam String fakeanswer2, @RequestParam String fakeanswer3,
-                            @RequestParam String correctanswer, Model model) {
+//    @GetMapping("/addQA")
+//    public String allCapec(){
+//        return "testcapec";
+//    }
+    @PostMapping("/addQAcapec")
+    public String addQAcapec(@RequestParam String addquestion,
+                            @RequestParam String fakeanswer1,
+                            @RequestParam String fakeanswer2,
+                            @RequestParam String fakeanswer3,
+                            @RequestParam String correctanswer,
+                            @RequestParam String id,
+                            Model model) {
 
-        if(addquestion.isEmpty() || fakeanswer1.isEmpty() || fakeanswer2.isEmpty() || fakeanswer3.isEmpty() ||
-                correctanswer.isEmpty()) {
+        if(addquestion.isEmpty()
+                || fakeanswer1.isEmpty()
+                || fakeanswer2.isEmpty()
+                || fakeanswer3.isEmpty()
+                || correctanswer.isEmpty()) {
+            Capec capec = capecService.findById(Integer.valueOf(id));
+            model.addAttribute("capec", capec);
             model.addAttribute("message", "You can't leave an empty field.");
+            return "createquestioncapec";
         }
         else {
             String[] fakes ={fakeanswer1, fakeanswer2, fakeanswer3};
@@ -89,7 +90,53 @@ public class QAController {
 
             model.addAttribute("message", "Created question: " + addquestion);
         }
+        List<Capec> capecs = capecService.findAll();
+        model.addAttribute("capecs", capecs);
 
-        return "index";
+
+        return "capeccreate";
+    }
+
+    @PostMapping("/addQAcodingstandard")
+    public String addQAcodingstandard(
+                            @RequestParam String addquestion,
+                            @RequestParam String fakeanswer1,
+                            @RequestParam String fakeanswer2,
+                            @RequestParam String fakeanswer3,
+                            @RequestParam String correctanswer,
+                            @RequestParam String id,
+                            Model model) {
+
+        if(addquestion.isEmpty()
+                || fakeanswer1.isEmpty()
+                || fakeanswer2.isEmpty()
+                || fakeanswer3.isEmpty()
+                || correctanswer.isEmpty()) {
+            CodingStandards codingStandard = codingStandardsService.findById(Integer.valueOf(id));
+            model.addAttribute("codingStandard", codingStandard);
+            model.addAttribute("message", "You can't leave an empty field.");
+            return "createquestioncodingstandard";
+        }
+        else {
+            String[] fakes ={fakeanswer1, fakeanswer2, fakeanswer3};
+            QA qa = new QA();
+            qa.setQuestion(addquestion);
+            qa.setCorrectAnswer(correctanswer);
+            List<String> answers = new ArrayList<>();
+            for(String fake : fakes){
+                answers.add(fake);
+            }
+            answers.add(qa.getCorrectAnswer());
+            Collections.shuffle(answers);
+            qa.setAnswers(answers);
+            qaService.save(qa);
+
+            model.addAttribute("message", "Created question: " + addquestion);
+        }
+        List<CodingStandards> codingStandards = codingStandardsService.findAll();
+        model.addAttribute("codingStandards", codingStandards);
+
+
+        return "javacodingcreate";
     }
 }

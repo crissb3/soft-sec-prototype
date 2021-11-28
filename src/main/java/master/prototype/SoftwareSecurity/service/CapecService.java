@@ -42,5 +42,6 @@ public class CapecService {
         capecRepository.save(newCapec);
         return newCapec;
     }
+    public Capec findById(int id) {return capecRepository.findById(id);}
 }
 

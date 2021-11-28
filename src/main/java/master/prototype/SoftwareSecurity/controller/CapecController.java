@@ -8,6 +8,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
@@ -24,7 +25,7 @@ public class CapecController {
         List<Capec> capecs = capecService.findAll();
         model.addAttribute("capecs", capecs);
 
-        return "testcapec";
+        return "capeccreate";
     }
     @GetMapping("/searchCapecDomainsOfAttack")
     public String searchCapecByDescription(@RequestParam String description, Model model){
@@ -34,7 +35,7 @@ public class CapecController {
         model.addAttribute("message_hits", "Number of hits: "+size);
         model.addAttribute("message_searched", "Containing search word: " + description);
 
-        return "testcapec";
+        return "capeccreate";
     }
     @GetMapping("/allCapecs")
     public String allCapecDomOfAttack(Model model){
@@ -44,7 +45,12 @@ public class CapecController {
 
         return "allcapecnames";
     }
-
+    @GetMapping("/createQuestion/{id}")
+    public String createCapecQuestion(Model model, @PathVariable int id) {
+        Capec capec = capecService.findById(id);
+        model.addAttribute("capec", capec);
+        return "createquestioncapec";
+    }
 
     @EventListener(ApplicationReadyEvent.class)
     public void createCapecObjects(){

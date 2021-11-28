@@ -13,4 +13,5 @@ public interface QuizRepositoryImpl extends JpaRepository<Quiz, Long> {
 
     List<Quiz> findByNameContainingIgnoreCase(@Param("name") String name);
     List<Quiz> findByOwner(@Param("owner") User user);
+    Quiz findByqId(@Param("qId") Long qId);
 }

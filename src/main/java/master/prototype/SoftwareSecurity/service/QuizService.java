@@ -27,4 +27,5 @@ public class QuizService {
     public List<Quiz> findAll(){return quizRepository.findAll();}
 
     public List<Quiz> findByName(String name){return quizRepository.findByNameContainingIgnoreCase(name);}
+    public Quiz findByqId(Long qId){return quizRepository.findByqId(qId);}
 }

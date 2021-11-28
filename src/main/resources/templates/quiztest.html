@@ -16,29 +16,10 @@
 
 <div class="center">
     <div class="container">
-        <form th:action="@{/Quiz/Search}">
-            <h3>Search for Quiz:</h3>
-            Search:<input type="text" name="quizname"><br><br>
-            <input type="submit" name="submit" value="Search">
-        </form><br>
-        <div class=message>
-            <p><span class=message th:text="${message}"></span></p>
-            <tr th:each="quiz : ${quizzes}">
-                <td>ID:</td>
-                <td th:text="${quiz.qId}">Quiz ID</td>
-                <td>Quiz name:</td>
-                <td th:text="${quiz.getName()}">Quiz name</td>
-                <br>
-            </tr>
-        </div>
-        <form th:action="@{/Quiz/Create}">
-            Name:
-            <input type="text" name="addname">
-            <input type="submit" name="addnamesubmit" value="Create quiz">
-        </form>
+
 
         <div style="height:400px; width: 680px; margin-left: 400px; margin-top: -100px; overflow: auto; border: 1px solid black; font-size: 19px; color: white">
-            <form th:action="@{/Quiz/Create}" th:object="${quiz}" method="post">
+            <form th:action="@{/testquiz}" th:object="${quiz}" method="post">
                 <ul>
                     <div th:each="qa : ${qas}">
                         <input type="checkbox" name="quizqa" th:value="${qa.qaId}" th:field="${quiz.qas}">
@@ -48,6 +29,7 @@
                 </ul>
                 <button type="submit">New quiz</button>
             </form>
+
 <!--            <table th:class="DescMit">-->
 <!--                <tr>-->
 <!--                    &lt;!&ndash;                        <th>Id</th>&ndash;&gt;-->

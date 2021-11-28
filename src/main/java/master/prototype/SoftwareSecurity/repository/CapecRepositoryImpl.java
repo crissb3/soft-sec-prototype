@@ -13,5 +13,6 @@ public interface CapecRepositoryImpl extends JpaRepository<Capec, Integer> {
     List<Capec> findByDescriptionContainingIgnoreCase(@Param("description") String description);
     List<Capec> findByNameContainingIgnoreCase(@Param("name")String name);
     List<Capec> findByMitigationContainingIgnoreCase(@Param("mitigation")String mitigation);
+    Capec findById(@Param("id") int id);
 
 }

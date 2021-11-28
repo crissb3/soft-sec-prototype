@@ -24,18 +24,20 @@
 <!--            <div class="button-3d"><div class="button_text">Load Quiz</div></div>-->
 <!--            <div class="divider_in_menu"></div>-->
 <!--            <div class="button-3d"><div class="button_text">Delete Quiz</div></div>-->
-            <div style="height:400px; width: 1000px; margin-left: 200px; overflow: auto; border: 1px solid black; font-size: 19px">
+            <div style="height:430px; width: 700px; margin-left: 100px; overflow: auto; border: 1px solid black; font-size: 19px">
                 <table th:class="DescMit">
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
-                        <th>Description</th>
-                        <th>Mitigation strategy</th>
+<!--                        <th>Description</th>-->
+<!--                        <th>Mitigation strategy</th>-->
                         <th class=th-hidden></th>
                     </tr>
                     <tr th:each="capec : ${capecs}">
                         <td align="center" th:text="${capec.id}"></td>
-                        <td align="center" th:text="${capec.name}"></td>
+                        <td align="center" style="cursor: pointer" th:text="${capec.name}"
+                            th:onClick="'window.location.href= \''+
+						    @{/createQuestion/{capecID}(capecID=${capec.id})}+'\''"></td>
 <!--                        <td class="DescMit" th:text="${capec.description}"></td>-->
 <!--                        <td class="DescMit" th:text="${capec.mitigation}"></td>-->
                     </tr>
@@ -43,12 +45,14 @@
             </div>
         </div>
         <form th:action="@{/searchCapecDomainsOfAttack}">
-            <h3>Search for Question/Answer:</h3>
+            <h3>Search:</h3>
             Search:<input type="text" name="description"><br><br>
 <!--            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>-->
             <input type="submit" name="submit" value="Search">
         </form><br>
-        <div class=message>
+        <button onclick="window.location.href='/addQuestion'">Go back</button>
+        <p><span th:text="${message}"></span></p>
+        <div class=message style="color: white">
             <p><span class=message th:text="${message_hits}"></span></p>
             <p><span class=message th:text="${message_searched}"></span></p>
         </div>
