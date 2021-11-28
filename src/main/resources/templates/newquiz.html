@@ -23,7 +23,7 @@
             <input type="submit" name="submit" value="Search">
         </form><br>
         <div class=message>
-            <p><span class=message th:text="${message}"></span></p>
+            <p><span style="color:white;" class=message th:text="${message}"></span></p>
             <tr th:each="quiz : ${quizzes}">
                 <td>ID:</td>
                 <td th:text="${quiz.qId}">Quiz ID</td>

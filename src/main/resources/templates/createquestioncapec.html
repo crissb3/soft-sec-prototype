@@ -36,11 +36,11 @@
         </div>
         <button onclick="window.location.href='/capecDomainsOfAttack'" style="margin-left: 50px; margin-top: 50px">Go back</button>
         <br>
-        <p><span style="margin-left: 20px" th:text="${message}"></span></p>
+        <p><span style="margin-left: 20px; color: white" th:text="${message}"></span></p>
         <form th:action="@{/addQAcapec}" style="margin-left: 50px; margin-top: 50px" th:method="post">
             Question:
             <br>
-            <textarea type="text" name="addquestion" style="height: 50px; font-size: 12px;"></textarea>
+            <textarea type="text" name="addquestion" style="height: 50px;"></textarea>
             <br>
             Add 3 fake answers:
             <br>

@@ -40,23 +40,23 @@
         <button th:onClick="'window.location.href= \''+
         @{/createQuestion/codingstandard/code/{javacsID}(javacsID=${codingStandard.id})}+'\''" style="margin-left: 50px; margin-top: 50px">Code example</button>
         <br>
-        <p><span style="margin-left: 20px" th:text="${message}"></span></p>
-        <form th:action="@{/addQA}" style="margin-left: 50px; margin-top: 50px" th:method="post">
+        <p><span style="margin-left: 20px; color: white;" th:text="${message}"></span></p>
+        <form th:action="@{/addQAcodingstandard}" style="margin-left: 50px; margin-top: 15px" th:method="post">
             Question:
             <br>
-            <input type="text" name="addquestion">
+            <textarea type="text" style="height: 50px;" name="addquestion"></textarea>
             <br>
             Add 3 fake answers:
             <br>
-            <input type="text" name="fakeanswer1">
+            <textarea type="text" name="fakeanswer1"></textarea>
             <br>
-            <input type="text" name="fakeanswer2">
+            <textarea type="text" name="fakeanswer2"></textarea>
             <br>
-            <input type="text" name="fakeanswer3">
+            <textarea type="text" name="fakeanswer3"></textarea>
             <br>
             Add 1 correct answer:
             <br>
-            <input type="text" name="correctanswer">
+            <textarea type="text" name="correctanswer"></textarea>
             <br>
             <input type="submit" name="addquestionsubmit" value="Add question">
             <input type="number" th:value="${codingStandard.id}" name="id" hidden/>
