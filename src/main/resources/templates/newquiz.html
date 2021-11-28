@@ -19,6 +19,7 @@
         <form th:action="@{/Quiz/Search}">
             <h3>Search for Quiz:</h3>
             Search:<input type="text" name="quizname"><br><br>
+<!--            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>-->
             <input type="submit" name="submit" value="Search">
         </form><br>
         <div class=message>
@@ -38,15 +39,14 @@
         </form>
 
         <div style="height:400px; width: 680px; margin-left: 400px; margin-top: -100px; overflow: auto; border: 1px solid black; font-size: 19px; color: white">
-            <form th:action="@{/Quiz/Create}" th:object="${quiz}" method="post">
+            <form th:action="@{/Quiz/Create}" th:object="${quizqa}">
                 <ul>
                     <div th:each="qa : ${qas}">
-                        <input type="checkbox" name="quizqa" th:value="${qa.qaId}" th:field="${quiz.qas}">
+                        <input type="checkbox" name="quizqa" th:value="${qa}">
                         <label th:text="${qa.qaId}"></label>
                         <label th:text="${qa.question}"></label>
                     </div>
                 </ul>
-                <button type="submit">New quiz</button>
             </form>
 <!--            <table th:class="DescMit">-->
 <!--                <tr>-->

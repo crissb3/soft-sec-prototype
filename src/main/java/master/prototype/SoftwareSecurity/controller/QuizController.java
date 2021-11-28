@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -61,11 +60,11 @@ public class QuizController {
 
         return "newquiz";
     }
-    @PostMapping("/Quiz/Create")
-    public String addQuestionsToQuiz(@ModelAttribute("quiz") Quiz quiz){
-        System.out.println(quiz);
-        return "newquiz";
-    }
+//    @PostMapping("/Quiz/Create")
+//    public String addQuestionsToQuiz(@ModelAttribute("quiz") Quiz quiz){
+//        System.out.println(quiz);
+//        return "newquiz";
+//    }
     @GetMapping("/testquiz")
     public String gettestquiz(Model model){
         Quiz quiz = new Quiz("test");
