@@ -38,11 +38,11 @@
         <br>
         <p><span style="margin-left: 20px; color: white" th:text="${message}"></span></p>
         <form th:action="@{/addQAcapec}" style="margin-left: 50px; margin-top: 50px" th:method="post">
-            Question:
+            <b style="color: white; text-shadow: 1px 1px black">Question:</b>
             <br>
             <textarea type="text" name="addquestion" style="height: 50px;"></textarea>
             <br>
-            Add 3 fake answers:
+            <b style="color: white; text-shadow: 1px 1px black">Add 3 fake answers:</b>
             <br>
             <textarea type="text" name="fakeanswer1"></textarea>
             <br>
@@ -50,7 +50,7 @@
             <br>
             <textarea type="text" name="fakeanswer3"></textarea>
             <br>
-            Add 1 correct answer:
+            <b style="color:white; text-shadow: 1px 1px black">Add 1 correct answer:</b>
             <br>
             <textarea type="text" name="correctanswer"></textarea>
             <br>
