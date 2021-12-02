@@ -21,69 +21,100 @@ public class QuizController {
     @Autowired
     private QAService qaService;
 
-    @GetMapping("/Quiz")
-    public String newQuiz(Model model) {
-
-        model.addAttribute("message", "Create new quiz");
-        List<QA> qas = qaService.findAll();
+    @GetMapping("/Quiz/Create/Search")
+    public String searchQuiz(Model model, @RequestParam String question) {
+        List<QA> qas  = qaService.findByWord(question);
+        Quiz quiz = new Quiz();
         model.addAttribute("qas", qas);
-        return "newquiz";
-    }
-
-
-    @GetMapping("/Quiz/Search")
-    public String searchQuiz(Model model, @RequestParam String quizname) {
-        List<Quiz> quizzes = quizService.findByName(quizname);
-        List<QA> qas  = qaService.findAll();
-
-        model.addAttribute("qas", qas);
-        model.addAttribute("quizzes", quizzes);
-        model.addAttribute("message", "Searched for quiz with name:" +quizname);
+        model.addAttribute("quiz", quiz);
 
         return "newquiz";
     }
 
 
     @GetMapping("/Quiz/Create")
-    public String createQuiz(Model model, @RequestParam String addname) {
-        if(!addname.isEmpty()){
-            Quiz quiz = new Quiz(addname);
+    public String createQuiz(Model model, @ModelAttribute String name) {
+        Quiz quiz = new Quiz();
+        if(!name.isEmpty()){
+            quiz.setName(name);
             quizService.save(quiz);
-            model.addAttribute("quizzes", quiz);
-            model.addAttribute("message", "Created quiz with name: " + addname);
         }
-        else{
-            model.addAttribute("message", "Can't create quiz without a name.");
-        }
+        model.addAttribute("quiz", quiz);
+
         List<QA> qas = qaService.findAll();
         model.addAttribute("qas", qas);
 
         return "newquiz";
     }
-//    @PostMapping("/Quiz/Create")
-//    public String addQuestionsToQuiz(@ModelAttribute("quiz") Quiz quiz){
-//        System.out.println(quiz);
-//        return "newquiz";
-//    }
-    @GetMapping("/testquiz")
-    public String gettestquiz(Model model){
-        Quiz quiz = new Quiz("test");
-        List<QA> qas = new ArrayList<>();
-        qas.add(new QA(1L,"What is 2+2?","4"));
-        qas.add(new QA(2L, "What is 3+3?","6"));
-        qas.add(new QA(3L, "What is 4+4?", "8"));
-        for(QA qa : qas){
-            qaService.save(qa);
+    @PostMapping("/Quiz/Create")
+    public String addQuestionsToQuiz(@ModelAttribute("quiz") Quiz quiz, Model model){
+
+        if(quiz.getName().isEmpty()){
+            model.addAttribute("message", "Can't create quiz without a name.");
         }
+        else{
+            model.addAttribute("message", "Created quiz with name: " + quiz.getName());
+            quizService.save(quiz);
+        }
+        return "index";
+    }
+    @GetMapping("Quiz/Select")
+    public String selectQuiz(Model model){
+        List<Quiz> quizzes = quizService.findAll();
+        model.addAttribute("quizzes",quizzes);
+        return "quizselect";
+    }
+    @GetMapping("/Quiz/Start/{id}")
+    public String startQuiz(Model model, @PathVariable long id){
+
+        Quiz quiz = quizService.findByqId(id);
+
+        System.out.println(quiz.getName());
+        System.out.println(quiz.getQas());
+        System.out.println(quiz.getQas().get(0).getQuestion());
+        System.out.println(quiz.getQas().get(0).getAnswers());
+        model.addAttribute("quiz", quiz);
+
+        return "quizplay";
+    }
+    @GetMapping("/Quiz/Play/{id}/{count}")
+    public String playQuiz(Model model, @PathVariable long id, @PathVariable int count){
+        
+        Quiz quiz = quizService.findByqId(id);
+        System.out.println(count);
+        System.out.println(quiz.getName());
+        System.out.println(quiz.getQas());
+        System.out.println(quiz.getQas().get(count).getQuestion());
+        System.out.println(quiz.getQas().get(count).getAnswers());
+        model.addAttribute("quiz", quiz);
+
+        return "quizplay";
+    }
+
+
+
+
+    @GetMapping("/testquiz")
+    public String gettestquiz(Model model, @ModelAttribute String name){
+        Quiz quiz = new Quiz(name);
+        List<QA> qas = qaService.findAll();
         model.addAttribute("quiz", quiz);
         model.addAttribute("qas", qas);
-
+        quizService.save(quiz);
         return "quiztest";
     }
     @PostMapping("/testquiz")
     public String testquiz(@ModelAttribute("quiz") Quiz quiz){
-
+        quizService.save(quiz);
         System.out.println(quiz);
-        return "quiztest";
+
+        return "index";
+    }
+    @GetMapping("/testfind")
+    public String testfind(Model model){
+        List<Quiz> quizzes = quizService.findAll();
+        model.addAttribute("quizzes", quizzes);
+
+        return "testfind";
     }
 }

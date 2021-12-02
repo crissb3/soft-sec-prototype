@@ -17,16 +17,11 @@
 <div class="center">
     <div class="container">
         <div class="center">
-            <div class="button-3d"><div class="button_text">Start Quiz</div></div>
-            <div class="divider_in_menu"></div>
-            <div class="button-3d"><div class="button_text">Create Quiz</div></div>
-            <div class="divider_in_menu"></div>
-            <div class="button-3d"><div class="button_text">Load Quiz</div></div>
-            <div class="divider_in_menu"></div>
-            <div class="button-3d"><div class="button_text">Delete Quiz</div></div>
-        </div>
-        <div class=message>
-            <p><span class=message th:text="${message}"></span></p>
+            <b th:text="${quiz.QId}"></b>
+            <b th:text="${quiz.name}"></b>
+            <b align="center" style="cursor: pointer" th:text="${quiz.getQas().get(0).getAnswers().get(0)}"
+                th:onClick="'window.location.href= \''+
+						    @{/Quiz/Play/{quizID}(quizID=${quiz.QId})/{count}(count=${count})+'\''"></b>
         </div>
     </div>
 </div>

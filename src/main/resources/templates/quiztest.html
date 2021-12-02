@@ -16,10 +16,11 @@
 
 <div class="center">
     <div class="container">
-
-
         <div style="height:400px; width: 680px; margin-left: 400px; margin-top: -100px; overflow: auto; border: 1px solid black; font-size: 19px; color: white">
             <form th:action="@{/testquiz}" th:object="${quiz}" method="post">
+                <input type="text" name="name" th:field="*{name}">
+                <input type="hidden" th:field="*{QId}">
+
                 <ul>
                     <div th:each="qa : ${qas}">
                         <input type="checkbox" name="quizqa" th:value="${qa.qaId}" th:field="${quiz.qas}">

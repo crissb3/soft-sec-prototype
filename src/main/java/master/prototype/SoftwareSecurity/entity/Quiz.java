@@ -13,7 +13,7 @@ public class Quiz {
     private Long qId;
 
     private String name;
-    @OneToMany
+    @ManyToMany
     private List<QA> qas;
 
     @OneToOne

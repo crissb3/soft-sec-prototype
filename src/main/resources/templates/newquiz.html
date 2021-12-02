@@ -15,39 +15,29 @@
     <div class="logo_text">SoftSec Quiz</div>
 
 <div class="center">
+    <form th:action="@{/Quiz/Create/Search}">
+        <h3>Search:</h3>
+        Search:<input type="text" name="question"><br><br>
+        <!--            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>-->
+        <input type="submit" name="submit" value="Search">
+    </form>
     <div class="container">
-        <form th:action="@{/Quiz/Search}">
-            <h3>Search for Quiz:</h3>
-            Search:<input type="text" name="quizname"><br><br>
-<!--            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>-->
-            <input type="submit" name="submit" value="Search">
-        </form><br>
-        <div class=message>
-            <p><span style="color:white;" class=message th:text="${message}"></span></p>
-            <tr th:each="quiz : ${quizzes}">
-                <td>ID:</td>
-                <td th:text="${quiz.qId}">Quiz ID</td>
-                <td>Quiz name:</td>
-                <td th:text="${quiz.getName()}">Quiz name</td>
-                <br>
-            </tr>
-        </div>
-        <form th:action="@{/Quiz/Create}">
-            Name:
-            <input type="text" name="addname">
-            <input type="submit" name="addnamesubmit" value="Create quiz">
-        </form>
+        <form th:action="@{/Quiz/Create}" th:object="${quiz}" method="post">
+            <b style="margin-top: 70px; margin-left: 40px; color: white">Name:</b>
+            <input style="margin-top: 70px;" type="text" name="name" th:field="*{name}">
+            <input type="hidden" th:field="*{QId}">
 
-        <div style="height:400px; width: 680px; margin-left: 400px; margin-top: -100px; overflow: auto; border: 1px solid black; font-size: 19px; color: white">
-            <form th:action="@{/Quiz/Create}" th:object="${quizqa}">
-                <ul>
-                    <div th:each="qa : ${qas}">
-                        <input type="checkbox" name="quizqa" th:value="${qa}">
-                        <label th:text="${qa.qaId}"></label>
-                        <label th:text="${qa.question}"></label>
-                    </div>
-                </ul>
-            </form>
+            <button type="submit">Create quiz</button>
+            <div style="height:400px; width: 680px; margin-left: 400px; margin-top: -40px; overflow: auto; border: 1px solid black; font-size: 19px; color: white">
+                    <ul>
+                        <div th:each="qa : ${qas}">
+                            <input type="checkbox" name="quizqa" th:value="${qa.qaId}" th:field="${quiz.qas}">
+                            <label th:text="${qa.qaId}"></label>
+                            <label th:text="${qa.question}"></label>
+                        </div>
+                    </ul>
+            </div>
+        </form>
 <!--            <table th:class="DescMit">-->
 <!--                <tr>-->
 <!--                    &lt;!&ndash;                        <th>Id</th>&ndash;&gt;-->
@@ -65,7 +55,6 @@
 <!--            </table>-->
 <!--        </div>-->
     </div>
-</div>
 </div>
 </body>
 
