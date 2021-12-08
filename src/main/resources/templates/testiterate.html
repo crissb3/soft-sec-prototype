@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SecQuiz</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+    <div class="text_frame_menu">
+        <div class="single_text_in_menu" onclick="window.location.href='/'">Home</div>
+        <div class="single_text_in_menu">Achievements</div>
+        <div class="single_text_in_menu">Leaderboard</div>
+    </div>
+    <div class="logo_text">SoftSec Quiz</div>
+
+    <div class="center">
+        <div class="container">
+            <div class="center">
+                <div style="height:400px; width: 1000px; margin-left: 200px; overflow: auto; border: 1px solid black; font-size: 18px;">
+<!--                    <ul th:each="quiz : ${quizzes}">-->
+<!--                        <li align="center" th:text="${quiz.name}"></li>-->
+<!--                        <li th:text="${quiz.qas}"></li>-->
+<!--                    </ul>-->
+                    <div>
+                        <p th:text="${quizzes[__${page}__].name}">
+                        <p th:text="${quizzes[__${page}__].qas}">
+                        <p th:text="${quizzes[__${page}__].QId}">
+                        <div th:each="quiz, status : ${page}"><a th:text="${status.index}" th:href="@{testiterate(page=${page+1})}"></a></div>
+                        <p th:text="${page}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

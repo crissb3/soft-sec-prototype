@@ -2,6 +2,7 @@ package master.prototype.SoftwareSecurity.controller;
 
 import master.prototype.SoftwareSecurity.entity.QA;
 import master.prototype.SoftwareSecurity.entity.Quiz;
+import master.prototype.SoftwareSecurity.entity.User;
 import master.prototype.SoftwareSecurity.service.QAService;
 import master.prototype.SoftwareSecurity.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,31 +66,71 @@ public class QuizController {
         return "quizselect";
     }
     @GetMapping("/Quiz/Start/{id}")
-    public String startQuiz(Model model, @PathVariable long id){
-
+    public String startQuiz(Model model,
+                            @PathVariable long id,
+                            @RequestParam(name="page", defaultValue = "0") int page){
         Quiz quiz = quizService.findByqId(id);
 
         System.out.println(quiz.getName());
         System.out.println(quiz.getQas());
-        System.out.println(quiz.getQas().get(0).getQuestion());
-        System.out.println(quiz.getQas().get(0).getAnswers());
+        System.out.println(quiz.getQas().get(page).getQuestion());
+        System.out.println(quiz.getQas().get(page).getAnswers());
+        User user = new User();
+        int score = user.getScore();
+        model.addAttribute("score", score);
+        model.addAttribute("page", page);
         model.addAttribute("quiz", quiz);
 
         return "quizplay";
     }
-    @GetMapping("/Quiz/Play/{id}/{count}")
-    public String playQuiz(Model model, @PathVariable long id, @PathVariable int count){
-        
+    @GetMapping("/Quiz/Start/page")
+    public String playQuiztest(Model model,
+                               @RequestParam long id,
+                               @RequestParam(name="page", defaultValue = "-1") int page,
+                               @RequestParam int score,
+                               @RequestParam String answer){
         Quiz quiz = quizService.findByqId(id);
-        System.out.println(count);
-        System.out.println(quiz.getName());
-        System.out.println(quiz.getQas());
-        System.out.println(quiz.getQas().get(count).getQuestion());
-        System.out.println(quiz.getQas().get(count).getAnswers());
-        model.addAttribute("quiz", quiz);
+        User user = new User();
+        if(quiz.getQas().size() == page){
+            if(answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
+                score += 10;
+                user.setScore(score);
+            }
+            model.addAttribute("idtest", id);
+            model.addAttribute("page", 0);
+            model.addAttribute("quiz", quiz);
+            model.addAttribute("score", score);
+        }
+        else{
+            if(answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
+                score += 10;
+                user.setScore(score);
+            }
+            model.addAttribute("idtest", id);
+            model.addAttribute("page", page);
+            model.addAttribute("quiz", quiz);
+            model.addAttribute("score", score);
+
+        }
+
 
         return "quizplay";
     }
+//    @GetMapping("/Quiz/Play")
+//    public String playQuiz(Model model,
+//                           @RequestParam long id,
+//                           @RequestParam(name="page", defaultValue = "0") int page){
+//
+//        Quiz quiz = quizService.findByqId(id);
+//        System.out.println(page);
+//        System.out.println(quiz.getName());
+//        System.out.println(quiz.getQas());
+//        System.out.println(quiz.getQas().get(page).getQuestion());
+//        System.out.println(quiz.getQas().get(page).getAnswers());
+//        model.addAttribute("quiz", quiz);
+//
+//        return "quizplay";
+//    }
 
 
 
@@ -117,4 +158,21 @@ public class QuizController {
 
         return "testfind";
     }
+
+    @GetMapping("/testiterate")
+    public String testIterate(Model model, @RequestParam(name="page", defaultValue = "0") int page){
+
+        List<Quiz> quizzes = quizService.findAll();
+        if(quizzes.size()==page){
+            model.addAttribute("quizzes", quizzes);
+            model.addAttribute("page",0);
+        }
+        else{
+            model.addAttribute("quizzes", quizzes);
+            model.addAttribute("page", page);
+        }
+
+        return "testiterate";
+    }
+
 }
