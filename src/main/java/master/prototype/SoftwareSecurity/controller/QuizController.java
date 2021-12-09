@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,8 +30,6 @@ public class QuizController {
 
         return "newquiz";
     }
-
-
     @GetMapping("/Quiz/Create")
     public String createQuiz(Model model, @ModelAttribute String name) {
         Quiz quiz = new Quiz();
@@ -110,31 +107,9 @@ public class QuizController {
             model.addAttribute("page", page);
             model.addAttribute("quiz", quiz);
             model.addAttribute("score", score);
-
         }
-
-
         return "quizplay";
     }
-//    @GetMapping("/Quiz/Play")
-//    public String playQuiz(Model model,
-//                           @RequestParam long id,
-//                           @RequestParam(name="page", defaultValue = "0") int page){
-//
-//        Quiz quiz = quizService.findByqId(id);
-//        System.out.println(page);
-//        System.out.println(quiz.getName());
-//        System.out.println(quiz.getQas());
-//        System.out.println(quiz.getQas().get(page).getQuestion());
-//        System.out.println(quiz.getQas().get(page).getAnswers());
-//        model.addAttribute("quiz", quiz);
-//
-//        return "quizplay";
-//    }
-
-
-
-
     @GetMapping("/testquiz")
     public String gettestquiz(Model model, @ModelAttribute String name){
         Quiz quiz = new Quiz(name);
