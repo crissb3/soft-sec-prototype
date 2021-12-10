@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import master.prototype.SoftwareSecurity.entity.QA;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -75,17 +73,7 @@ public class QAController {
             return "createquestioncapec";
         }
         else {
-            String[] fakes ={fakeanswer1, fakeanswer2, fakeanswer3};
-            QA qa = new QA();
-            qa.setQuestion(addquestion);
-            qa.setCorrectAnswer(correctanswer);
-            List<String> answers = new ArrayList<>();
-            for(String fake : fakes){
-                answers.add(fake);
-            }
-            answers.add(qa.getCorrectAnswer());
-            Collections.shuffle(answers);
-            qa.setAnswers(answers);
+            QA qa = qaService.shuffleAnswers(addquestion, fakeanswer1, fakeanswer2, fakeanswer3, correctanswer);
             qaService.save(qa);
 
             model.addAttribute("message", "Created question: " + addquestion);
@@ -118,17 +106,7 @@ public class QAController {
             return "createquestioncodingstandard";
         }
         else {
-            String[] fakes ={fakeanswer1, fakeanswer2, fakeanswer3};
-            QA qa = new QA();
-            qa.setQuestion(addquestion);
-            qa.setCorrectAnswer(correctanswer);
-            List<String> answers = new ArrayList<>();
-            for(String fake : fakes){
-                answers.add(fake);
-            }
-            answers.add(qa.getCorrectAnswer());
-            Collections.shuffle(answers);
-            qa.setAnswers(answers);
+            QA qa = qaService.shuffleAnswers(addquestion, fakeanswer1, fakeanswer2, fakeanswer3, correctanswer);
             qaService.save(qa);
 
             model.addAttribute("message", "Created question: " + addquestion);

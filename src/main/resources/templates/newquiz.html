@@ -15,16 +15,16 @@
     <div class="logo_text">SoftSec Quiz</div>
 
 <div class="center">
-    <form th:action="@{/Quiz/Create/Search}">
-        <h3>Search:</h3>
-        Search:<input type="text" name="question"><br><br>
-        <!--            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>-->
-        <input type="submit" name="submit" value="Search">
-    </form>
     <div class="container">
+        <form th:action="@{/Quiz/Create/Search}">
+            <h3>Search:</h3>
+            <input type="text" name="question"><br><br>
+            <!--            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>-->
+            <input type="submit" name="submit" value="Search">
+        </form>
         <form th:action="@{/Quiz/Create}" th:object="${quiz}" method="post">
-            <b style="margin-top: 70px; margin-left: 40px; color: white">Name:</b>
-            <input style="margin-top: 70px;" type="text" name="name" th:field="*{name}">
+            <b style="margin-top: 15px; margin-left: 40px; color: white">Name:</b>
+            <input style="margin-top: 15px;" type="text" name="name" th:field="*{name}">
             <input type="hidden" th:field="*{QId}">
 
             <button type="submit">Create quiz</button>

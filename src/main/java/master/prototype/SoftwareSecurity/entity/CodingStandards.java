@@ -95,16 +95,24 @@ public class CodingStandards {
                         name = element.getAttribute("Name");
                     }
                     if(element.getElementsByTagName("Detection_Methods").item(0) == null) {
-                        detection = "No detection method found";
+                        detection = "No detection method found.";
                     }
                     else{
                         detection = element.getElementsByTagName("Detection_Methods").item(0).getTextContent();
                     }
                     if(element.getElementsByTagName("Example_Code").item(0) == null) {
-                        example_code = "No detection method found";
+                        example_code = "No example code found.";
                     }
                     else {
                         example_code = element.getElementsByTagName("Example_Code").item(0).getTextContent();
+                        int length = element.getElementsByTagName("Example_Code").getLength();
+                        for(int j = 0; j < length; j++){
+                            if(!(element.getElementsByTagName("Example_Code").item(j).getAttributes().getNamedItem("Language")==null)){
+                                if(element.getElementsByTagName("Example_Code").item(j).getAttributes().getNamedItem("Language").getTextContent().contains("Java")){
+                                    example_code += element.getElementsByTagName("Example_Code").item(j).getTextContent();
+                                }
+                            }
+                        }
                     }
                     CodingStandards codingStandard = new CodingStandards(id, name, description, mitigation, detection, example_code);
                     codingStandards.add(codingStandard);
