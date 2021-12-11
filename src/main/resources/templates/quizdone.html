@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SecQuiz</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+    <div class="text_frame_menu">
+        <div class="single_text_in_menu" onclick="window.location.href='/'">Home</div>
+        <div class="single_text_in_menu">Achievements</div>
+        <div class="single_text_in_menu" onclick="window.location.href='/Quiz/Leaderboard/Select'">Leaderboard</div>
+    </div>
+    <div class="logo_text">SoftSec Quiz</div>
+
+<div class="center">
+    <div class="container">
+        <div class="center">
+            <b style="color:white; font-size: large;" th:text="${quiz.QId}"></b>
+            <b style="color:white; font-size: large;" th:text="${quiz.name}"></b>
+            <div>
+                <b style="color: white">Final score:</b><b style="color: white; font-size: large" th:text="${score}"></b>
+                <form th:action="@{/Quiz/final-score}" style="margin-left: 50px; margin-top: 50px" method="post">
+                    <input type="text" name="name">
+                    <input type="submit" name="addscore" value="Submit score">
+                    <input type="hidden" name="id" th:value="${quiz.QId}">
+                    <input type="number" th:value="${score}" name="score" hidden/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

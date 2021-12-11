@@ -15,9 +15,11 @@ public class Quiz {
     private String name;
     @ManyToMany
     private List<QA> qas;
-
     @OneToOne
     private User owner;
+    @OneToMany
+    private List<User> scores;
+
 
     public Quiz(String name) {
         this.name = name;
@@ -26,6 +28,7 @@ public class Quiz {
         this.name = name;
         this.qas = qas;
     }
+
 
     public Quiz() {
     }

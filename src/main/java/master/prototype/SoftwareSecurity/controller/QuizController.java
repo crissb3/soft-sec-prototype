@@ -5,11 +5,15 @@ import master.prototype.SoftwareSecurity.entity.Quiz;
 import master.prototype.SoftwareSecurity.entity.User;
 import master.prototype.SoftwareSecurity.service.QAService;
 import master.prototype.SoftwareSecurity.service.QuizService;
+import master.prototype.SoftwareSecurity.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -20,6 +24,8 @@ public class QuizController {
     private QuizService quizService;
     @Autowired
     private QAService qaService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/Quiz/Create/Search")
     public String searchQuiz(Model model, @RequestParam String question) {
@@ -67,11 +73,6 @@ public class QuizController {
                             @PathVariable long id,
                             @RequestParam(name="page", defaultValue = "0") int page){
         Quiz quiz = quizService.findByqId(id);
-
-        System.out.println(quiz.getName());
-        System.out.println(quiz.getQas());
-        System.out.println(quiz.getQas().get(page).getQuestion());
-        System.out.println(quiz.getQas().get(page).getAnswers());
         User user = new User();
         int score = user.getScore();
         model.addAttribute("score", score);
@@ -97,6 +98,7 @@ public class QuizController {
             model.addAttribute("page", 0);
             model.addAttribute("quiz", quiz);
             model.addAttribute("score", score);
+            return "quizdone";
         }
         else{
             if(answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
@@ -110,6 +112,47 @@ public class QuizController {
         }
         return "quizplay";
     }
+    @PostMapping("Quiz/final-score")
+    public String finalScore(Model model, @RequestParam String name, @RequestParam int score, @RequestParam long id){
+        User user = new User();
+        List<User> scores;
+        user.setScore(score);
+        user.setUsername(name);
+        userService.save(user);
+        Quiz quiz = quizService.findByqId(id);
+//        System.out.println(user);
+        if(quiz.getScores().isEmpty()){
+            scores = new ArrayList<>();
+        }
+        else{
+            scores = quiz.getScores();
+        }
+        scores.add(user);
+        quiz.setScores(scores);
+        quizService.save(quiz);
+//        System.out.println(quiz.getScores());
+
+        model.addAttribute("name",name);
+        model.addAttribute("score", score);
+        model.addAttribute("message", "Score posted to leaderboard for user: "+name);
+        return "index";
+    }
+    @GetMapping("/Quiz/Leaderboard/Select")
+    public String selectLeaderboard(Model model){
+        List<Quiz> quizzes = quizService.findAll();
+        model.addAttribute("quizzes", quizzes);
+        return "quizselectleaderboard";
+    }
+    @GetMapping("/Quiz/Leaderboard/{id}")
+    public String leaderboard(Model model,
+                              @PathVariable long id){
+        Quiz quiz = quizService.findByqId(id);
+        List<User> scores = quiz.getScores();
+        Collections.sort(scores, Comparator.comparingInt(User::getScore).reversed());
+        model.addAttribute("scores", scores);
+        return "leaderboard";
+    }
+
     @GetMapping("/testquiz")
     public String gettestquiz(Model model, @ModelAttribute String name){
         Quiz quiz = new Quiz(name);

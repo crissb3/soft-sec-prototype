@@ -18,8 +18,8 @@ public class QA {
     @ElementCollection
     private List<String> answers = new ArrayList<>();
 
-//    @OneToMany
-//    private Quiz quiz;
+//    @ManyToOne
+//    private User owner;
 
     public QA(Long qaId, String question, String correctAnswer){
         this.qaId = qaId;
