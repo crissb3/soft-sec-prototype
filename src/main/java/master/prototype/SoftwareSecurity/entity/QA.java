@@ -2,7 +2,6 @@ package master.prototype.SoftwareSecurity.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,7 +15,19 @@ public class QA {
     private String question;
     private String correctAnswer;
     @ElementCollection
-    private List<String> answers = new ArrayList<>();
+    private List<String> answers;
+
+    public enum Tags {
+        SOFTWARE_SECURITY("software_security"), NETWORK("network"), CODING_STANDARD("coding_standard");
+        private String tag;
+
+        Tags(String tag){
+            this.tag = tag;
+        }
+        public String getTag(){
+            return this.tag;
+        }
+    }
 
 //    @ManyToOne
 //    private User owner;

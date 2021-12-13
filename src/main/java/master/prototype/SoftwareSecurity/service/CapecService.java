@@ -19,7 +19,7 @@ public class CapecService {
     }
 
     public List<Capec> findByDescription(String description) {
-        return capecRepository.findByDescriptionContainingIgnoreCase(description);
+        return capecRepository.findByDescContainingIgnoreCase(description);
     }
     public List<Capec> findByName(String name) {
         return capecRepository.findByNameContainingIgnoreCase(name);

@@ -24,7 +24,7 @@ public class Capec {
     @Id
     private int id;
     @Lob
-    private String description;
+    private String desc;
     @Lob
     private String mitigation;
 
@@ -52,7 +52,7 @@ public class Capec {
 
     public Capec(int id, String description, String mitigation, String name){
         this.id = id;
-        this.description = description;
+        this.desc = description;
         this.mitigation = mitigation;
         this.name = name;
     }

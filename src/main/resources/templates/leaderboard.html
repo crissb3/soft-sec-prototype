@@ -20,6 +20,7 @@
             <div style="height:430px; width: 700px; margin-left: 100px; overflow: auto; border: 1px solid black; font-size: 19px">
                 <table th:class="DescMit">
                     <tr>
+                        <th>User ID</th>
                         <th>Name</th>
                         <th>Score</th>
                         <!--                        <th>Description</th>-->
@@ -27,6 +28,7 @@
                         <th class=th-hidden></th>
                     </tr>
                     <tr th:each="score : ${scores}">
+                        <td align="center" th:text="${score.UId}"></td>
                         <td align="center" th:text="${score.username}"></td>
                         <td align="center" th:text="${score.score}"></td>
                     </tr>
