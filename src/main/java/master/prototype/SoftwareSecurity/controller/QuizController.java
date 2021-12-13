@@ -152,6 +152,26 @@ public class QuizController {
         model.addAttribute("scores", scores);
         return "leaderboard";
     }
+    @GetMapping("/Quiz/Delete")
+    public String deleteSelect(Model model){
+        List<Quiz> quizzes = quizService.findAll();
+        model.addAttribute("quizzes", quizzes);
+
+        return "quizselectdelete";
+    }
+    @GetMapping("/Quiz/Delete/{id}")
+    public String deleteQuiz(Model model, @PathVariable long id){
+        Quiz quiz = quizService.findByqId(id);
+        model.addAttribute("quiz", quiz);
+        return "quizdelete";
+    }
+    @PostMapping("/Quiz/Delete/{id}")
+    public String deleteQuizconfirm(Model model, @PathVariable long id){
+        String name = quizService.findByqId(id).getName();
+        quizService.deleteByqId(id);
+        model.addAttribute("message","Deleted quiz with name: "+name);
+        return "index";
+    }
 
     @GetMapping("/testquiz")
     public String gettestquiz(Model model, @ModelAttribute String name){

@@ -28,4 +28,6 @@ public class QuizService {
 
     public List<Quiz> findByName(String name){return quizRepository.findByNameContainingIgnoreCase(name);}
     public Quiz findByqId(Long qId){return quizRepository.findByqId(qId);}
+
+    public void deleteByqId(Long qId){quizRepository.deleteById(qId);}
 }
