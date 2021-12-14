@@ -73,13 +73,19 @@ public class QuizController {
                             @PathVariable long id,
                             @RequestParam(name="page", defaultValue = "0") int page){
         Quiz quiz = quizService.findByqId(id);
-        User user = new User();
-        int score = user.getScore();
-        model.addAttribute("score", score);
-        model.addAttribute("page", page);
-        model.addAttribute("quiz", quiz);
+        if(quiz.getQas().isEmpty()){
+            model.addAttribute("message", "Can't start a quiz without questions");
+            return "index";
+        }
+        else{
+            User user = new User();
+            int score = user.getScore();
+            model.addAttribute("score", score);
+            model.addAttribute("page", page);
+            model.addAttribute("quiz", quiz);
 
-        return "quizplay";
+            return "quizplay";
+        }
     }
     @GetMapping("/Quiz/Start/page")
     public String playQuiztest(Model model,
