@@ -3,6 +3,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -16,6 +17,8 @@ public class QA {
     private String correctAnswer;
     @ElementCollection
     private List<String> answers;
+    @ElementCollection
+    private Set<Tags> tags;
 
     public enum Tags {
         SOFTWARE_SECURITY("software_security"), NETWORK("network"), CODING_STANDARD("coding_standard");

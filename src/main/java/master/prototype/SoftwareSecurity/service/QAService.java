@@ -4,9 +4,7 @@ import master.prototype.SoftwareSecurity.entity.QA;
 import master.prototype.SoftwareSecurity.repository.QARepositoryImpl;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class QAService {
@@ -21,7 +19,7 @@ public class QAService {
         return qaRepository.findByQuestionContainingIgnoreCase(question);
     }
     public List<QA> findAll(){return qaRepository.findAll();}
-
+    public List<QA> findByTags(Set<QA.Tags> tags){return qaRepository.findByTagsIn(tags);}
     public QA save(QA newQA){
         qaRepository.save(newQA);
         return newQA;
@@ -47,5 +45,12 @@ public class QAService {
         Collections.shuffle(answers);
         qa.setAnswers(answers);
         return qa;
+    }
+    public Set<QA.Tags> setTag(String tag1, String tag2, String tag3){
+        Set<QA.Tags> tags = new HashSet<>();
+        if(!(tag1==null)) tags.add(QA.Tags.valueOf(tag1));
+        if(!(tag2==null)) tags.add(QA.Tags.valueOf(tag2));
+        if(!(tag3==null)) tags.add(QA.Tags.valueOf(tag3));
+        return tags;
     }
 }

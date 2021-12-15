@@ -11,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 
 @Controller
@@ -28,8 +25,28 @@ public class QuizController {
     private UserService userService;
 
     @GetMapping("/Quiz/Create/Search")
-    public String searchQuiz(Model model, @RequestParam String question) {
-        List<QA> qas  = qaService.findByWord(question);
+    public String searchQuiz(Model model,
+                             @RequestParam String question,
+                             @RequestParam(required = false) String tag1,
+                             @RequestParam(required = false) String tag2,
+                             @RequestParam(required = false) String tag3) {
+        List<QA> qas;
+        Set<QA.Tags> tags = qaService.setTag(tag1,tag2,tag3);
+        if(!(tag1==null)) tags.add(QA.Tags.valueOf(tag1));
+        if(!(tag2==null)) tags.add(QA.Tags.valueOf(tag2));
+        if(!(tag3==null)) tags.add(QA.Tags.valueOf(tag3));
+        if(tags.isEmpty()){
+            qas  = qaService.findByWord(question);
+        }
+        else{
+            qas  = qaService.findByTags(tags);
+            List<QA> searchwordlist = qaService.findByWord(question);
+            qas.retainAll(searchwordlist);
+            Set<QA> qaSet = new HashSet<>(qas);
+            qas.clear();
+            qas.addAll(qaSet);
+            Collections.sort(qas, Comparator.comparingLong(QA::getQaId));
+        }
         Quiz quiz = new Quiz();
         model.addAttribute("qas", qas);
         model.addAttribute("quiz", quiz);

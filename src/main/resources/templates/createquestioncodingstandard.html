@@ -18,7 +18,7 @@
     <div class="container">
         <div class="center">
             <b style="color: white; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; font-size: 28px;" th:text="${codingStandard.name}"></b>
-            <div style="height:430px; width: 700px; margin-left: 100px; overflow: auto; border: 1px solid black; font-size: 19px; float: right">
+            <div style="height:400px; width: 700px; margin-left: 100px; overflow: auto; border: 1px solid black; font-size: 19px; float: right">
                 <table th:class="DescMit">
                     <tr>
 <!--                        <th>Id</th>-->
@@ -43,7 +43,7 @@
         @{/createQuestion/codingstandard/code/{javacsID}(javacsID=${codingStandard.id})}+'\''" style="margin-left: 50px; margin-top: 50px">Code example</button>
         <br>
         <p><span style="margin-left: 20px; color: white" th:text="${message}"></span></p>
-        <form th:action="@{/addQAcodingstandard}" style="margin-left: 50px; margin-top: 15px" th:method="post">
+        <form th:action="@{/addQAcodingstandard}" style="margin-left: 50px; margin-top: -15px" th:method="post">
             Question:
             <br>
             <textarea style="height: 50px;" type="text" name="addquestion"></textarea>
@@ -62,6 +62,12 @@
             <br>
             <input type="submit" name="addquestionsubmit" value="Add question">
             <input type="number" th:value="${codingStandard.id}" name="id" hidden/>
+            <ul>
+                <b>Tags:</b><br>
+                <b>Network</b><input type="checkbox" name="tag1" th:value="NETWORK">
+                <b>Software Security</b><input type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY">
+                <b>Coding Standard</b><input type="checkbox" name="tag3" th:value="CODING_STANDARD">
+            </ul>
         </form>
     </div>
 </div>

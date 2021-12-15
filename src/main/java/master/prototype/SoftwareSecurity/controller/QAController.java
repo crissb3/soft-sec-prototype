@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import master.prototype.SoftwareSecurity.entity.QA;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class QAController {
@@ -49,10 +51,6 @@ public class QAController {
         return "index";
     }
 
-//    @GetMapping("/addQA")
-//    public String allCapec(){
-//        return "testcapec";
-//    }
     @PostMapping("/addQAcapec")
     public String addQAcapec(@RequestParam String addquestion,
                             @RequestParam String fakeanswer1,
@@ -60,6 +58,9 @@ public class QAController {
                             @RequestParam String fakeanswer3,
                             @RequestParam String correctanswer,
                             @RequestParam String id,
+                            @RequestParam(required = false) String tag1,
+                            @RequestParam(required = false) String tag2,
+                            @RequestParam(required = false) String tag3,
                             Model model) {
 
         if(addquestion.isEmpty()
@@ -74,8 +75,8 @@ public class QAController {
         }
         else {
             QA qa = qaService.shuffleAnswers(addquestion, fakeanswer1, fakeanswer2, fakeanswer3, correctanswer);
+            qa.setTags(qaService.setTag(tag1, tag2, tag3));
             qaService.save(qa);
-
             model.addAttribute("message", "Created question: " + addquestion);
         }
         List<Capec> capecs = capecService.findAll();
@@ -93,6 +94,9 @@ public class QAController {
                             @RequestParam String fakeanswer3,
                             @RequestParam String correctanswer,
                             @RequestParam String id,
+                            @RequestParam(required = false) String tag1,
+                            @RequestParam(required = false) String tag2,
+                            @RequestParam(required = false) String tag3,
                             Model model) {
 
         if(addquestion.isEmpty()
@@ -107,6 +111,7 @@ public class QAController {
         }
         else {
             QA qa = qaService.shuffleAnswers(addquestion, fakeanswer1, fakeanswer2, fakeanswer3, correctanswer);
+            qa.setTags(qaService.setTag(tag1, tag2, tag3));
             qaService.save(qa);
 
             model.addAttribute("message", "Created question: " + addquestion);
@@ -117,4 +122,5 @@ public class QAController {
 
         return "javacodingcreate";
     }
+
 }

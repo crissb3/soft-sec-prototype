@@ -18,7 +18,7 @@
     <div class="container">
         <div class="center">
             <b style="color: white; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; font-size: 28px;" th:text="${capec.name}"></b>
-            <div style="height:430px; width: 700px; margin-left: 100px; overflow: auto; border: 1px solid black; font-size: 19px; float: right">
+            <div style="height:370px; width: 700px; margin-left: 100px; overflow: auto; border: 1px solid black; font-size: 19px; float: right">
                 <table th:class="DescMit">
                     <tr>
 <!--                        <th>Id</th>-->
@@ -57,13 +57,12 @@
             <br>
             <input type="submit" name="addquestionsubmit" value="Add question">
             <input type="number" th:value="${capec.id}" name="id" hidden/>
-<!--            <ul>-->
-<!--                <div th:each="qa : ${qas}">-->
-<!--                    <input type="checkbox" name="quizqa" th:value="${qa.qaId}" th:field="${quiz.qas}">-->
-<!--                    <label th:text="${qa.qaId}"></label>-->
-<!--                    <label th:text="${qa.question}"></label>-->
-<!--                </div>-->
-<!--            </ul>-->
+            <ul>
+                <b>Tags:</b><br>
+                <b>Network</b><input type="checkbox" name="tag1" th:value="NETWORK">
+                <b>Software Security</b><input type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY">
+                <b>Coding Standard</b><input type="checkbox" name="tag3" th:value="CODING_STANDARD">
+            </ul>
         </form>
     </div>
 </div>
