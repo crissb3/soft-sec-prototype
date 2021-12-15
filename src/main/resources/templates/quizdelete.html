@@ -19,11 +19,11 @@
         <div class="center">
             <div style="height:430px; width: 700px; margin-left: 100px; overflow: auto; border: 1px solid black; font-size: 19px">
                 <form th:action="@{/Quiz/Delete/{quizID}(quizID=${quiz.QId})}" th:object="${quiz}" method="post">
+                    <b style="margin-top: 15px; margin-left: 40px; color: white">ID:</b>
+                    <b style="color: white" th:text="${quiz.QId}"></b>
+                    <br>
                     <b style="margin-top: 15px; margin-left: 40px; color: white">Name:</b>
                     <b style="color: white" th:text="${quiz.name}"></b>
-                    <br>
-                    <b style="margin-top: 15px; margin-left: 40px; color: white">Questions:</b>
-                    <b style="color: white" th:text="${quiz.qas}"></b>
                     <input type="hidden" th:field="*{QId}">
 
                     <button type="submit">Delete quiz</button>
