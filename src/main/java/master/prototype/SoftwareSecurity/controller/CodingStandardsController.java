@@ -45,7 +45,7 @@ public class CodingStandardsController {
         int size = codingStandards.size();
         model.addAttribute("codingStandards", codingStandards);
         model.addAttribute("message_hits", "Number of hits: "+size);
-        model.addAttribute("message_searched", "Containing search word: " + description);
+        model.addAttribute("message_searched", "Containing search word: \n" + description);
 
         return "javacodingcreate";
     }

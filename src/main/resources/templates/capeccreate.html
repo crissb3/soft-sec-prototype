@@ -44,17 +44,16 @@
                 </table>
             </div>
         </div>
-        <form th:action="@{/searchCapecDomainsOfAttack}">
-            <h3>Search:</h3>
-            Search:<input type="text" name="description"><br><br>
-<!--            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>-->
+        <form style="margin-left: 50px" th:action="@{/searchCapecDomainsOfAttack}">
+            <b style="color: white; text-shadow: 1px 1px black">Search:</b>
+            <input style="margin-top: 100px;" type="text" name="description"><br><br>
             <input type="submit" name="submit" value="Search">
         </form><br>
-        <button onclick="window.location.href='/addQuestion'">Go back</button>
+        <button style="margin-left: 50px" onclick="window.location.href='/addQuestion'">Go back</button>
         <p><span style="color:white;" th:text="${message}"></span></p>
-        <div class=message style="color: white">
+        <div class=message style="color: white; margin-left: 30px">
             <p><span class=message th:text="${message_hits}"></span></p>
-            <p><span class=message th:text="${message_searched}"></span></p>
+            <p><span style="white-space: pre-wrap" class=message th:text="${message_searched}"></span></p>
         </div>
     </div>
 </div>

@@ -36,7 +36,7 @@ public class CapecController {
         int size = capecs.size();
         model.addAttribute("capecs", capecs);
         model.addAttribute("message_hits", "Number of hits: "+size);
-        model.addAttribute("message_searched", "Containing search word: " + description);
+        model.addAttribute("message_searched", "Containing search word: \n" + description);
 
         return "capeccreate";
     }

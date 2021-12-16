@@ -19,8 +19,8 @@
         <form th:action="@{/Quiz/Create/Search}">
             <input style="margin-left: 50px; margin-top: 50px;" type="submit" name="submit" value="Search">
             <input type="text" name="question"><br><br>
-            <ul>
-                <b>Tags:</b><br>
+            <ul style="color: black">
+                <b style="color: white; text-shadow: 1px 1px 0px black;">Search with tags:</b><br>
                 <b>Network</b><input type="checkbox" name="tag1" th:value="NETWORK"><br>
                 <b>Software Security</b><input type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY"><br>
                 <b>Coding Standard</b><input type="checkbox" name="tag3" th:value="CODING_STANDARD">
@@ -28,7 +28,7 @@
             <!--            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>-->
         </form>
         <form th:action="@{/Quiz/Create}" th:object="${quiz}" method="post">
-            <b style="margin-top: 15px; margin-left: 40px; color: white">Name:</b>
+            <b style="margin-top: 15px; margin-left: 40px; color: white; text-shadow: 1px 1px black">Name:</b>
             <input style="margin-top: 15px;" type="text" name="name" th:field="*{name}">
             <input type="hidden" th:field="*{QId}">
 
