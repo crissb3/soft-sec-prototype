@@ -1,9 +1,9 @@
 package master.prototype.SoftwareSecurity.controller;
 
-import master.prototype.SoftwareSecurity.entity.Capec;
-import master.prototype.SoftwareSecurity.entity.CodingStandards;
-import master.prototype.SoftwareSecurity.service.CapecService;
-import master.prototype.SoftwareSecurity.service.CodingStandardsService;
+//import master.prototype.SoftwareSecurity.entity.Capec;
+//import master.prototype.SoftwareSecurity.entity.CodingStandards;
+//import master.prototype.SoftwareSecurity.service.CapecService;
+//import master.prototype.SoftwareSecurity.service.CodingStandardsService;
 import master.prototype.SoftwareSecurity.service.QAService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,10 +19,10 @@ public class QAController {
 
     @Autowired
     private QAService qaService;
-    @Autowired
-    private CapecService capecService;
-    @Autowired
-    private CodingStandardsService codingStandardsService;
+//    @Autowired
+//    private CapecService capecService;
+//    @Autowired
+//    private CodingStandardsService codingStandardsService;
 
     @GetMapping("/searchQA")
     public String searchQA(@RequestParam String question, Model model) {
@@ -49,76 +49,76 @@ public class QAController {
         return "index";
     }
 
-    @PostMapping("/addQAcapec")
-    public String addQAcapec(@RequestParam String addquestion,
-                            @RequestParam String fakeanswer1,
-                            @RequestParam String fakeanswer2,
-                            @RequestParam String fakeanswer3,
-                            @RequestParam String correctanswer,
-                            @RequestParam String id,
-                            @RequestParam(required = false) String tag1,
-                            @RequestParam(required = false) String tag2,
-                            @RequestParam(required = false) String tag3,
-                            Model model) {
+//    @PostMapping("/addQAcapec")
+//    public String addQAcapec(@RequestParam String addquestion,
+//                            @RequestParam String fakeanswer1,
+//                            @RequestParam String fakeanswer2,
+//                            @RequestParam String fakeanswer3,
+//                            @RequestParam String correctanswer,
+//                            @RequestParam String id,
+//                            @RequestParam(required = false) String tag1,
+//                            @RequestParam(required = false) String tag2,
+//                            @RequestParam(required = false) String tag3,
+//                            Model model) {
+//
+//        if(addquestion.isEmpty()
+//                || fakeanswer1.isEmpty()
+//                || fakeanswer2.isEmpty()
+//                || fakeanswer3.isEmpty()
+//                || correctanswer.isEmpty()) {
+//            Capec capec = capecService.findById(Integer.valueOf(id));
+//            model.addAttribute("capec", capec);
+//            model.addAttribute("message", "You can't leave an empty field.");
+//            return "createquestioncapec";
+//        }
+//        else {
+//            QA qa = qaService.shuffleAnswers(addquestion, fakeanswer1, fakeanswer2, fakeanswer3, correctanswer);
+//            qa.setTags(qaService.setTag(tag1, tag2, tag3));
+//            qaService.save(qa);
+//            model.addAttribute("message", "Created question: " + addquestion);
+//        }
+//        List<Capec> capecs = capecService.findAll();
+//        model.addAttribute("capecs", capecs);
+//
+//
+//        return "capeccreate";
+//    }
 
-        if(addquestion.isEmpty()
-                || fakeanswer1.isEmpty()
-                || fakeanswer2.isEmpty()
-                || fakeanswer3.isEmpty()
-                || correctanswer.isEmpty()) {
-            Capec capec = capecService.findById(Integer.valueOf(id));
-            model.addAttribute("capec", capec);
-            model.addAttribute("message", "You can't leave an empty field.");
-            return "createquestioncapec";
-        }
-        else {
-            QA qa = qaService.shuffleAnswers(addquestion, fakeanswer1, fakeanswer2, fakeanswer3, correctanswer);
-            qa.setTags(qaService.setTag(tag1, tag2, tag3));
-            qaService.save(qa);
-            model.addAttribute("message", "Created question: " + addquestion);
-        }
-        List<Capec> capecs = capecService.findAll();
-        model.addAttribute("capecs", capecs);
-
-
-        return "capeccreate";
-    }
-
-    @PostMapping("/addQAcodingstandard")
-    public String addQAcodingstandard(
-                            @RequestParam String addquestion,
-                            @RequestParam String fakeanswer1,
-                            @RequestParam String fakeanswer2,
-                            @RequestParam String fakeanswer3,
-                            @RequestParam String correctanswer,
-                            @RequestParam String id,
-                            @RequestParam(required = false) String tag1,
-                            @RequestParam(required = false) String tag2,
-                            @RequestParam(required = false) String tag3,
-                            Model model) {
-
-        if(addquestion.isEmpty()
-                || fakeanswer1.isEmpty()
-                || fakeanswer2.isEmpty()
-                || fakeanswer3.isEmpty()
-                || correctanswer.isEmpty()) {
-            CodingStandards codingStandard = codingStandardsService.findById(Integer.valueOf(id));
-            model.addAttribute("codingStandard", codingStandard);
-            model.addAttribute("message", "You can't leave an empty field.");
-            return "createquestioncodingstandard";
-        }
-        else {
-            QA qa = qaService.shuffleAnswers(addquestion, fakeanswer1, fakeanswer2, fakeanswer3, correctanswer);
-            qa.setTags(qaService.setTag(tag1, tag2, tag3));
-            qaService.save(qa);
-
-            model.addAttribute("message", "Created question: " + addquestion);
-        }
-        List<CodingStandards> codingStandards = codingStandardsService.findAll();
-        model.addAttribute("codingStandards", codingStandards);
-
-
-        return "javacodingcreate";
-    }
+//    @PostMapping("/addQAcodingstandard")
+//    public String addQAcodingstandard(
+//                            @RequestParam String addquestion,
+//                            @RequestParam String fakeanswer1,
+//                            @RequestParam String fakeanswer2,
+//                            @RequestParam String fakeanswer3,
+//                            @RequestParam String correctanswer,
+//                            @RequestParam String id,
+//                            @RequestParam(required = false) String tag1,
+//                            @RequestParam(required = false) String tag2,
+//                            @RequestParam(required = false) String tag3,
+//                            Model model) {
+//
+//        if(addquestion.isEmpty()
+//                || fakeanswer1.isEmpty()
+//                || fakeanswer2.isEmpty()
+//                || fakeanswer3.isEmpty()
+//                || correctanswer.isEmpty()) {
+//            CodingStandards codingStandard = codingStandardsService.findById(Integer.valueOf(id));
+//            model.addAttribute("codingStandard", codingStandard);
+//            model.addAttribute("message", "You can't leave an empty field.");
+//            return "createquestioncodingstandard";
+//        }
+//        else {
+//            QA qa = qaService.shuffleAnswers(addquestion, fakeanswer1, fakeanswer2, fakeanswer3, correctanswer);
+//            qa.setTags(qaService.setTag(tag1, tag2, tag3));
+//            qaService.save(qa);
+//
+//            model.addAttribute("message", "Created question: " + addquestion);
+//        }
+//        List<CodingStandards> codingStandards = codingStandardsService.findAll();
+//        model.addAttribute("codingStandards", codingStandards);
+//
+//
+//        return "javacodingcreate";
+//    }
 
 }
