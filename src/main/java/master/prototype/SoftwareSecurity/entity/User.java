@@ -12,15 +12,15 @@ import javax.persistence.Id;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long uId;
+    private Long uid;
 
     private String username;
     private String email;
     private int score;
     private boolean isAdmin;
 
-    public User(Long uId, String username, String email, int score, boolean isAdmin){
-        this.uId = uId;
+    public User(Long uid, String username, String email, int score, boolean isAdmin){
+        this.uid = uid;
         this.username = username;
         this.email = email;
         this.score = score;
