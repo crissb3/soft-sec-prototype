@@ -12,7 +12,7 @@ public class QA {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long qaId;
 
-    @Lob
+    //@Lob
     private String question;
     private String correctAnswer;
     @ElementCollection

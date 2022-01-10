@@ -1,6 +1,5 @@
 package master.prototype.SoftwareSecurity.service;
 
-import master.prototype.SoftwareSecurity.entity.QA;
 import master.prototype.SoftwareSecurity.entity.Quiz;
 import master.prototype.SoftwareSecurity.entity.User;
 import master.prototype.SoftwareSecurity.repository.QuizRepositoryImpl;
