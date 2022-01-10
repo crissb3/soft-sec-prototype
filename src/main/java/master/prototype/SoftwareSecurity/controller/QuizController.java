@@ -137,11 +137,11 @@ public class QuizController {
     }
     @PostMapping("Quiz/final-score")
     public String finalScore(Model model, @RequestParam String name, @RequestParam int score, @RequestParam long id){
-        User user = new User();
+        User newUser = new User();
         List<User> scores;
-        user.setScore(score);
-        user.setUsername(name);
-        userService.save(user);
+        newUser.setScore(score);
+        newUser.setUsername(name);
+        userService.save(newUser);
         Quiz quiz = quizService.findByqId(id);
 //        System.out.println(user);
         if(quiz.getScores().isEmpty()){
@@ -150,7 +150,7 @@ public class QuizController {
         else{
             scores = quiz.getScores();
         }
-        scores.add(user);
+        scores.add(newUser);
         quiz.setScores(scores);
         quizService.save(quiz);
 //        System.out.println(quiz.getScores());
