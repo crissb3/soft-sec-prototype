@@ -12,9 +12,9 @@ public class UserService {
     public UserService(UserRepositoryImpl userRepository) {
         this.userRepository = userRepository;
     }
-    public User save(User user){
-        userRepository.save(user);
-        return user;
+    public User save(User newUser){
+        userRepository.save(newUser);
+        return newUser;
     }
 
 

@@ -39,7 +39,7 @@ public class QAController {
     public String createQuestion(Model model) {
 
         model.addAttribute("message", "Create questions page....");
-        return "addquestions";
+        return "createquestion";
     }
 
     @GetMapping("/deleteQ")
@@ -47,6 +47,34 @@ public class QAController {
         model.addAttribute("message", "Successfully deleted");
         qaService.deleteAll(); // TEMPORARY
         return "index";
+    }
+
+    @PostMapping("/addQA")
+    public String addQA(@RequestParam String addquestion,
+                        @RequestParam String fakeanswer1,
+                            @RequestParam String fakeanswer2,
+                            @RequestParam String fakeanswer3,
+                            @RequestParam String correctanswer,
+                            @RequestParam(required = false) String tag1,
+                            @RequestParam(required = false) String tag2,
+                            @RequestParam(required = false) String tag3,
+                            Model model) {
+        if(addquestion.isEmpty()
+                || fakeanswer1.isEmpty()
+                || fakeanswer2.isEmpty()
+                || fakeanswer3.isEmpty()
+                || correctanswer.isEmpty()) {
+            model.addAttribute("message", "You can't leave an empty field.");
+            return "createquestion";
+        }
+        else {
+            QA qa = qaService.shuffleAnswers(addquestion, fakeanswer1, fakeanswer2, fakeanswer3, correctanswer);
+            qa.setTags(qaService.setTag(tag1, tag2, tag3));
+            qaService.save(qa);
+            model.addAttribute("message", "Created question: " + addquestion);
+        }
+
+        return "createquestion";
     }
 
 //    @PostMapping("/addQAcapec")
