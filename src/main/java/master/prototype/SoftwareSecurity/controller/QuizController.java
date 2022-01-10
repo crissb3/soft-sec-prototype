@@ -74,8 +74,8 @@ public class QuizController {
             model.addAttribute("message", "Can't create quiz without a name.");
         }
         else{
-            model.addAttribute("message", "Created quiz with name: " + quiz.getName());
             quizService.save(quiz);
+            model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + "\n Copy and share this ID if you want others to play your quiz.");
         }
         return "index";
     }
@@ -83,6 +83,21 @@ public class QuizController {
     public String selectQuiz(Model model){
         List<Quiz> quizzes = quizService.findAll();
         model.addAttribute("quizzes",quizzes);
+        return "quizselect";
+    }
+    @GetMapping("Quiz/Select/Search")
+    public String selectQuizSearch(Model model,
+                                   @RequestParam(required = false) Long qid){
+        List<Quiz> quizzes = new ArrayList<>();
+        if(!(qid == null)){
+            if(!(quizService.findByqId(qid)==null)){
+            Quiz quiz = quizService.findByqId(qid);
+            quizzes.add(quiz);}
+        }
+        else{
+            quizzes = quizService.findAll();
+        }
+        model.addAttribute("quizzes", quizzes);
         return "quizselect";
     }
     @GetMapping("/Quiz/Start/{id}")
