@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-public class User {
+public class Userclass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uid;
@@ -19,7 +19,7 @@ public class User {
     private int score;
     private boolean isAdmin;
 
-    public User(Long uid, String username, String email, int score, boolean isAdmin){
+    public Userclass(Long uid, String username, String email, int score, boolean isAdmin){
         this.uid = uid;
         this.username = username;
         this.email = email;
@@ -27,5 +27,5 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-    public User() {}
+    public Userclass() {}
 }

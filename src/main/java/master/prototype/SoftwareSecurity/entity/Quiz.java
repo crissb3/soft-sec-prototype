@@ -16,9 +16,9 @@ public class Quiz {
     @ManyToMany
     private List<QA> qas;
     @OneToOne
-    private User owner;
+    private Userclass owner;
     @OneToMany
-    private List<User> scores;
+    private List<Userclass> scores;
 
 
     public Quiz(String name) {

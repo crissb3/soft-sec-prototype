@@ -2,7 +2,7 @@ package master.prototype.SoftwareSecurity.controller;
 
 import master.prototype.SoftwareSecurity.entity.QA;
 import master.prototype.SoftwareSecurity.entity.Quiz;
-import master.prototype.SoftwareSecurity.entity.User;
+import master.prototype.SoftwareSecurity.entity.Userclass;
 import master.prototype.SoftwareSecurity.service.QAService;
 import master.prototype.SoftwareSecurity.service.QuizService;
 import master.prototype.SoftwareSecurity.service.UserService;
@@ -95,8 +95,8 @@ public class QuizController {
             return "index";
         }
         else{
-            User user = new User();
-            int score = user.getScore();
+            Userclass userclass = new Userclass();
+            int score = userclass.getScore();
             model.addAttribute("score", score);
             model.addAttribute("page", page);
             model.addAttribute("quiz", quiz);
@@ -111,11 +111,11 @@ public class QuizController {
                                @RequestParam int score,
                                @RequestParam String answer){
         Quiz quiz = quizService.findByqId(id);
-        User user = new User();
+        Userclass userclass = new Userclass();
         if(quiz.getQas().size() == page){
             if(answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
                 score += 10;
-                user.setScore(score);
+                userclass.setScore(score);
             }
             model.addAttribute("idtest", id);
             model.addAttribute("page", 0);
@@ -126,7 +126,7 @@ public class QuizController {
         else{
             if(answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
                 score += 10;
-                user.setScore(score);
+                userclass.setScore(score);
             }
             model.addAttribute("idtest", id);
             model.addAttribute("page", page);
@@ -137,11 +137,11 @@ public class QuizController {
     }
     @PostMapping("Quiz/final-score")
     public String finalScore(Model model, @RequestParam String name, @RequestParam int score, @RequestParam long id){
-        User newUser = new User();
-        List<User> scores;
-        newUser.setScore(score);
-        newUser.setUsername(name);
-        userService.save(newUser);
+        Userclass newUserclass = new Userclass();
+        List<Userclass> scores;
+        newUserclass.setScore(score);
+        newUserclass.setUsername(name);
+        userService.save(newUserclass);
         Quiz quiz = quizService.findByqId(id);
 //        System.out.println(user);
         if(quiz.getScores().isEmpty()){
@@ -150,7 +150,7 @@ public class QuizController {
         else{
             scores = quiz.getScores();
         }
-        scores.add(newUser);
+        scores.add(newUserclass);
         quiz.setScores(scores);
         quizService.save(quiz);
 //        System.out.println(quiz.getScores());
@@ -170,8 +170,8 @@ public class QuizController {
     public String leaderboard(Model model,
                               @PathVariable long id){
         Quiz quiz = quizService.findByqId(id);
-        List<User> scores = quiz.getScores();
-        Collections.sort(scores, Comparator.comparingInt(User::getScore).reversed());
+        List<Userclass> scores = quiz.getScores();
+        Collections.sort(scores, Comparator.comparingInt(Userclass::getScore).reversed());
         model.addAttribute("scores", scores);
         return "leaderboard";
     }
