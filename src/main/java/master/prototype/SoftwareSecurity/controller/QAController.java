@@ -8,10 +8,18 @@ import master.prototype.SoftwareSecurity.service.QAService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import master.prototype.SoftwareSecurity.entity.QA;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Controller
@@ -75,6 +83,37 @@ public class QAController {
         }
 
         return "createquestion";
+    }
+
+    @GetMapping("/testimg")
+    public String testImage(Model model){
+        List<QA> qas = qaService.findAll();
+        model.addAttribute("qas", qas);
+
+        return "testiterate";
+    }
+    @PostMapping("/testimg")
+    public String testImg(@RequestParam("img") MultipartFile multipartFile) throws IOException {
+//        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+//        QA qa = new QA();
+//        qa.setImg(fileName);
+//        QA savedQA = qaService.save(qa);
+//
+//        String uploadDir = "./qa-images/" + savedQA.getQaId();
+//        Path uploadPath = Paths.get(uploadDir);
+//        if(!Files.exists(uploadPath)){
+//            Files.createDirectories(uploadPath);
+//        }
+//
+//        try(InputStream inputStream = multipartFile.getInputStream()) {
+//            Path filePath = uploadPath.resolve(fileName);
+//            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+//        } catch (IOException e){
+//            throw new IOException();
+//        }
+//        System.out.println(qaService.findByQaId(savedQA.getQaId()).getImg());
+        qaService.testimage(multipartFile);
+        return "testiterate";
     }
 
 //    @PostMapping("/addQAcapec")

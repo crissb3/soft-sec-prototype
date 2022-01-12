@@ -3,7 +3,10 @@ package master.prototype.SoftwareSecurity.service;
 import master.prototype.SoftwareSecurity.entity.QA;
 import master.prototype.SoftwareSecurity.repository.QARepositoryImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -52,5 +55,15 @@ public class QAService {
         if(!(tag2==null)) tags.add(QA.Tags.valueOf(tag2));
         if(!(tag3==null)) tags.add(QA.Tags.valueOf(tag3));
         return tags;
+    }
+
+    public void testimage(MultipartFile file) throws IOException {
+        QA qa = new QA();
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        if(fileName.contains("..")){
+            System.out.println("Not valid file");
+        }
+        qa.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
+        qaRepository.save(qa);
     }
 }

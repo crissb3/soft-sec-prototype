@@ -18,16 +18,17 @@
         <div class="container">
             <div class="center">
                 <div style="height:400px; width: 1000px; margin-left: 200px; overflow: auto; border: 1px solid black; font-size: 18px;">
-<!--                    <ul th:each="quiz : ${quizzes}">-->
-<!--                        <li align="center" th:text="${quiz.name}"></li>-->
-<!--                        <li th:text="${quiz.qas}"></li>-->
-<!--                    </ul>-->
                     <div>
-                        <p th:text="${quizzes[__${page}__].name}">
-                        <p th:text="${quizzes[__${page}__].qas}">
-                        <p th:text="${quizzes[__${page}__].QId}">
-                        <div th:each="quiz, status : ${page}"><a th:text="${status.index}" th:href="@{testiterate(page=${page+1})}"></a></div>
-                        <p th:text="${page}"></p>
+                        <form th:action="@{/testimg}" method="post" enctype="multipart/form-data">
+                            <label>Upload:</label>
+                            <input type="file" name="img" accept="image/png, image/jpeg">
+                            <input style="margin-left: 50px; margin-top: 50px;" type="submit" name="submit" value="Upload">
+                        </form>
+                        <tr th:each="qa : ${qas}">
+                            <td>
+                                <img style="max-width: 100px; max-height: 100px" th:src="*{'data:image/png;base64,'+qa.img}" alt=""/>
+                            </td>
+                        </tr>
                     </div>
                 </div>
             </div>

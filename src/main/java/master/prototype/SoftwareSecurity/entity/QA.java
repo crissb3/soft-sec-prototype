@@ -20,6 +20,10 @@ public class QA {
     @ElementCollection
     private Set<Tags> tags;
 
+    @Column()
+    @Lob
+    private String img;
+
     public enum Tags {
         SOFTWARE_SECURITY("software_security"), NETWORK("network"), CODING_STANDARD("coding_standard");
         private String tag;
@@ -51,6 +55,13 @@ public class QA {
         this.question = question;
         this.answers = answers;
         this.correctAnswer = correctAnswer;
+    }
+
+    @Transient
+    public String getImgPath() {
+        if(img == null || qaId == null) return null;
+
+        return "/qa-images/" + qaId +"/" + img;
     }
 
 //    public QA(Long qaId, String question, String answer, Quiz quiz){
