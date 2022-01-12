@@ -20,8 +20,9 @@
         </div>
         <br>
         <p><span style="margin-left: 20px; color: white" th:text="${message}"></span></p>
-        <form th:action="@{/addQA}" style="margin-left: 50px; margin-top: 50px" th:method="post">
+        <form th:action="@{/addQA}" style="margin-left: 50px; margin-top: 50px" th:method="post" enctype="multipart/form-data">
             <b style="color: white; text-shadow: 1px 1px black">Question:</b>
+            <input type="file" name="file" accept="image/png, image/jpeg">
             <br>
             <textarea type="text" name="addquestion" style="height: 50px;"></textarea>
             <br>

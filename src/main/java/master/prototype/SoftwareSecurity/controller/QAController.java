@@ -15,11 +15,7 @@ import master.prototype.SoftwareSecurity.entity.QA;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -66,7 +62,8 @@ public class QAController {
                             @RequestParam(required = false) String tag1,
                             @RequestParam(required = false) String tag2,
                             @RequestParam(required = false) String tag3,
-                            Model model) {
+                            @RequestParam(value = "file", required = false) MultipartFile file,
+                            Model model) throws IOException {
         if(addquestion.isEmpty()
                 || fakeanswer1.isEmpty()
                 || fakeanswer2.isEmpty()
@@ -78,6 +75,11 @@ public class QAController {
         else {
             QA qa = qaService.shuffleAnswers(addquestion, fakeanswer1, fakeanswer2, fakeanswer3, correctanswer);
             qa.setTags(qaService.setTag(tag1, tag2, tag3));
+            if(!(file == null)){
+                String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+                qa.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
+            }
+
             qaService.save(qa);
             model.addAttribute("message", "Created question: " + addquestion);
         }
