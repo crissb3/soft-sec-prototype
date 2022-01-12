@@ -1,5 +1,6 @@
 package master.prototype.SoftwareSecurity.entity;
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,6 +23,7 @@ public class QA {
 
     @Column()
     @Lob
+    @Type(type = "org.hibernate.type.ImageType")
     private String img;
 
     public enum Tags {
