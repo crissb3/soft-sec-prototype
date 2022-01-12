@@ -21,9 +21,9 @@ public class QA {
     @ElementCollection
     private Set<Tags> tags;
 
-    @Column
-    @Type(type = "")
+    @Column(length = 10485760)
     @Lob
+    @Type(type = "")
     private String img;
 
     public enum Tags {
