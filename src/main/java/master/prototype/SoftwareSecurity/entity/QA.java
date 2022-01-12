@@ -23,7 +23,7 @@ public class QA {
 
     @Column()
     @Lob
-    @Type(type = "org.hibernate.type.ImageType")
+    @Type(type = "")
     private String img;
 
     public enum Tags {
