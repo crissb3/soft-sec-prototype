@@ -59,12 +59,12 @@ public class QA {
         this.correctAnswer = correctAnswer;
     }
 
-    @Transient
-    public String getImgPath() {
-        if(img == null || qaId == null) return null;
-
-        return "/qa-images/" + qaId +"/" + img;
-    }
+//    @Transient
+//    public String getImgPath() {
+//        if(img == null || qaId == null) return null;
+//
+//        return "/qa-images/" + qaId +"/" + img;
+//    }
 
 //    public QA(Long qaId, String question, String answer, Quiz quiz){
 //        this.qaId = qaId;

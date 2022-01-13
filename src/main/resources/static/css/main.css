@@ -62,12 +62,43 @@ ul.allCapec {
     user-select: none;
 }
 .container {
-    height: 530px;
-    width: 1300px;
+    margin-top: 100px;
+    height: 770px;
+    width: 1600px;
     position: relative;
     border-radius: 140px;
     background-color: #10647e;
     /*#424549 discord grey*/
+}
+
+.center_image {
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.center_score {
+    margin: 0;
+    position: fixed;
+    top: 65%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.center_answers {
+    margin: 0 auto;
+    padding: 10px 0;
+    display: flex;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    justify-content: space-between;
 }
 
 .center {
