@@ -110,8 +110,7 @@ public class QuizController {
             return "index";
         }
         else{
-            Userclass userclass = new Userclass();
-            int score = userclass.getScore();
+            int score = 0;
             model.addAttribute("score", score);
             model.addAttribute("page", page);
             model.addAttribute("quiz", quiz);
@@ -123,13 +122,13 @@ public class QuizController {
     public String playQuiztest(Model model,
                                @RequestParam long id,
                                @RequestParam(name="page", defaultValue = "-1") int page,
-                               @RequestParam int score,
-                               @RequestParam String answer){
+                               @RequestParam("score") int score,
+                               @RequestParam("answer") String answer){
         Quiz quiz = quizService.findByqId(id);
         Userclass userclass = new Userclass();
         if(quiz.getQas().size() == page){
             if(answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
-                score += 10;
+                score += 10*page;
                 userclass.setScore(score);
             }
             model.addAttribute("idtest", id);
@@ -140,7 +139,7 @@ public class QuizController {
         }
         else{
             if(answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
-                score += 10;
+                score += 10*page;
                 userclass.setScore(score);
             }
             model.addAttribute("idtest", id);

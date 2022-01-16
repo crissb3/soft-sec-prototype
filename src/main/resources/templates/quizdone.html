@@ -17,11 +17,15 @@
 <div class="center">
     <div class="container">
         <div class="center">
-            <b style="color:white; font-size: large;" th:text="${quiz.QId}"></b>
-            <b style="color:white; font-size: large;" th:text="${quiz.name}"></b>
+            <b style="color:white; font-size: large;" th:text="${'Quiz ID: '+quiz.QId}"></b>
+            <br>
+            <b style="color:white; font-size: large;" th:text="${'Quiz Name: '+quiz.name}"></b>
+            <br>
+            <br>
             <div>
-                <b style="color: white">Final score:</b><b style="color: white; font-size: large" th:text="${score}"></b>
-                <form th:action="@{/Quiz/final-score}" style="margin-left: 50px; margin-top: 50px" method="post">
+                <b style="color: white; font-size: large" th:text="${'Final score: '+score}"></b>
+                <form th:action="@{/Quiz/final-score}" style="margin-top: 30px" method="post">
+                    <b style="color: white; font-size: large">Name: </b>
                     <input type="text" name="name">
                     <input type="submit" name="addscore" value="Submit score">
                     <input type="hidden" name="id" th:value="${quiz.QId}">

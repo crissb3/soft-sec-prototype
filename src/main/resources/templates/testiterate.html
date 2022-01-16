@@ -29,6 +29,10 @@
                                 <img style="max-width: 100px; max-height: 100px" th:src="*{'data:image/png;base64,'+qa.img}" alt=""/>
                             </td>
                         </tr>
+                        <form>
+                        <a th:href="@{'https://www.stackoverflow.com/'+'search?q=Test/'}" target="popup"
+                           onclick="window.open('https://www.stackoverflow.com/'+'search?q=Test','name','width=600,height=500')">Ask Stackoverflow</a>
+                        </form>
                     </div>
                 </div>
             </div>
