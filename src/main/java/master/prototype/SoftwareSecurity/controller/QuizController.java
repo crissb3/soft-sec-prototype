@@ -119,6 +119,8 @@ public class QuizController {
             Userclass user = new Userclass();
             user.setScore(score);
             user.setLives(quiz.getLives());
+            Set<String> lifelines = Set.of("5050","call","ask");
+            user.setLifelines(lifelines);
             userService.save(user);
 //            model.addAttribute("score", score);
             model.addAttribute("page", page);

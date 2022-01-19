@@ -2,10 +2,8 @@ package master.prototype.SoftwareSecurity.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -19,6 +17,8 @@ public class Userclass {
     private int score;
     private boolean isAdmin;
     private int lives;
+    @ElementCollection
+    private Set<String> lifelines;
 
     public Userclass(Long uid, String username, String email, int score, boolean isAdmin){
         this.uid = uid;
