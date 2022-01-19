@@ -28,12 +28,24 @@
             <!--            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>-->
         </form>
         <form th:action="@{/Quiz/Create}" th:object="${quiz}" method="post">
-            <b style="margin-top: 15px; margin-left: 40px; color: white; text-shadow: 1px 1px black">Name:</b>
-            <input style="margin-top: 15px;" type="text" name="name" th:field="*{name}">
+            <h1 style="margin-left: 40px; font-size: 18px; color: white; text-shadow: 1px 1px black">Name your quiz and select amount of errors
+                <br> allowed before losing the quiz.
+                <br>If you select '-1' you will have infinite amount of errors.
+            </h1>
+            <b style="margin-left: 40px; color: white; text-shadow: 1px 1px black">Name:</b>
+            <input type="text" name="name" th:field="*{name}">
+            <select name="lives">
+                <option value="0">-1</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
             <input type="hidden" th:field="*{QId}">
 
             <button style="margin-top: 50px" type="submit">Create quiz</button>
-            <div style="height:400px; width: 680px; margin-left: 400px; margin-top: -200px; overflow: auto; border: 1px solid black; font-size: 19px; color: white">
+            <div style="height:400px; width: 680px; margin-left: 500px; margin-top: -200px; overflow: auto; border: 1px solid black; font-size: 19px; color: white">
                     <ul>
                         <div th:each="qa : ${qas}">
                             <input type="checkbox" name="quizqa" th:value="${qa.qaId}" th:field="${quiz.qas}">

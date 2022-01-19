@@ -68,13 +68,18 @@ public class QuizController {
         return "newquiz";
     }
     @PostMapping("/Quiz/Create")
-    public String addQuestionsToQuiz(@ModelAttribute("quiz") Quiz quiz, Model model){
+    public String addQuestionsToQuiz(
+            @ModelAttribute("quiz") Quiz quiz,
+            Model model,
+            @RequestParam("lives") int lives){
 
         if(quiz.getName().isEmpty()){
             model.addAttribute("message", "Can't create quiz without a name.");
         }
         else{
+            quiz.setLives(lives);
             quizService.save(quiz);
+            System.out.println(quiz.getLives());
             model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + "\n Copy and share this ID if you want others to play your quiz.");
         }
         return "index";
@@ -111,9 +116,14 @@ public class QuizController {
         }
         else{
             int score = 0;
-            model.addAttribute("score", score);
+            Userclass user = new Userclass();
+            user.setScore(score);
+            user.setLives(quiz.getLives());
+            userService.save(user);
+//            model.addAttribute("score", score);
             model.addAttribute("page", page);
             model.addAttribute("quiz", quiz);
+            model.addAttribute("user", user);
 
             return "quizplay";
         }
@@ -122,40 +132,59 @@ public class QuizController {
     public String playQuiztest(Model model,
                                @RequestParam long id,
                                @RequestParam(name="page", defaultValue = "-1") int page,
-                               @RequestParam("score") int score,
+                               @RequestParam("user") long uid,
                                @RequestParam("answer") String answer){
         Quiz quiz = quizService.findByqId(id);
-        Userclass userclass = new Userclass();
+        Userclass userclass = userService.findUserById(uid);
+        int score = userclass.getScore();
         if(quiz.getQas().size() == page){
             if(answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
                 score += 10*page;
                 userclass.setScore(score);
+                userService.save(userclass);
             }
-            model.addAttribute("idtest", id);
+            model.addAttribute("id", id);
             model.addAttribute("page", 0);
             model.addAttribute("quiz", quiz);
-            model.addAttribute("score", score);
+//            model.addAttribute("score", score);
+            model.addAttribute("user", userclass);
             return "quizdone";
         }
-        else{
-            if(answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
+        else if(answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
                 score += 10*page;
                 userclass.setScore(score);
-            }
-            model.addAttribute("idtest", id);
-            model.addAttribute("page", page);
-            model.addAttribute("quiz", quiz);
-            model.addAttribute("score", score);
+                userService.save(userclass);
         }
+        else if(!answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
+            int lives = userclass.getLives();
+            lives -= 1;
+            if(lives==0){
+                model.addAttribute("id", id);
+                model.addAttribute("page", 0);
+                model.addAttribute("quiz", quiz);
+//                model.addAttribute("score", score);
+                model.addAttribute("user", userclass);
+                return "quizdone";
+            }
+            userclass.setLives(lives);
+            userService.save(userclass);
+        }
+        model.addAttribute("id", id);
+        model.addAttribute("page", page);
+        model.addAttribute("quiz", quiz);
+//            model.addAttribute("score", score);
+        model.addAttribute("user", userclass);
         return "quizplay";
     }
     @PostMapping("Quiz/final-score")
-    public String finalScore(Model model, @RequestParam String name, @RequestParam int score, @RequestParam long id){
-        Userclass newUserclass = new Userclass();
+    public String finalScore(Model model,
+                             @RequestParam String name,
+                             @RequestParam long id,
+                             @RequestParam("user") long uid){
         List<Userclass> scores;
-        newUserclass.setScore(score);
-        newUserclass.setUsername(name);
-        userService.save(newUserclass);
+        Userclass user = userService.findUserById(uid);
+        user.setUsername(name);
+        userService.save(user);
         Quiz quiz = quizService.findByqId(id);
 //        System.out.println(user);
         if(quiz.getScores().isEmpty()){
@@ -164,13 +193,13 @@ public class QuizController {
         else{
             scores = quiz.getScores();
         }
-        scores.add(newUserclass);
+        scores.add(user);
         quiz.setScores(scores);
         quizService.save(quiz);
 //        System.out.println(quiz.getScores());
 
         model.addAttribute("name",name);
-        model.addAttribute("score", score);
+        model.addAttribute("score", user.getScore());
         model.addAttribute("message", "Score posted to leaderboard for user: "+name);
         return "index";
     }

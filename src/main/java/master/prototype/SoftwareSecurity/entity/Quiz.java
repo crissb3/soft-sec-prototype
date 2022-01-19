@@ -20,6 +20,8 @@ public class Quiz {
     @OneToMany
     private List<Userclass> scores;
 
+    private int lives;
+
 
     public Quiz(String name) {
         this.name = name;

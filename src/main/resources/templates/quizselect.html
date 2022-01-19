@@ -26,8 +26,6 @@
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
-                        <!--                        <th>Description</th>-->
-                        <!--                        <th>Mitigation strategy</th>-->
                         <th class=th-hidden></th>
                     </tr>
                     <tr th:each="quiz : ${quizzes}">
@@ -35,8 +33,6 @@
                         <td align="center" style="cursor: pointer" th:text="${quiz.name}"
                             th:onClick="'window.location.href= \''+
 						    @{/Quiz/Start/{quizID}(quizID=${quiz.QId})}+'\''"></td>
-                        <!--                        <td class="DescMit" th:text="${capec.description}"></td>-->
-                        <!--                        <td class="DescMit" th:text="${capec.mitigation}"></td>-->
                     </tr>
                 </table>
             </div>

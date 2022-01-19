@@ -18,6 +18,7 @@ public class Userclass {
     private String email;
     private int score;
     private boolean isAdmin;
+    private int lives;
 
     public Userclass(Long uid, String username, String email, int score, boolean isAdmin){
         this.uid = uid;

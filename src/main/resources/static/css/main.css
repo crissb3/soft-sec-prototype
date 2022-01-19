@@ -89,6 +89,15 @@ ul.allCapec {
     transform: translate(-50%, -50%);
 }
 
+.center_lives {
+    margin: 0;
+    position: fixed;
+    top: 70%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
 .center_answers {
     margin: 0 auto;
     padding: 10px 0;
