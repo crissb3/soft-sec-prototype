@@ -71,6 +71,26 @@ ul.allCapec {
     /*#424549 discord grey*/
 }
 
+.button_5050 {
+    border: 2px solid #008CBA;
+    background-color: white;
+    color: black;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+    font-family: poetsenone, sans-serif;
+    border-radius: 12px;
+}
+.button_5050:hover {
+    background-color: #008CBA;
+    color: white;
+}
+
 .center_image {
     margin: 0;
     position: absolute;
