@@ -79,7 +79,6 @@ public class QuizController {
         else{
             quiz.setLives(lives);
             quizService.save(quiz);
-            System.out.println(quiz.getLives());
             model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + "\n Copy and share this ID if you want others to play your quiz.");
         }
         return "index";
@@ -135,10 +134,42 @@ public class QuizController {
                                @RequestParam long id,
                                @RequestParam(name="page", defaultValue = "-1") int page,
                                @RequestParam("user") long uid,
-                               @RequestParam("answer") String answer){
+                               @RequestParam(name = "answer", required = false) String answer,
+                               @RequestParam(name = "5050", required = false) String fiftyfifty){
         Quiz quiz = quizService.findByqId(id);
         Userclass userclass = userService.findUserById(uid);
         int score = userclass.getScore();
+
+        if(answer==null){
+            if(fiftyfifty!=null){
+                System.out.println(fiftyfifty);
+                userclass.getLifelines().remove("5050");
+                userService.save(userclass);
+                System.out.println(userService.findUserById(uid).getLifelines());
+                String correct = quiz.getQas().get(page).getCorrectAnswer();
+                for(String ans : quiz.getQas().get(page).getAnswers()){
+                    if(!ans.equals(correct)){
+                        System.out.println(ans);
+                        String fake = ans;
+                        model.addAttribute("id",id);
+                        model.addAttribute("page",page);
+                        model.addAttribute("quiz", quiz);
+                        model.addAttribute("user", userclass);
+                        model.addAttribute("correct", correct);
+                        model.addAttribute("fake", fake);
+                        return "5050";
+                    }
+                }
+                model.addAttribute("id",id);
+                model.addAttribute("page",page);
+                model.addAttribute("quiz", quiz);
+                model.addAttribute("user", userclass);
+                model.addAttribute("correct", correct);
+                model.addAttribute("fake", correct);
+                return "5050";
+            }
+        }
+
         if(quiz.getQas().size() == page){
             if(answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
                 score += 10*page;
@@ -152,6 +183,7 @@ public class QuizController {
             model.addAttribute("user", userclass);
             return "quizdone";
         }
+
         else if(answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
                 score += 10*page;
                 userclass.setScore(score);
@@ -171,6 +203,7 @@ public class QuizController {
             userclass.setLives(lives);
             userService.save(userclass);
         }
+
         model.addAttribute("id", id);
         model.addAttribute("page", page);
         model.addAttribute("quiz", quiz);

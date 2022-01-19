@@ -28,49 +28,25 @@
         <p class="center_score" style="color: white; font-size: large; margin-top: 35px" th:text="${'Lives left: '+user.lives}"></p>
         <p class="center_score" style="color: white; font-size: large; margin-top: 10px" th:text="${'Score: '+user.score}"></p>
 
-        <form class="center_score" style="color: white; font-size: large; margin-top: 80px" th:action="@{page(page=${page}, id=${quiz.QId})}" th:object="${quiz}">
-            <p th:if="${user.lifelines.contains('5050')}">
-                <input type="hidden" name="page" th:value="${page}">
-                <input type="hidden" name="id" th:value="${quiz.QId}">
-                <input type="hidden" name="user" th:value="${user.uid}">
-                <input type="hidden" name="5050" th:value="${user.lifelines}">
-                <button type="submit" th:text="'50/50'"></button></p>
-        </form>
-
         <div class="center_answers">
             <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
                 <input type="hidden" name="page" th:value="${page+1}">
                 <input type="hidden" name="id" th:value="${quiz.QId}">
-                <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[0]}">
                 <input type="hidden" name="user" th:value="${user.uid}">
-                <button class="button-3d" type="submit" th:text="${quiz.qas.get(page).answers[0]}"></button>
+                <input type="hidden" name="answer" th:value="${correct}">
+                <button class="button-3d" type="submit" th:text="${correct}"></button>
+
             </form>
+
             <span style="width: 20px;"></span>
             <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
                 <input type="hidden" name="page" th:value="${page+1}">
                 <input type="hidden" name="id" th:value="${quiz.QId}">
-                <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[1]}">
-<!--                <input type="hidden" name="score" th:value="${score}">-->
+                <input type="hidden" name="answer" th:value="${fake}">
                 <input type="hidden" name="user" th:value="${user.uid}">
-                <button class="button-3d" type="submit" th:text="${quiz.qas.get(page).answers[1]}"></button>
+                <button class="button-3d" type="submit" th:text="${fake}"></button>
             </form>
             <span style="width: 20px;"></span>
-            <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
-                <input type="hidden" name="page" th:value="${page+1}">
-                <input type="hidden" name="id" th:value="${quiz.QId}">
-                <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[2]}">
-<!--                <input type="hidden" name="score" th:value="${score}">-->
-                <input type="hidden" name="user" th:value="${user.uid}">
-                <button class="button-3d" type="submit" th:text="${quiz.qas.get(page).answers[2]}"></button>
-            </form>
-            <span style="width: 20px;"></span>
-            <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
-                <input type="hidden" name="page" th:value="${page+1}">
-                <input type="hidden" name="id" th:value="${quiz.QId}">
-                <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[3]}">
-                <input type="hidden" name="user" th:value="${user.uid}">
-                <button class="button-3d" type="submit" th:text="${quiz.qas.get(page).answers[3]}"></button>
-            </form>
         </div>
     </div>
 </div>
