@@ -17,22 +17,24 @@
 <div class="center">
     <div class="container">
         <form th:action="@{/Quiz/Create/Search}">
-            <input style="margin-left: 50px; margin-top: 50px;" type="submit" name="submit" value="Search">
+            <input style="margin-left: 50px; margin-top: 70px;" type="submit" name="submit" value="Search">
             <input type="text" name="question"><br><br>
-            <ul style="color: black">
-                <b style="color: white; text-shadow: 1px 1px 0px black;">Search with tags:</b><br>
-                <b>Network</b><input type="checkbox" name="tag1" th:value="NETWORK"><br>
-                <b>Software Security</b><input type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY"><br>
-                <b>Coding Standard</b><input type="checkbox" name="tag3" th:value="CODING_STANDARD">
-            </ul>
+
+            <div style="margin-left: 40px; padding-bottom: 10px;">
+                <strong style="color: white; font-size: 18px; text-shadow: 1px 1px 0px black;">Search with tags:</strong><br><br>
+                <strong>Network</strong><input style="margin-left: 10px" type="checkbox" name="tag1" th:value="NETWORK"><br><br>
+                <strong>Software Security</strong><input style="margin-left: 10px" type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY"><br><br>
+                <strong>Coding Standard</strong><input style="margin-left: 10px" type="checkbox" name="tag3" th:value="CODING_STANDARD">
+            </div>
+
             <!--            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>-->
         </form>
         <form th:action="@{/Quiz/Create}" th:object="${quiz}" method="post">
-            <h1 style="margin-left: 40px; font-size: 18px; color: white; text-shadow: 1px 1px black">Name your quiz and select amount of errors
+            <h1 style="margin-left: 40px; font-size: 18px; color: white; text-shadow: 2px 2px black; font-weight: normal">Name your quiz and select amount of errors
                 <br> allowed before losing the quiz.
-                <br>If you select '-1' you will have infinite amount of errors.
+                <br>If you select '-1' you allow infinite amount of errors.
             </h1>
-            <b style="margin-left: 40px; color: white; text-shadow: 1px 1px black">Name:</b>
+            <strong style="margin-left: 40px; color: white; font-size: 18px; text-shadow: 1px 1px black">Quiz name:</strong>
             <input type="text" name="name" th:field="*{name}">
             <select name="lives">
                 <option value="0">-1</option>
@@ -45,10 +47,10 @@
             <input type="hidden" th:field="*{QId}">
 
             <button style="margin-top: 50px" type="submit">Create quiz</button>
-            <div style="height:400px; width: 680px; margin-left: 500px; margin-top: -200px; overflow: auto; border: 1px solid black; font-size: 19px; color: white">
+            <div style="height:400px; width: 680px; margin-left: 550px; margin-top: -200px; overflow: auto; border: 1px solid black; font-size: 19px; color: white">
                     <ul>
                         <div th:each="qa : ${qas}">
-                            <input type="checkbox" name="quizqa" th:value="${qa.qaId}" th:field="${quiz.qas}">
+                            <input style="margin-right: 10px; margin-bottom: 15px" type="checkbox" name="quizqa" th:value="${qa.qaId}" th:field="${quiz.qas}">
                             <label th:text="${qa.qaId}"></label>
                             <label th:text="${qa.question}"></label>
                         </div>

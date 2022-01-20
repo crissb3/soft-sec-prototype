@@ -9,6 +9,10 @@ body{
     background-image: url('../images/background_frontend.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
+    font-family: poetsenone, sans-serif;
+}
+strong{
+    font-weight: normal;
 }
 html{
     height: 100%;
@@ -86,6 +90,7 @@ ul.allCapec {
     font-family: poetsenone, sans-serif;
     border-radius: 12px;
 }
+
 .button_5050:hover {
     background-color: #008CBA;
     color: white;
@@ -178,4 +183,8 @@ ul.allCapec {
     box-shadow: 0 2px 0 #1485b9;
     position:relative;
     top:4px;
+}
+
+input[type=checkbox]{
+    transform: scale(2);
 }

@@ -42,7 +42,7 @@ public class QAController {
     @GetMapping("/addQuestion")
     public String createQuestion(Model model) {
 
-        model.addAttribute("message", "Create questions page....");
+        model.addAttribute("message", "Create questions page!");
         return "createquestion";
     }
 

@@ -17,8 +17,8 @@
 <div class="center">
     <div class="container">
         <br>
-        <h1 style="color:white; font-size: large; text-align: center" th:text="${'Quiz ID: '+quiz.QId}"></h1>
-        <h1 style="color:white; font-size: large; text-align: center" th:text="${'Quiz name: '+quiz.name}"></h1>
+        <h1 style="color:white; font-size: large; text-align: center; font-weight: normal" th:text="${'Quiz ID: '+quiz.QId}"></h1>
+        <h1 style="color:white; font-size: large; text-align: center; font-weight: normal" th:text="${'Quiz name: '+quiz.name}"></h1>
 
         <p style="color:white; font-size: large; text-align: center" th:text="${'Question: '+quiz.qas[__${page}__].question}">
         <p th:if="${quiz.qas[__${page}__].img != null}">

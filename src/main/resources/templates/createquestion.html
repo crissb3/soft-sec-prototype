@@ -21,14 +21,18 @@
         <div class="center">
         </div>
         <br>
-        <p><span style="margin-left: 20px; color: white" th:text="${message}"></span></p>
-        <form th:action="@{/addQA}" style="margin-left: 50px; margin-top: 50px" th:method="post" enctype="multipart/form-data">
-            <b style="color: white; text-shadow: 1px 1px black">Question:</b>
+        <br>
+        <div style="margin-left: 30%">
+            <strong style="font-weight: normal; color: white; font-size: 18px;" th:text="${message}"></strong>
+            <strong style="font-weight: normal; color: white; font-size: 18px; float: bottom">Use the links below to help construct your questions.</strong>
+        </div>
+        <form th:action="@{/addQA}" style="font-size: 24px; margin-left: 50px; margin-top: 50px; float: left" th:method="post" enctype="multipart/form-data">
+            <strong style="color: white; font-weight: normal; text-shadow: 2px 2px black">Question:</strong>
             <input type="file" name="file" accept="image/png, image/jpeg">
             <br>
             <textarea type="text" name="addquestion" style="height: 50px;"></textarea>
             <br>
-            <b style="color: white; text-shadow: 1px 1px black">Add 3 fake answers:</b>
+            <strong style="color: white; font-weight: normal; text-shadow: 2px 2px black">Add 3 fake answers:</strong>
             <br>
             <textarea type="text" name="fakeanswer1"></textarea>
             <br>
@@ -36,19 +40,31 @@
             <br>
             <textarea type="text" name="fakeanswer3"></textarea>
             <br>
-            <b style="color:white; text-shadow: 1px 1px black">Add 1 correct answer:</b>
+            <strong style="color:white; font-weight: normal; text-shadow: 2px 2px black">Add the correct answer:</strong>
             <br>
             <textarea type="text" name="correctanswer"></textarea>
             <br>
-            <input type="submit" name="addquestionsubmit" value="Add question">
+            <input class="button_5050" type="submit" name="addquestionsubmit" value="Add question">
             <ul>
-                <b>Tags:</b><br>
-                <b>Network</b><input type="checkbox" name="tag1" th:value="NETWORK">
-                <b>Software Security</b><input type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY">
-                <b>Coding Standard</b><input type="checkbox" name="tag3" th:value="CODING_STANDARD">
+                <strong style="font-weight: normal;">Tags:</strong><br>
+                <strong style="font-weight: normal; margin-right: 6px">Network</strong><input type="checkbox" name="tag1" th:value="NETWORK">
+                <strong style="font-weight: normal; margin-right: 6px">Software Security</strong><input type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY">
+                <strong style="font-weight: normal; margin-right: 6px">Coding Standard</strong><input type="checkbox" name="tag3" th:value="CODING_STANDARD">
             </ul>
-            <iframe src="https://pdfhost.io/v/VIm7QKPxY_cwe_latest&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe>
+<!--            <iframe src="https://pdfhost.io/v/VIm7QKPxY_cwe_latest&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe>-->
         </form>
+        <form style="margin-top: 50px; margin-left: 40%;">
+            <a style="width: 35%" class="button_5050" th:href="@{'https://capec.mitre.org/data/definitions/1000.html'}" target="popup"
+               onclick="window.open('https://capec.mitre.org/data/definitions/1000.html','name','width=600,height=500')">Capec - Mechanisms Of Attack</a>
+            <br>
+            <a style="width: 35%" class="button_5050" th:href="@{'https://wiki.sei.cmu.edu/confluence/display/java'}" target="popup"
+               onclick="window.open('https://wiki.sei.cmu.edu/confluence/display/java','name','width=600,height=500')">SEI CERT - Coding Standard for Java</a>
+            <br>
+            <a style="width: 35%" class="button_5050" th:href="@{'https://cwe.mitre.org/data/definitions/699.html'}" target="popup"
+               onclick="window.open('https://cwe.mitre.org/data/definitions/699.html','name','width=600,height=500')">CWE - Software Development</a>
+        </form>
+
+
     </div>
 </div>
 </body>
