@@ -88,23 +88,26 @@ public class QuizController {
     public String addQuestionsToQuizrandom(
             Model model,
             @RequestParam("lives_random") int lives,
-            @RequestParam("quiz_size") int quiz_size,
+            @RequestParam(value = "quiz_size", required = false) String quiz_size,
             @RequestParam("name_random") String name,
-            @RequestParam("qas") List<String> qas){
+            @RequestParam(value = "qas", required = false) List<String> qas){
         List<QA> qasList = new ArrayList<>();
         List<QA> random_QA_list = new ArrayList<>();
-        for(String qa : qas){
-            qasList.add(qaService.findByQaId(Long.valueOf(qa)));
-        }
         if(name.isEmpty()){
             model.addAttribute("message", "Can't create quiz without a name.");
         }
+        else if(qas == null){
+            model.addAttribute("message", "Can't create quiz without questions");
+        }
         else{
+            for(String qa : qas){
+                qasList.add(qaService.findByQaId(Long.valueOf(qa)));
+            }
             Random rand = new Random();
             Quiz quiz = new Quiz();
             quiz.setLives(lives);
             quiz.setName(name);
-            for(int i = 0; i<quiz_size; i++){
+            for(int i = 0; i<Integer.parseInt(quiz_size); i++){
                 int randomIndex = rand.nextInt(qasList.size());
                 random_QA_list.add(qasList.get(randomIndex));
                 qasList.remove(randomIndex);

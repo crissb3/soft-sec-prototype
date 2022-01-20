@@ -38,7 +38,7 @@
                     class="button_5050" type="submit" th:text="'50/50'"></button></p>
         </form>
         <form class="center_score" style="color: white; font-size: large; margin-top: 80px; margin-left: -10%" th:action="@{page(page=${page}, id=${quiz.QId})}" th:object="${quiz}">
-            <p th:if="${user.lifelines.contains('protection')}">
+            <p th:if="${user.lifelines.contains('protection') && quiz.lives>0}">
                 <input type="hidden" name="page" th:value="${page}">
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="user" th:value="${user.uid}">
