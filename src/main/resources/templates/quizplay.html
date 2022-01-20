@@ -25,20 +25,31 @@
             <img style="max-width: 500px; max-height: 300px;" class="center_image" th:src="*{'data:image/png;base64,'+quiz.qas[__${page}__].img}" alt=""/>
         </p>
 
-        <p class="center_score" style="color: white; font-size: large; margin-top: 35px" th:text="${'Lives left: '+user.lives}"></p>
+        <p th:if="${user.lives>0}" class="center_score" style="color: white; font-size: large; margin-top: 35px" th:text="${'Lives left: '+user.lives}"></p>
         <p class="center_score" style="color: white; font-size: large; margin-top: 10px" th:text="${'Score: '+user.score}"></p>
 
         <form class="center_score" style="color: white; font-size: large; margin-top: 80px" th:action="@{page(page=${page}, id=${quiz.QId})}" th:object="${quiz}">
             <p th:if="${user.lifelines.contains('5050')}">
+            <input type="hidden" name="page" th:value="${page}">
+            <input type="hidden" name="id" th:value="${quiz.QId}">
+            <input type="hidden" name="user" th:value="${user.uid}">
+            <input type="hidden" name="5050" th:value="${user.lifelines}">
+            <button title="If you use this lifeline, two wrong answers will be removed."
+                    class="button_5050" type="submit" th:text="'50/50'"></button></p>
+        </form>
+        <form class="center_score" style="color: white; font-size: large; margin-top: 80px; margin-left: -10%" th:action="@{page(page=${page}, id=${quiz.QId})}" th:object="${quiz}">
+            <p th:if="${user.lifelines.contains('protection')}">
                 <input type="hidden" name="page" th:value="${page}">
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="user" th:value="${user.uid}">
-                <input type="hidden" name="5050" th:value="${user.lifelines}">
-                <button class="button_5050" type="submit" th:text="'50/50'"></button></p>
+                <input type="hidden" name="protection" th:value="${user.lifelines}">
+                <button title="If you use this lifeline you will not lose a life if you answer wrong on this question."
+                        class="button_5050" type="submit" th:text="'Protection'"></button></p>
         </form>
 
         <div class="center_answers">
             <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
+                <input type="hidden" name="prot" th:if="${prot != null}" th:value="${prot}">
                 <input type="hidden" name="page" th:value="${page+1}">
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[0]}">
@@ -47,6 +58,7 @@
             </form>
             <span style="width: 20px;"></span>
             <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
+                <input type="hidden" name="prot" th:if="${prot != null}" th:value="${prot}">
                 <input type="hidden" name="page" th:value="${page+1}">
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[1]}">
@@ -56,6 +68,7 @@
             </form>
             <span style="width: 20px;"></span>
             <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
+                <input type="hidden" name="prot" th:if="${prot != null}" th:value="${prot}">
                 <input type="hidden" name="page" th:value="${page+1}">
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[2]}">
@@ -65,6 +78,7 @@
             </form>
             <span style="width: 20px;"></span>
             <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
+                <input type="hidden" name="prot" th:if="${prot != null}" th:value="${prot}">
                 <input type="hidden" name="page" th:value="${page+1}">
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[3]}">

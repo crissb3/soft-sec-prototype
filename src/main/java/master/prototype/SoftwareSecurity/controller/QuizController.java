@@ -50,6 +50,7 @@ public class QuizController {
         Quiz quiz = new Quiz();
         model.addAttribute("qas", qas);
         model.addAttribute("quiz", quiz);
+        model.addAttribute("message_hits", qas.size());
 
         return "newquiz";
     }
@@ -79,7 +80,38 @@ public class QuizController {
         else{
             quiz.setLives(lives);
             quizService.save(quiz);
-            model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + "\n Copy and share this ID if you want others to play your quiz.");
+            model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + ".\n  Copy and share this ID if you want others to play your quiz.");
+        }
+        return "index";
+    }
+    @PostMapping("/Quiz/Create-random")
+    public String addQuestionsToQuizrandom(
+            Model model,
+            @RequestParam("lives_random") int lives,
+            @RequestParam("quiz_size") int quiz_size,
+            @RequestParam("name_random") String name,
+            @RequestParam("qas") List<String> qas){
+        List<QA> qasList = new ArrayList<>();
+        List<QA> random_QA_list = new ArrayList<>();
+        for(String qa : qas){
+            qasList.add(qaService.findByQaId(Long.valueOf(qa)));
+        }
+        if(name.isEmpty()){
+            model.addAttribute("message", "Can't create quiz without a name.");
+        }
+        else{
+            Random rand = new Random();
+            Quiz quiz = new Quiz();
+            quiz.setLives(lives);
+            quiz.setName(name);
+            for(int i = 0; i<quiz_size; i++){
+                int randomIndex = rand.nextInt(qasList.size());
+                random_QA_list.add(qasList.get(randomIndex));
+                qasList.remove(randomIndex);
+            }
+            quiz.setQas(random_QA_list);
+            quizService.save(quiz);
+            model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + ".\n  Copy and share this ID if you want others to play your quiz.");
         }
         return "index";
     }
@@ -118,7 +150,7 @@ public class QuizController {
             Userclass user = new Userclass();
             user.setScore(score);
             user.setLives(quiz.getLives());
-            Set<String> lifelines = Set.of("5050","call","ask");
+            Set<String> lifelines = Set.of("5050","call","protection");
             user.setLifelines(lifelines);
             userService.save(user);
 //            model.addAttribute("score", score);
@@ -135,14 +167,15 @@ public class QuizController {
                                @RequestParam(name="page", defaultValue = "-1") int page,
                                @RequestParam("user") long uid,
                                @RequestParam(name = "answer", required = false) String answer,
-                               @RequestParam(name = "5050", required = false) String fiftyfifty){
+                               @RequestParam(name = "5050", required = false) String fiftyfifty,
+                               @RequestParam(name = "protection", required = false) String prot,
+                               @RequestParam(name = "prot", required = false) String prot_used){
         Quiz quiz = quizService.findByqId(id);
         Userclass userclass = userService.findUserById(uid);
         int score = userclass.getScore();
 
         if(answer==null){
             if(fiftyfifty!=null){
-                System.out.println(fiftyfifty);
                 userclass.getLifelines().remove("5050");
                 userService.save(userclass);
                 System.out.println(userService.findUserById(uid).getLifelines());
@@ -168,6 +201,16 @@ public class QuizController {
                 model.addAttribute("fake", correct);
                 return "5050";
             }
+            if(prot!=null){
+                userclass.getLifelines().remove("protection");
+                userService.save(userclass);
+                model.addAttribute("id",id);
+                model.addAttribute("page",page);
+                model.addAttribute("quiz", quiz);
+                model.addAttribute("user", userclass);
+                model.addAttribute("prot", prot);
+                return "quizplay";
+            }
         }
 
         if(quiz.getQas().size() == page){
@@ -191,7 +234,9 @@ public class QuizController {
         }
         else if(!answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
             int lives = userclass.getLives();
-            lives -= 1;
+            if(prot_used==null){
+                lives -= 1;
+            }
             if(lives==0){
                 model.addAttribute("id", id);
                 model.addAttribute("page", 0);
