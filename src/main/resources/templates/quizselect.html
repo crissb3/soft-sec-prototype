@@ -17,9 +17,13 @@
 <div class="center">
     <div class="container">
         <div class="center">
-            <form th:action="@{/Quiz/Select/Search}">
-                <strong style="color: white; text-shadow: 1px 1px black; margin-left: 12%">Search by ID:</strong>
-                <input type="text" name="qid"><input style="margin-top: 40px;" type="submit" name="submit" value="Search"><br><br>
+            <form th:action="@{/Quiz/Select/Search-id}" style="float: left">
+                <strong style="color: white; text-shadow: 1px 1px black;">Search by Quiz ID:</strong>
+                <input type="text" name="qid"><input style="" type="submit" name="submit" value="Search"><br><br>
+            </form>
+            <form th:action="@{/Quiz/Select/Search-name}" style="float: right">
+                <strong style="color: white; text-shadow: 1px 1px black;">Search by Quiz name:</strong>
+                <input type="text" name="name"><input style="" type="submit" name="submit" value="Search"><br><br>
             </form>
             <div style="height:430px; width: 700px; margin-left: 100px; overflow: auto; border: 1px solid white; font-size: 19px;">
                 <table th:class="DescMit">

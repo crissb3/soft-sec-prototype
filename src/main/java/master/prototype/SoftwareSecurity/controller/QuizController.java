@@ -124,7 +124,7 @@ public class QuizController {
         model.addAttribute("quizzes",quizzes);
         return "quizselect";
     }
-    @GetMapping("Quiz/Select/Search")
+    @GetMapping("Quiz/Select/Search-id")
     public String selectQuizSearch(Model model,
                                    @RequestParam(required = false) Long qid){
         List<Quiz> quizzes = new ArrayList<>();
@@ -132,6 +132,19 @@ public class QuizController {
             if(!(quizService.findByqId(qid)==null)){
             Quiz quiz = quizService.findByqId(qid);
             quizzes.add(quiz);}
+        }
+        else{
+            quizzes = quizService.findAll();
+        }
+        model.addAttribute("quizzes", quizzes);
+        return "quizselect";
+    }
+    @GetMapping("Quiz/Select/Search-name")
+    public String selectQuizSearchName(Model model,
+                                   @RequestParam(required = false) String name){
+        List<Quiz> quizzes = new ArrayList<>();
+        if(!(name.equals(""))){
+            quizzes = quizService.findByName(name);
         }
         else{
             quizzes = quizService.findAll();

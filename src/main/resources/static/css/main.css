@@ -189,3 +189,56 @@ ul.allCapec {
 input[type=checkbox]{
     transform: scale(2);
 }
+
+
+.popup .overlay {
+    position: fixed;
+    top:0;
+    left:0;
+    width:83.35vw;
+    height:95vh;
+    background:rgba(0,0,0,0.7);
+    z-index:1;
+    display:none;
+}
+
+.popup .content {
+    position:absolute;
+    top:50%;
+    left:50%; transform:translate(-50%,-50%) scale(0);
+    background:#fff;
+    width:1050px;
+    height:720px;
+    z-index:2;
+    text-align:center;
+    padding:0;
+    box-sizing:border-box;
+
+    border-radius: 30%;
+}
+
+.popup .close-btn {
+    position:absolute;
+    right:20px;
+    top:20px;
+    width:30px;
+    height:30px;
+    background:white;
+    color:black;
+    font-size:25px;
+    font-weight:600;
+    line-height:30px;
+    text-align:center;
+    border-radius:30%;
+    cursor: pointer;
+}
+
+.popup.active .overlay {
+    display:block;
+
+}
+
+.popup.active .content {
+    transform:translate(-50%,-50%) scale(1);
+    transition:all 300ms ease-in-out;
+}
