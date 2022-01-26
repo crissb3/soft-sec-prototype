@@ -142,7 +142,7 @@ public class QuizController {
     @GetMapping("Quiz/Select/Search-name")
     public String selectQuizSearchName(Model model,
                                    @RequestParam(required = false) String name){
-        List<Quiz> quizzes = new ArrayList<>();
+        List<Quiz> quizzes;
         if(!(name.equals(""))){
             quizzes = quizService.findByName(name);
         }

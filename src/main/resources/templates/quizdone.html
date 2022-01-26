@@ -27,7 +27,7 @@
                 <form th:action="@{/Quiz/final-score}" style="margin-top: 30px" method="post">
                     <strong style="color: white; font-size: large">Name: </strong>
                     <input type="text" name="name"><br><br>
-                    <input class="button_5050" type="submit" name="addscore" value="Submit score">
+                    <input class="button_5050" style="font-size: 30px" type="submit" name="addscore" value="Submit score">
                     <input type="hidden" name="id" th:value="${quiz.QId}">
                     <input type="number" th:value="${user.uid}" name="user" hidden/>
                 </form>

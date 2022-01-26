@@ -16,85 +16,114 @@
 
 <div class="center">
     <div class="container">
-        <div class="popup" id="popup-1">
-            <div class="overlay" th:onClick="togglePopup()"></div>
-            <div class="content">
-                <div class="close-btn" th:onClick="togglePopup()">&times;</div>
-                <h1 style="">Create quiz by selecting questions:</h1>
-                <strong style="color: black; font-weight: normal; font-size: 22px">Name your quiz and select amount of errors
-                    <br> allowed before losing the quiz.
-                    <br>If you select '-1' you allow infinite amount of errors.
-                </strong>
-                <h1>Create quiz with random questions from search/tag:</h1>
-                <strong style="font-size: 22px">Create quiz from randomly selected questions:<br>
-                    Select tags/search word and search,<br> then select how many questions you want to randomly <br>
-                    add from the question list.</strong>
+
+        <div class="row">
+            <div class="column" style="border: 0px solid white; border-radius: 140px;">
+                <form th:action="@{/Quiz/Create/Search}">
+                    <h1 style="margin-left: 30%; color: white; text-shadow: 2px 2px black">Search:</h1>
+                    <input style="margin-left: 30%;" type="text" name="question">
+                    <input style="" type="submit" name="submit" value="Search">
+                    <br><br>
+
+                    <div style="margin-left: 30%; padding-bottom: 10px; color: white">
+                        <strong style="color: white; font-size: 18px; text-shadow: 1px 1px 0px black;">Search with tags:</strong><br><br>
+                        <strong>Network</strong><input style="margin-left: 10px" type="checkbox" name="tag1" th:value="NETWORK"><br><br>
+                        <strong>Software Security</strong><input style="margin-left: 10px" type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY"><br><br>
+                        <strong>Coding Standard</strong><input style="margin-left: 10px" type="checkbox" name="tag3" th:value="CODING_STANDARD">
+                    </div>
+
+                    <!--            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>-->
+                </form>
+            </div>
+            <div class="column" style="border: 0px solid white; border-radius: 140px; margin-left: 28px;">
+                <form th:action="@{/Quiz/Create}" th:object="${quiz}" method="post">
+                    <h1 style="margin-left: 0; color: white; text-shadow: 2px 2px black">Create quiz by selecting questions:</h1>
+                    <div style="margin-top: 10%">
+                    <strong style="margin-left: 0; color: white; font-size: 18px; text-shadow: 1px 1px black">Quiz name:</strong>
+                    <input type="text" name="name" th:field="*{name}">
+                    <select name="lives">
+                        <option value="-1">-1</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <input type="hidden" th:field="*{QId}">
+                    <br>
+                    <button class="button_5050" style="margin-top: 15px; margin-left: 100px; margin-bottom: 25px" type="submit">Create quiz</button>
+                    </div>
+                    <h1 style="color: white; text-shadow: 2px 2px black; float: left; margin-left: -400px">Questions list:</h1>
+                    <div style="margin-top: 70px; margin-left: -400px; padding-right: 30px; height:390px; width: 750px; max-width: 1000px; overflow: auto;
+                    text-overflow: ellipsis; border: 1px solid white; border-radius: 25px; font-size: 19px; color: white; word-break: break-word">
+                        <ul>
+                            <div th:each="qa : ${qas}">
+                                <input style="margin-right: 10px; margin-bottom: 15px; float: bottom" type="checkbox" name="quizqa" th:value="${qa.qaId}" th:field="${quiz.qas}">
+                                <label style="margin-right: 10px;" th:text="${qa.qaId}"></label>
+                                <label style="margin-right: 10px" th:text="${qa.question}"></label>
+                            </div>
+                        </ul>
+                    </div>
+                    <br><br>
+                    <br>
+                </form>
+            </div>
+            <div class="column" style="border: 0px solid white; border-radius: 140px; float: right">
+                <h1 style="color: white; text-shadow: 2px 2px black">Create quiz with random questions:</h1>
+                <form th:action="@{/Quiz/Create-random}" method="post" th:object="${qas}">
+                    <div th:each="qa : ${qas}">
+                        <input type="hidden" name="qas" th:value="${qa.qaId}">
+                    </div>
+                    <div style="margin-top: 1%">
+                    <strong style="color: white; font-size: 18px; text-shadow: 1px 1px black">Quiz name:</strong>
+                    <input type="text" name="name_random"><br>
+                    <strong style="padding-top: 2px; padding-bottom: 2px; padding-left: 3px; background-color: white; border-radius: 6px; border: 2px solid black; margin-right: 5px"> Amount of errors: </strong>
+                    <select style="border: 2px solid black; border-radius: 4px; padding-top: 3px; margin-top: 5px; margin-bottom: 10px; margin-left: 25px" name="lives_random">
+                        <option value="-1">-1</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select><br>
+                    <strong style="padding-top: 2px; padding-bottom: 2px; padding-left: 3px; background-color: white;
+                        border-radius: 6px; border: 2px solid black; margin-right: 5px; margin-top: 10px;"> Number of questions:
+                    </strong>
+                    <select style="border: 2px solid black; border-radius: 4px; padding-top: 3px" name="quiz_size">
+                        <option th:each="i : ${#numbers.sequence(1,qas.size(),1)}" th:text="${i}" th:value="${i}" name="quiz_size">
+                        </option>
+                    </select>
+                    <br><br>
+                    <button style="margin-left: 40px" class="button_5050">Create with random questions</button>
+                    </div>
+                </form>
+                <div class="popup" id="popup-1" style="float:right;">
+                    <div class="overlay" th:onClick="togglePopup()"></div>
+                    <div class="content">
+                        <div class="close-btn" th:onClick="togglePopup()">&times;</div>
+                        <h1 style="">Create quiz by selecting questions:</h1>
+                        <strong style="color: black; font-weight: normal; font-size: 22px">Name your quiz and select amount of errors
+                            <br> allowed before losing the quiz.
+                            <br>If you select '-1' you allow infinite amount of errors.<br>
+                            Check the questions you want to add to your quiz<br> and write the name, then press create quiz.
+                        </strong>
+                        <h1>Create quiz with random questions from search/tag:</h1>
+                        <strong style="font-size: 22px">Create quiz from randomly selected questions:<br>
+                            Select tags and/or search for word, hit search,<br> then select how many questions you want to randomly <br>
+                            add from the updated question list containing<br> questions based on your search and selected tags.<br>
+                        </strong>
+                        <h1>Search:</h1>
+                        <strong style="font-size: 22px">You can search by search word, tags or both.<br>
+                            Enter the word(s) you want to search for and hit search.<br> If you want to search by tag(s), you check the tag(s)<br>
+                            and hit search button to search for questions <br>containing the checked tag(s).<br>
+                            To search by tag(s) and search word(s) you simply just write<br>your search word(s) and check the wanted tag(s).
+                        </strong>
+                    </div>
+                </div>
+                <button style="margin-top: 150px; margin-left: 55px; font-size: 35px; border-radius: 50%; height: 250px" class="button_5050" th:onClick="togglePopup()">Need help?<br> Click me!</button>
             </div>
         </div>
-        <button th:onClick="togglePopup()">Show Popup</button>
 
-        <form th:action="@{/Quiz/Create/Search}">
-            <input style="margin-left: 50px; margin-top: 70px;" type="submit" name="submit" value="Search">
-            <input type="text" name="question"><br><br>
-
-            <div style="margin-left: 40px; padding-bottom: 10px;">
-                <strong style="color: white; font-size: 18px; text-shadow: 1px 1px 0px black;">Search with tags:</strong><br><br>
-                <strong>Network</strong><input style="margin-left: 10px" type="checkbox" name="tag1" th:value="NETWORK"><br><br>
-                <strong>Software Security</strong><input style="margin-left: 10px" type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY"><br><br>
-                <strong>Coding Standard</strong><input style="margin-left: 10px" type="checkbox" name="tag3" th:value="CODING_STANDARD">
-            </div>
-
-            <!--            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>-->
-        </form>
-        <form th:action="@{/Quiz/Create}" th:object="${quiz}" method="post" style="padding-right: 20%">
-            <strong style="margin-left: 40px; color: white; font-size: 18px; text-shadow: 1px 1px black">Quiz name:</strong>
-            <input type="text" name="name" th:field="*{name}">
-            <select name="lives">
-                <option value="-1">-1</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <input type="hidden" th:field="*{QId}">
-            <br>
-            <button class="button_5050" style="margin-top: 15px; margin-left: 150px; margin-bottom: 25px" type="submit">Create quiz</button>
-            <div style="float: right; height:400px; width: 780px; margin-top: -200px; overflow: auto; border: 1px solid white; border-radius: 6px; font-size: 19px; color: white">
-                    <ul>
-                        <div th:each="qa : ${qas}">
-                            <input style="margin-right: 10px; margin-bottom: 15px" type="checkbox" name="quizqa" th:value="${qa.qaId}" th:field="${quiz.qas}">
-                            <label style="margin-right: 10px;" th:text="${qa.qaId}"></label>
-                            <label style="margin-right: 10px" th:text="${qa.question}"></label>
-                        </div>
-                    </ul>
-            </div>
-            <br><br>
-            <br>
-        </form>
-        <form th:action="@{/Quiz/Create-random}" method="post" th:object="${qas}">
-            <div th:each="qa : ${qas}">
-                <input type="hidden" name="qas" th:value="${qa.qaId}">
-            </div>
-            <strong style="margin-left: 40px; color: white; font-size: 18px; text-shadow: 1px 1px black">Quiz name:</strong>
-            <input type="text" name="name_random">
-            <strong style="padding-top: 2px; padding-bottom: 2px; padding-left: 3px; background-color: white; border-radius: 6px; border: 2px solid black; margin-right: 5px"> Amount of errors: </strong>
-            <select style="border: 2px solid black; border-radius: 4px; padding-top: 3px" name="lives_random">
-                <option value="-1">-1</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <strong style="padding-top: 2px; padding-bottom: 2px; padding-left: 3px; background-color: white; border-radius: 6px; border: 2px solid black; margin-right: 5px"> Number of questions: </strong>
-            <select style="border: 2px solid black; border-radius: 4px; padding-top: 3px" name="quiz_size">
-                <option th:each="i : ${#numbers.sequence(1,qas.size(),1)}" th:text="${i}" th:value="${i}" name="quiz_size">
-                </option>
-            </select>
-            <br><br>
-            <button style="margin-left: 80px" class="button_5050">Create with random questions</button>
-        </form>
     </div>
 </div>
 </body>
