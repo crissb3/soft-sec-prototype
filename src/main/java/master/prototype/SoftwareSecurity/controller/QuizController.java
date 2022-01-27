@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -177,6 +178,40 @@ public class QuizController {
             return "quizplay";
         }
     }
+    @GetMapping("Quiz/Start/times-up")
+    public String timesUp(Model model,
+                          @RequestParam long id,
+                          @RequestParam(name="page", defaultValue = "-1") int page,
+                          @RequestParam("user") long uid){
+        Quiz quiz = quizService.findByqId(id);
+        Userclass userclass = userService.findUserById(uid);
+        int lives = userclass.getLives();
+        lives -= 1;
+        if(quiz.getQas().size() == page){
+
+            model.addAttribute("id", id);
+            model.addAttribute("page", page);
+            model.addAttribute("quiz", quiz);
+            model.addAttribute("user", userclass);
+            return "quizdone";
+        }
+        if(lives == 0){
+            model.addAttribute("id", id);
+            model.addAttribute("page", page);
+            model.addAttribute("quiz", quiz);
+            model.addAttribute("user", userclass);
+            return "quizdone";
+        }
+        userclass.setLives(lives);
+        userService.save(userclass);
+
+        model.addAttribute("id", id);
+        model.addAttribute("page", page);
+        model.addAttribute("quiz", quiz);
+        model.addAttribute("user", userclass);
+
+        return "quizplay";
+    }
     @GetMapping("/Quiz/Start/page")
     public String playQuiztest(Model model,
                                @RequestParam long id,
@@ -185,7 +220,8 @@ public class QuizController {
                                @RequestParam(name = "answer", required = false) String answer,
                                @RequestParam(name = "5050", required = false) String fiftyfifty,
                                @RequestParam(name = "protection", required = false) String prot,
-                               @RequestParam(name = "prot", required = false) String prot_used){
+                               @RequestParam(name = "prot", required = false) String prot_used,
+                               @RequestParam(name = "call", required = false) String call){
         Quiz quiz = quizService.findByqId(id);
         Userclass userclass = userService.findUserById(uid);
         int score = userclass.getScore();
@@ -225,6 +261,16 @@ public class QuizController {
                 model.addAttribute("quiz", quiz);
                 model.addAttribute("user", userclass);
                 model.addAttribute("prot", prot);
+                return "quizplay";
+            }
+            if(call!=null){
+                userclass.getLifelines().remove("call");
+                userService.save(userclass);
+                model.addAttribute("id", id);
+                model.addAttribute("page",page);
+                model.addAttribute("quiz", quiz);
+                model.addAttribute("user", userclass);
+                model.addAttribute("call", "call");
                 return "quizplay";
             }
         }
