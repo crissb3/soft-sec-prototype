@@ -18,7 +18,7 @@
 <div class="center">
     <div class="container">
 
-        <div style="margin-top: 0; margin-left: 10%; padding-top: 13%; float: left" th:if="${call != null}">
+        <div style="margin-top: 0; margin-right: 10%; padding-top: 13%; float: right" th:if="${call != null}">
             <div id="app"></div>
             <div id="count">
                 <input id="page" type="hidden" name="page" th:value="${page}">
@@ -63,7 +63,7 @@
             <script type="text/javascript" th:src="@{/js/countdown.js}"></script>
         </div>
         <br>
-        <div th:if="${call != null}" style="margin-left: 16.3%; float: left">
+        <div th:if="${call != null}" style="margin-left: 28.75%;">
             <h1 style="color:white; font-size: large; text-align: center; font-weight: normal" th:text="${'Quiz ID: '+quiz.QId}"></h1>
             <h1 style="color:white; font-size: large; text-align: center; font-weight: normal" th:text="${'Quiz name: '+quiz.name}"></h1>
             <p style="color:white; font-size: large; text-align: center" th:text="${'Question: '+quiz.qas[__${page}__].question}">
@@ -106,7 +106,8 @@
                 <input type="hidden" name="user" th:value="${user.uid}">
                 <input type="hidden" name="call" th:value="${user.lifelines}">
                 <button title="If you use this lifeline it will open a site to help you find the answer, and you have 90 seconds to answer before you lose the chance to answer."
-                        class="button_5050" type="submit" th:text="'Call (temp name)'"></button></p>
+                        class="button_5050" type="submit" th:text="'Call (temp name)'"
+                        onclick="window.open('https://wiki.sei.cmu.edu/confluence/display/java','name','width=600,height=500')"></button></p>
         </form>
 
         <div class="center_answers">
