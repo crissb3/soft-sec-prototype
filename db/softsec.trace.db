@@ -1,0 +1,9 @@
+2022-01-31 21:19:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "QUESTION VARCHAR(255)": "'What is that is who is when that is a is of that the time when spoof is not secure what when is that ok? How? And then that wha... (298)"; SQL statement:
+insert into qa (qa_id, correct_answer, img, question) values (null, ?, ?, ?) [22001-200]
+2022-01-31 21:19:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "QUESTION VARCHAR(255)": "'What is that is who is when that is a is of that the time when spoof is not secure what when is that ok? How? And then that wha... (294)"; SQL statement:
+insert into qa (qa_id, correct_answer, img, question) values (null, ?, ?, ?) [22001-200]
+2022-01-31 21:19:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "QUESTION VARCHAR(255)": "'What is that is who is when that is a is of that the time when spoof is not secure what when is that ok? How? And then that wha... (272)"; SQL statement:
+insert into qa (qa_id, correct_answer, img, question) values (null, ?, ?, ?) [22001-200]

@@ -72,6 +72,13 @@ public class QAController {
             model.addAttribute("message", "You can't leave an empty field.");
             return "createquestion";
         }
+        if(addquestion.length()>255
+        || fakeanswer1.length()>255
+        || fakeanswer2.length()>255
+        || fakeanswer3.length()>255){
+            model.addAttribute("message", "The maximum length of a question or an answer can be is 255 characters.");
+            return "createquestion";
+        }
         else {
             QA qa = qaService.shuffleAnswers(addquestion, fakeanswer1, fakeanswer2, fakeanswer3, correctanswer);
             qa.setTags(qaService.setTag(tag1, tag2, tag3));

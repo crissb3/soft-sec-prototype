@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <title>SecQuiz</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
-    <frame-options policy="SAMEORIGIN"/>
-    <frame-options disabled="true"/>
 </head>
 
 <body>
@@ -51,7 +49,7 @@
                 <strong style="font-weight: normal; margin-right: 6px; color: white">Software Security</strong><input type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY">
                 <strong style="font-weight: normal; margin-right: 6px; color: white">Coding Standard</strong><input type="checkbox" name="tag3" th:value="CODING_STANDARD">
             </ul>
-<!--            <iframe src="https://pdfhost.io/v/VIm7QKPxY_cwe_latest&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe>-->
+
         </form>
         <form style="margin-top: 50px; margin-left: 40%;">
             <a style="width: 35%" class="button_5050" th:href="@{'https://capec.mitre.org/data/definitions/1000.html'}" target="popup"

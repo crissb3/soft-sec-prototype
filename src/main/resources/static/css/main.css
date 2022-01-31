@@ -354,3 +354,21 @@ input[type=checkbox]{
     justify-content: center;
     font-size: 48px;
 }
+
+.fa-heart {
+    color: palevioletred;
+    font-family: poetsenone, sans-serif;
+    font-size: 28px;
+}
+
+.fa-shield-alt {
+    font-size: 28px;
+}
+
+.fa-percentage {
+    font-size: 28px;
+}
+
+.fa-phone-alt {
+    font-size: 28px;
+}
