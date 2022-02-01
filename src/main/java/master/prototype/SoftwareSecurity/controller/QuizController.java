@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -261,7 +260,7 @@ public class QuizController {
                 model.addAttribute("quiz", quiz);
                 model.addAttribute("user", userclass);
                 model.addAttribute("prot", prot);
-                return "quizplay";
+                return "quizplayprot";
             }
             if(call!=null){
                 userclass.getLifelines().remove("call");
