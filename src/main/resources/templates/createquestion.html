@@ -49,7 +49,10 @@
                 <strong style="font-weight: normal; margin-right: 6px; color: white">Software Security</strong><input type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY">
                 <strong style="font-weight: normal; margin-right: 6px; color: white">Coding Standard</strong><input type="checkbox" name="tag3" th:value="CODING_STANDARD">
             </ul>
-
+        </form>
+        <form method="post" style="float: left; margin-top: 35%; margin-left: -35%">
+            <strong style="color: white; font-size: 24px">Custom tag:</strong>
+            <input type="text" name="custom_tag"><button type="submit">Add tag</button>
         </form>
         <form style="margin-top: 50px; margin-left: 40%;">
             <a style="width: 35%" class="button_5050" th:href="@{'https://capec.mitre.org/data/definitions/1000.html'}" target="popup"
@@ -61,6 +64,7 @@
             <a style="width: 35%" class="button_5050" th:href="@{'https://cwe.mitre.org/data/definitions/699.html'}" target="popup"
                onclick="window.open('https://cwe.mitre.org/data/definitions/699.html','name','width=600,height=500')">CWE - Software Development</a>
         </form>
+
 
 
     </div>

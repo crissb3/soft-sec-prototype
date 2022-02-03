@@ -168,6 +168,22 @@
                 <button class="button-3d" type="submit" th:text="${quiz.qas.get(page).answers[3]}"></button>
             </form>
         </div>
+        <script th:inline="javascript">
+            var scoreBenchmark  = [[${quiz.qas.size*10}]];
+            var score           = [[${user.score}]];
+            function init(){
+                $('.score_bar').attr('style', 'height:' + (((score / scoreBenchmark) * 100)*3.5) + 'px' );
+            };
+
+
+
+            setTimeout(function(){
+                init();
+            }, 0);
+        </script>
+        <div class="container_score_bar">
+            <div class="score_bar"></div>
+        </div>
     </div>
 </div>
 </body>

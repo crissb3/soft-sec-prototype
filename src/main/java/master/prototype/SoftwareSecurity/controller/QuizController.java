@@ -229,11 +229,9 @@ public class QuizController {
             if(fiftyfifty!=null){
                 userclass.getLifelines().remove("5050");
                 userService.save(userclass);
-                System.out.println(userService.findUserById(uid).getLifelines());
                 String correct = quiz.getQas().get(page).getCorrectAnswer();
                 for(String ans : quiz.getQas().get(page).getAnswers()){
                     if(!ans.equals(correct)){
-                        System.out.println(ans);
                         String fake = ans;
                         model.addAttribute("id",id);
                         model.addAttribute("page",page);
@@ -276,7 +274,7 @@ public class QuizController {
 
         if(quiz.getQas().size() == page){
             if(answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
-                score += 10*page;
+                score += 10;
                 userclass.setScore(score);
                 userService.save(userclass);
             }
@@ -289,7 +287,7 @@ public class QuizController {
         }
 
         else if(answer.equals(quiz.getQas().get(page-1).getCorrectAnswer())){
-                score += 10*page;
+                score += 10;
                 userclass.setScore(score);
                 userService.save(userclass);
         }
@@ -327,17 +325,19 @@ public class QuizController {
         user.setUsername(name);
         userService.save(user);
         Quiz quiz = quizService.findByqId(id);
-//        System.out.println(user);
         if(quiz.getScores().isEmpty()){
             scores = new ArrayList<>();
         }
         else{
             scores = quiz.getScores();
         }
+        if(user.getScore()>(quiz.getQas().size()*10)){
+            model.addAttribute("message", "You cheated! Score not posted for user: "+name);
+            return "index";
+        }
         scores.add(user);
         quiz.setScores(scores);
         quizService.save(quiz);
-//        System.out.println(quiz.getScores());
 
         model.addAttribute("name",name);
         model.addAttribute("score", user.getScore());

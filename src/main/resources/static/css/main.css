@@ -388,3 +388,30 @@ input[type=checkbox]{
             -30px 0 110px #ffe600,        /* outer left magenta */
             30px 0 110px #00ffea;         /* outer right cyan */
 }
+
+.container_score_bar {
+    display: flex;
+    width: 40px;
+    height: 350px;
+    border: 1px solid #cdcdcd;
+    position: absolute;
+    top: 50%;
+    left: 95%;
+    transform: translate(-50%, -50%);
+    align-items: flex-end;
+    border-radius: 2%;
+}
+.score_bar {
+    display: block;
+    width: 40px;
+    background-color: #69ea92;
+    margin: 0 auto;
+    vertical-align: bottom;
+    height: 0px;
+    border-radius: 2%;
+
+    -webkit-transition: 0.4s ease-out;
+    -moz-transition: 0.4s ease-out;
+    -o-transition: 0.4s ease-out;
+    transition: 0.4s ease-out;
+}

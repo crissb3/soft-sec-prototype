@@ -20,6 +20,8 @@ public class QA {
     private List<String> answers;
     @ElementCollection
     private Set<Tags> tags;
+    @ElementCollection
+    private List<String> custom_tags;
 
     @Column(length = 10485760)
     @Lob

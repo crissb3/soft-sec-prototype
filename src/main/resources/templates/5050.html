@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>SecQuiz</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/7401e2a6eb.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -47,6 +49,22 @@
                 <button class="button-3d" type="submit" th:text="${fake}"></button>
             </form>
             <span style="width: 20px;"></span>
+        </div>
+        <script th:inline="javascript">
+            var scoreBenchmark  = [[${quiz.qas.size*10}]];
+            var score           = [[${user.score}]];
+            function init(){
+                $('.score_bar').attr('style', 'height:' + (((score / scoreBenchmark) * 100)*3.5) + 'px' );
+            };
+
+
+
+            setTimeout(function(){
+                init();
+            }, 0);
+        </script>
+        <div class="container_score_bar">
+            <div class="score_bar"></div>
         </div>
     </div>
 </div>
