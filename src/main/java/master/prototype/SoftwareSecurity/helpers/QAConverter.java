@@ -1,4 +1,4 @@
-package master.prototype.SoftwareSecurity.Helpers;
+package master.prototype.SoftwareSecurity.helpers;
 
 import master.prototype.SoftwareSecurity.entity.QA;
 import master.prototype.SoftwareSecurity.service.QAService;

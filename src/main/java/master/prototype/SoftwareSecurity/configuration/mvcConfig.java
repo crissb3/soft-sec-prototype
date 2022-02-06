@@ -1,4 +1,4 @@
-package master.prototype.SoftwareSecurity.Configuration;
+package master.prototype.SoftwareSecurity.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

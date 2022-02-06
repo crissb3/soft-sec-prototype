@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>SecQuiz</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script type="text/javascript" th:src="@{/js/popup.js}"></script>
 </head>
 
 <body>
@@ -50,9 +51,11 @@
                 <strong style="font-weight: normal; margin-right: 6px; color: white">Coding Standard</strong><input type="checkbox" name="tag3" th:value="CODING_STANDARD">
             </ul>
         </form>
-        <form method="post" style="float: left; margin-top: 35%; margin-left: -35%">
-            <strong style="color: white; font-size: 24px">Custom tag:</strong>
-            <input type="text" name="custom_tag"><button type="submit">Add tag</button>
+        <form method="post" style="float: left; margin-top: 35%; margin-left: -36%">
+            <label class="custom-field one">
+                <input type="text" name="custom_tag" placeholder=" "><span class="placeholder">Enter Custom Tag</span>
+            </label>
+            <button type="submit">Add tag</button>
         </form>
         <form style="margin-top: 50px; margin-left: 40%;">
             <a style="width: 35%" class="button_5050" th:href="@{'https://capec.mitre.org/data/definitions/1000.html'}" target="popup"
@@ -64,6 +67,33 @@
             <a style="width: 35%" class="button_5050" th:href="@{'https://cwe.mitre.org/data/definitions/699.html'}" target="popup"
                onclick="window.open('https://cwe.mitre.org/data/definitions/699.html','name','width=600,height=500')">CWE - Software Development</a>
         </form>
+        <div class="popup" id="popup-1" style="float:right;">
+            <div class="overlay" th:onClick="togglePopup()"></div>
+            <div class="content">
+                <div class="close-btn" th:onClick="togglePopup()">&times;</div>
+                <h1 style="">Select image as question:</h1>
+                <strong style="color: black; font-weight: normal; font-size: 22px">
+                    You can select image as question by clicking the select file feature <br> and picking the desired picture from your files.
+                </strong>
+                <h1>How to:</h1>
+                <strong style="font-size: 22px">
+                    To create a question you have to fill in all the fields. <br>
+                    Type your question, three fake answers and a correct answer. <br>
+                    You can select tags if you want to categorize your question.<br>
+                    You can also create your own tag by typing in your desired tag.<br>
+                    When you have filled in all the fields and selected the tags <br>
+                    that fit the question you can click 'Add question' and it will <br>
+                    be saved to the questions list.<br> The questions list is available when you create a quiz.
+                </strong>
+                <h1>Links:</h1>
+                <strong style="font-size: 22px">
+                    There are three links that you can find above, these can help you <br>
+                    construct questions about software and hardware weaknesses/threats <br> and how to fight them,
+                    and also Java Coding Standards.
+                </strong>
+            </div>
+        </div>
+        <button style="margin-top: 150px; margin-left: 85px; font-size: 35px; border-radius: 50%; height: 250px" class="button_5050" th:onClick="togglePopup()">Need help?<br> Click me!</button>
 
 
 
