@@ -2,9 +2,11 @@ package master.prototype.SoftwareSecurity.controller;
 
 import master.prototype.SoftwareSecurity.entity.QA;
 import master.prototype.SoftwareSecurity.entity.Quiz;
+import master.prototype.SoftwareSecurity.entity.Tag;
 import master.prototype.SoftwareSecurity.entity.Userclass;
 import master.prototype.SoftwareSecurity.service.QAService;
 import master.prototype.SoftwareSecurity.service.QuizService;
+import master.prototype.SoftwareSecurity.service.TagService;
 import master.prototype.SoftwareSecurity.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,23 +25,23 @@ public class QuizController {
     private QAService qaService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TagService tagService;
 
     @GetMapping("/Quiz/Create/Search")
     public String searchQuiz(Model model,
                              @RequestParam String question,
-                             @RequestParam(required = false) String tag1,
-                             @RequestParam(required = false) String tag2,
-                             @RequestParam(required = false) String tag3) {
+                             @RequestParam(value = "tags", required = false) List<String> tags) {
         List<QA> qas;
-        Set<QA.Tags> tags = qaService.setTag(tag1,tag2,tag3);
-        if(!(tag1==null)) tags.add(QA.Tags.valueOf(tag1));
-        if(!(tag2==null)) tags.add(QA.Tags.valueOf(tag2));
-        if(!(tag3==null)) tags.add(QA.Tags.valueOf(tag3));
-        if(tags.isEmpty()){
+        if(tags == null){
             qas  = qaService.findByWord(question);
         }
         else{
-            qas  = qaService.findByTags(tags);
+            List<Tag> tagList = new ArrayList<>();
+            for(String tag : tags){
+                tagList.add(tagService.findBytId(Long.valueOf(tag)));
+            }
+            qas = qaService.findByTags(tagList);
             List<QA> searchwordlist = qaService.findByWord(question);
             qas.retainAll(searchwordlist);
             Set<QA> qaSet = new HashSet<>(qas);
@@ -48,6 +50,7 @@ public class QuizController {
             Collections.sort(qas, Comparator.comparingLong(QA::getQaId));
         }
         Quiz quiz = new Quiz();
+        model.addAttribute("tags", tagService.findAll());
         model.addAttribute("qas", qas);
         model.addAttribute("quiz", quiz);
         model.addAttribute("message_hits", qas.size());
@@ -65,6 +68,7 @@ public class QuizController {
 
         List<QA> qas = qaService.findAll();
         model.addAttribute("qas", qas);
+        model.addAttribute("tags", tagService.findAll());
 
         return "newquiz";
     }
@@ -79,6 +83,7 @@ public class QuizController {
         }
         else{
             quiz.setLives(lives);
+
             quizService.save(quiz);
             model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + ".\n  Copy and share this ID if you want others to play your quiz.");
         }

@@ -5,6 +5,8 @@
     <title>SecQuiz</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <script type="text/javascript" th:src="@{/js/popup.js}"></script>
+    <link rel="stylesheet" th:href="@{/chosen/chosen.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="text_frame_menu">
@@ -30,9 +32,17 @@
 
                     <div style="margin-left: 30%; padding-bottom: 10px; color: white">
                         <strong style="color: white; font-size: 18px; text-shadow: 1px 1px 0px black;">Search with tags:</strong><br><br>
-                        <strong>Network</strong><input style="margin-left: 10px" type="checkbox" name="tag1" th:value="NETWORK"><br><br>
-                        <strong>Software Security</strong><input style="margin-left: 10px" type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY"><br><br>
-                        <strong>Coding Standard</strong><input style="margin-left: 10px" type="checkbox" name="tag3" th:value="CODING_STANDARD">
+                        <select name="tags" data-placeholder="Select tags" multiple class="chosen-select" style="width: 120px; overflow-y: scroll; height: 10px; float: left">
+                            <div th:each="tag : ${tags}">
+                                <option name="tags_list" th:value="${tag.TId}" th:text="${tag.tag}"></option>
+                            </div>
+                        </select>
+                        <script th:src="@{/chosen/chosen.jquery.js}" type="text/javascript"></script>
+
+                        <script>
+                            $(".chosen-select").chosen();
+                            $("ul.chosen-choices").css({ "overflow": 'auto', "max-height": "70px" });
+                        </script>
                     </div>
 
                     <!--            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>-->
@@ -41,12 +51,13 @@
             <div class="column" style="margin-left: 28px;">
                 <form th:action="@{/Quiz/Create}" th:object="${quiz}" method="post">
                     <h1 style="margin-left: 0; color: white; text-shadow: 2px 2px black">Create quiz by selecting questions:</h1>
-                    <div style="margin-top: 10%">
+                    <div style="margin-top: 5%">
 <!--                        <strong style="margin-left: 0; color: white; font-size: 18px; text-shadow: 1px 1px black">Quiz name:</strong>-->
                         <label class="custom-field one">
                             <input type="text" name="name" th:field="*{name}" placeholder=" "><span class="placeholder">Enter Quiz Name</span>
                         </label>
                         <select name="lives">
+                            <option value="-1">Amount of errors:</option>
                             <option value="-1">-1</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -56,7 +67,7 @@
                         </select>
                         <input type="hidden" th:field="*{QId}">
                         <br>
-                        <button class="button_5050" style="margin-top: 15px; margin-left: 100px; margin-bottom: 25px" type="submit">Create quiz</button>
+                        <button class="button_5050" style="margin-top: 15px; margin-left: 0px; margin-bottom: 25px" type="submit">Create quiz</button>
                     </div>
                     <h1 style="color: white; text-shadow: 2px 2px black; float: left; margin-left: -400px">Questions list:</h1>
                     <div style="margin-top: 60px; margin-left: -400px; padding-right: 30px; height:380px; width: 750px; max-width: 1000px; overflow: auto;
@@ -84,7 +95,8 @@
                         <label class="custom-field one">
                             <input type="text" name="name_random" placeholder=" "><span class="placeholder">Enter Quiz Name</span><br>
                         </label>
-                        <strong style="padding-top: 2px; padding-bottom: 2px; padding-left: 3px; background-color: white; border-radius: 6px; border: 2px solid black; margin-right: 5px"> Amount of errors: </strong>
+                        <br>
+                        <strong style="padding: 3px; background-color: white; border-radius: 6px; border: 2px solid black; margin-right: 5px"> Amount of errors: </strong>
                         <select style="border: 2px solid black; border-radius: 4px; padding-top: 3px; margin-top: 5px; margin-bottom: 10px; margin-left: 25px" name="lives_random">
                             <option value="-1">-1</option>
                             <option value="1">1</option>
@@ -93,15 +105,15 @@
                             <option value="4">4</option>
                             <option value="5">5</option>
                         </select><br>
-                        <strong style="padding-top: 2px; padding-bottom: 2px; padding-left: 3px; background-color: white;
+                        <strong style="padding: 3px; background-color: white;
                             border-radius: 6px; border: 2px solid black; margin-right: 5px; margin-top: 10px;"> Number of questions:
                         </strong>
-                        <select style="border: 2px solid black; border-radius: 4px; padding-top: 3px" name="quiz_size">
+                        <select style="border: 2px solid black; border-radius: 4px; padding-top: 3px;" name="quiz_size">
                             <option th:each="i : ${#numbers.sequence(1,qas.size(),1)}" th:text="${i}" th:value="${i}" name="quiz_size">
                             </option>
                         </select>
                         <br><br>
-                        <button style="margin-left: 40px" class="button_5050">Create with random questions</button>
+                        <button style="margin-left: 0px" class="button_5050">Create with random questions</button>
                     </div>
                 </form>
                 <div class="popup" id="popup-1" style="float:right;">
@@ -127,7 +139,7 @@
                         </strong>
                     </div>
                 </div>
-                <button style="margin-top: 150px; margin-left: 55px; font-size: 35px; border-radius: 50%; height: 250px" class="button_5050" th:onClick="togglePopup()">Need help?<br> Click me!</button>
+                <button style="margin-top: 130px; margin-left: 55px; font-size: 35px; border-radius: 50%; height: 250px" class="button_5050" th:onClick="togglePopup()">Need help?<br> Click me!</button>
             </div>
             </div>
         </div>

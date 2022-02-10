@@ -4,7 +4,9 @@ package master.prototype.SoftwareSecurity.controller;
 //import master.prototype.SoftwareSecurity.entity.CodingStandards;
 //import master.prototype.SoftwareSecurity.service.CapecService;
 //import master.prototype.SoftwareSecurity.service.CodingStandardsService;
+import master.prototype.SoftwareSecurity.entity.Tag;
 import master.prototype.SoftwareSecurity.service.QAService;
+import master.prototype.SoftwareSecurity.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import master.prototype.SoftwareSecurity.entity.QA;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -23,6 +26,8 @@ public class QAController {
 
     @Autowired
     private QAService qaService;
+    @Autowired
+    private TagService tagService;
 //    @Autowired
 //    private CapecService capecService;
 //    @Autowired
@@ -41,7 +46,7 @@ public class QAController {
 
     @GetMapping("/addQuestion")
     public String createQuestion(Model model) {
-
+        model.addAttribute("tags",tagService.findAll());
         model.addAttribute("message", "Create questions page!");
         return "createquestion";
     }
@@ -59,10 +64,8 @@ public class QAController {
                             @RequestParam String fakeanswer2,
                             @RequestParam String fakeanswer3,
                             @RequestParam String correctanswer,
-                            @RequestParam(required = false) String tag1,
-                            @RequestParam(required = false) String tag2,
-                            @RequestParam(required = false) String tag3,
                             @RequestParam(value = "file", required = false) MultipartFile file,
+                            @RequestParam(value = "tags", required = false) List<String> tags,
                             Model model) throws IOException {
         if(addquestion.isEmpty()
                 || fakeanswer1.isEmpty()
@@ -81,16 +84,33 @@ public class QAController {
         }
         else {
             QA qa = qaService.shuffleAnswers(addquestion, fakeanswer1, fakeanswer2, fakeanswer3, correctanswer);
-            qa.setTags(qaService.setTag(tag1, tag2, tag3));
+            if(tags != null){
+                List<Tag> tagList = new ArrayList<>();
+                for(String tag : tags){
+                    tagList.add(tagService.findBytId(Long.valueOf(tag)));
+                }
+                qa.setCustomtags(tagList);
+            }
+//            qa.setTags(qaService.setTag(tag1, tag2, tag3));
             if(!(file == null)){
                 String fileName = StringUtils.cleanPath(file.getOriginalFilename());
                 qa.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
             }
 
             qaService.save(qa);
+            model.addAttribute("tags",tagService.findAll());
             model.addAttribute("message", "Created question: " + addquestion);
         }
 
+        return "createquestion";
+    }
+    @PostMapping("/addTag")
+    public String addTag(@RequestParam String custom_tag, Model model){
+        Tag tag = new Tag();
+        tag.setTag(custom_tag);
+        tagService.save(tag);
+        model.addAttribute("tags",tagService.findAll());
+        model.addAttribute("message", "Create questions page!");
         return "createquestion";
     }
 

@@ -1,6 +1,7 @@
 package master.prototype.SoftwareSecurity.service;
 
 import master.prototype.SoftwareSecurity.entity.QA;
+import master.prototype.SoftwareSecurity.entity.Tag;
 import master.prototype.SoftwareSecurity.repository.QARepositoryImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -22,7 +23,11 @@ public class QAService {
         return qaRepository.findByQuestionContainingIgnoreCase(question);
     }
     public List<QA> findAll(){return qaRepository.findAll();}
-    public List<QA> findByTags(Set<QA.Tags> tags){return qaRepository.findByTagsIn(tags);}
+//    public List<QA> findByTags(Set<QA.Tags> tags){return qaRepository.findByTagsIn(tags);}
+    public List<QA> findByTags(List<Tag> tags){
+        return qaRepository.findByCustomtagsIn(tags);
+    }
+//    public List<String> findAllTags(){return qaRepository.findAllQATags();}
     public QA save(QA newQA){
         qaRepository.save(newQA);
         return newQA;

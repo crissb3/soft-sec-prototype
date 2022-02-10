@@ -5,8 +5,9 @@
     <title>SecQuiz</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <script type="text/javascript" th:src="@{/js/popup.js}"></script>
+    <link rel="stylesheet" th:href="@{/chosen/chosen.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-
 <body>
     <div class="text_frame_menu">
         <div class="single_text_in_menu" onclick="window.location.href='/'">Home</div>
@@ -44,14 +45,28 @@
             <textarea type="text" name="correctanswer"></textarea>
             <br>
             <input class="button_5050" type="submit" name="addquestionsubmit" value="Add question">
-            <ul>
-                <strong style="font-weight: normal; color: white; text-shadow: 2px 2px black">Tags:</strong><br>
-                <strong style="font-weight: normal; margin-right: 6px; color: white">Network</strong><input type="checkbox" name="tag1" th:value="NETWORK">
-                <strong style="font-weight: normal; margin-right: 6px; color: white">Software Security</strong><input type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY">
-                <strong style="font-weight: normal; margin-right: 6px; color: white">Coding Standard</strong><input type="checkbox" name="tag3" th:value="CODING_STANDARD">
-            </ul>
+<!--            <ul style="float: bottom">-->
+<!--&lt;!&ndash;                <strong style="font-weight: normal; color: white; text-shadow: 2px 2px black">Tags:</strong><br>&ndash;&gt;-->
+<!--&lt;!&ndash;                <strong style="font-weight: normal; margin-right: 6px; color: white">Network</strong><input type="checkbox" name="tag1" th:value="NETWORK">&ndash;&gt;-->
+<!--&lt;!&ndash;                <strong style="font-weight: normal; margin-right: 6px; color: white">Software Security</strong><input type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY">&ndash;&gt;-->
+<!--&lt;!&ndash;                <strong style="font-weight: normal; margin-right: 6px; color: white">Coding Standard</strong><input type="checkbox" name="tag3" th:value="CODING_STANDARD">&ndash;&gt;-->
+<!--            </ul>-->
+
+
+            <select name="tags" data-placeholder="Select tags" multiple class="chosen-select" style="width: 120px; overflow-y: scroll; height: 10px; float: left">
+                <div th:each="tag : ${tags}">
+                    <option name="tags_list" th:value="${tag.TId}" th:text="${tag.tag}"></option>
+                </div>
+            </select>
+            <script th:src="@{/chosen/chosen.jquery.js}" type="text/javascript"></script>
+
+            <script>
+                $(".chosen-select").chosen();
+                $("ul.chosen-choices").css({ "overflow": 'auto', "max-height": "70px" });
+            </script>
+
         </form>
-        <form method="post" style="float: left; margin-top: 35%; margin-left: -36%">
+        <form th:method="post" style="float: left; margin-top: 30%; margin-left: -23%" th:action="@{/addTag}">
             <label class="custom-field one">
                 <input type="text" name="custom_tag" placeholder=" "><span class="placeholder">Enter Custom Tag</span>
             </label>
@@ -93,7 +108,7 @@
                 </strong>
             </div>
         </div>
-        <button style="margin-top: 150px; margin-left: 85px; font-size: 35px; border-radius: 50%; height: 250px" class="button_5050" th:onClick="togglePopup()">Need help?<br> Click me!</button>
+        <button style="margin-top: 150px; margin-left: 285px; font-size: 35px; border-radius: 50%; height: 250px" class="button_5050" th:onClick="togglePopup()">Need help?<br> Click me!</button>
 
 
 

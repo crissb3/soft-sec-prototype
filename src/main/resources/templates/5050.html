@@ -19,16 +19,23 @@
 <div class="center">
     <div class="container">
         <br>
-        <h1 style="color:white; font-size: large; text-align: center" th:text="${'Quiz ID: '+quiz.QId}"></h1>
-        <h1 style="color:white; font-size: large; text-align: center" th:text="${'Quiz name: '+quiz.name}"></h1>
+        <h1 style="color:white; font-size: large; text-align: center; font-weight: normal" th:text="${'Quiz ID: '+quiz.QId}"></h1>
+        <h1 style="color:white; font-size: large; text-align: center; font-weight: normal" th:text="${'Quiz name: '+quiz.name}"></h1>
 
         <p style="color:white; font-size: large; text-align: center" th:text="${'Question: '+quiz.qas[__${page}__].question}">
         <p th:if="${quiz.qas[__${page}__].img != null}">
             <img style="max-width: 500px; max-height: 300px;" class="center_image" th:src="*{'data:image/png;base64,'+quiz.qas[__${page}__].img}" alt=""/>
         </p>
 
-        <p class="center_score" style="color: white; font-size: large; margin-top: 35px" th:text="${'Lives left: '+user.lives}"></p>
-        <p class="center_score" style="color: white; font-size: large; margin-top: 10px" th:text="${'Score: '+user.score}"></p>
+        <strong class="center_score" th:if="${user.lives>0}" th:text="${'Lives left:'}" style="color: white; font-size: large; position: absolute;"></strong>
+        <b></b>
+        <div class="center_score" style="margin-top: 35px; margin-left: 130px;">
+            <i class="fas fa-heart" th:if="${user.lives==5}"></i>
+            <i class="fas fa-heart" th:if="${user.lives>=4}"></i>
+            <i class="fas fa-heart" th:if="${user.lives>=3}"></i>
+            <i class="fas fa-heart" th:if="${user.lives>=2}"></i>
+            <i class="fas fa-heart" th:if="${user.lives>=1}"></i>
+        </div>
 
         <div class="center_answers">
             <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
@@ -66,6 +73,7 @@
         <div class="container_score_bar">
             <div class="score_bar"></div>
         </div>
+        <strong style="color: white; float: right; margin-right: 3%; font-size: 20px" th:text="${'Score: '+user.score+' / '+quiz.qas.size*10}"></strong>
     </div>
 </div>
 </body>

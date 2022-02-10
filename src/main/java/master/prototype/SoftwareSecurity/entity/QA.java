@@ -13,15 +13,14 @@ public class QA {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long qaId;
 
-    //@Lob
     private String question;
     private String correctAnswer;
     @ElementCollection
     private List<String> answers;
     @ElementCollection
     private Set<Tags> tags;
-    @ElementCollection
-    private List<String> custom_tags;
+    @ManyToMany
+    private List<Tag> customtags;
 
     @Column(length = 10485760)
     @Lob
@@ -40,9 +39,6 @@ public class QA {
         }
     }
 
-//    @ManyToOne
-//    private User owner;
-
     public QA(Long qaId, String question, String correctAnswer){
         this.qaId = qaId;
         this.question = question;
@@ -60,20 +56,6 @@ public class QA {
         this.answers = answers;
         this.correctAnswer = correctAnswer;
     }
-
-//    @Transient
-//    public String getImgPath() {
-//        if(img == null || qaId == null) return null;
-//
-//        return "/qa-images/" + qaId +"/" + img;
-//    }
-
-//    public QA(Long qaId, String question, String answer, Quiz quiz){
-//        this.qaId = qaId;
-//        this.question = question;
-//        this.answer = answer;
-//        this.quiz = quiz;
-//    }
 
     public QA() {}
 }
