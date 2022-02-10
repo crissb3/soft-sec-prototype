@@ -107,8 +107,16 @@ public class QAController {
     @PostMapping("/addTag")
     public String addTag(@RequestParam String custom_tag, Model model){
         Tag tag = new Tag();
-        tag.setTag(custom_tag);
-        tagService.save(tag);
+        boolean isFound = tagService.findAll().stream().anyMatch(o -> o.getTag().equals(custom_tag));
+        if(isFound){
+            model.addAttribute("tags",tagService.findAll());
+            model.addAttribute("message", "Tag already exists. ");
+            return "createquestion";
+        }
+        else{
+            tag.setTag(custom_tag);
+            tagService.save(tag);
+        }
         model.addAttribute("tags",tagService.findAll());
         model.addAttribute("message", "Create questions page!");
         return "createquestion";
