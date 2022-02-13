@@ -107,7 +107,7 @@ public class QAController {
     @PostMapping("/addTag")
     public String addTag(@RequestParam String custom_tag, Model model){
         Tag tag = new Tag();
-        boolean isFound = tagService.findAll().stream().anyMatch(o -> o.getTag().equals(custom_tag));
+        boolean isFound = tagService.findAll().stream().anyMatch(o -> o.getTag().equalsIgnoreCase(custom_tag));
         if(isFound){
             model.addAttribute("tags",tagService.findAll());
             model.addAttribute("message", "Tag already exists. ");
