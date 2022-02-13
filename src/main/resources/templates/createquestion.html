@@ -44,16 +44,9 @@
             <br>
             <textarea type="text" name="correctanswer"></textarea>
             <br>
-            <input class="button_5050" type="submit" name="addquestionsubmit" value="Add question">
-<!--            <ul style="float: bottom">-->
-<!--&lt;!&ndash;                <strong style="font-weight: normal; color: white; text-shadow: 2px 2px black">Tags:</strong><br>&ndash;&gt;-->
-<!--&lt;!&ndash;                <strong style="font-weight: normal; margin-right: 6px; color: white">Network</strong><input type="checkbox" name="tag1" th:value="NETWORK">&ndash;&gt;-->
-<!--&lt;!&ndash;                <strong style="font-weight: normal; margin-right: 6px; color: white">Software Security</strong><input type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY">&ndash;&gt;-->
-<!--&lt;!&ndash;                <strong style="font-weight: normal; margin-right: 6px; color: white">Coding Standard</strong><input type="checkbox" name="tag3" th:value="CODING_STANDARD">&ndash;&gt;-->
-<!--            </ul>-->
-
-
-            <select name="tags" data-placeholder="Select tags" multiple class="chosen-select" style="width: 120px; overflow-y: scroll; height: 10px; float: left">
+            <strong style="color: white; font-weight: normal; text-shadow: 2px 2px black">Add Tags to question:</strong>
+            <div style="height: 75px">
+            <select name="tags" data-placeholder="Select tags" multiple class="chosen-select" style="width: 120px; overflow-y: scroll; height: 10px;">
                 <div th:each="tag : ${tags}">
                     <option name="tags_list" th:value="${tag.TId}" th:text="${tag.tag}"></option>
                 </div>
@@ -62,15 +55,26 @@
 
             <script>
                 $(".chosen-select").chosen();
-                $("ul.chosen-choices").css({ "overflow": 'auto', "max-height": "70px" });
+                $("ul.chosen-choices").css({ "overflow": 'auto', "max-height": "70px", "float": "left"});
             </script>
+            </div>
+            <input class="button_5050" type="submit" name="addquestionsubmit" value="Add question" style="float: left; margin-right: 10px; position: absolute">
+<!--            <ul style="float: bottom">-->
+<!--&lt;!&ndash;                <strong style="font-weight: normal; color: white; text-shadow: 2px 2px black">Tags:</strong><br>&ndash;&gt;-->
+<!--&lt;!&ndash;                <strong style="font-weight: normal; margin-right: 6px; color: white">Network</strong><input type="checkbox" name="tag1" th:value="NETWORK">&ndash;&gt;-->
+<!--&lt;!&ndash;                <strong style="font-weight: normal; margin-right: 6px; color: white">Software Security</strong><input type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY">&ndash;&gt;-->
+<!--&lt;!&ndash;                <strong style="font-weight: normal; margin-right: 6px; color: white">Coding Standard</strong><input type="checkbox" name="tag3" th:value="CODING_STANDARD">&ndash;&gt;-->
+<!--            </ul>-->
+
+
+
 
         </form>
-        <form th:method="post" style="float: left; margin-top: 30%; margin-left: -23%" th:action="@{/addTag}">
-            <label class="custom-field one">
+        <form th:method="post" style="float: left; margin-top: 35%; margin-left: -23%" th:action="@{/addTag}">
+            <label class="custom-field one" style="top: -2px">
                 <input type="text" name="custom_tag" placeholder=" "><span class="placeholder">Enter Custom Tag</span>
             </label>
-            <button type="submit">Add tag</button>
+            <button type="submit" class="button_plus">+</button>
         </form>
         <form style="margin-top: 50px; margin-left: 40%;">
             <a style="width: 35%" class="button_5050" th:href="@{'https://capec.mitre.org/data/definitions/1000.html'}" target="popup"
@@ -95,7 +99,8 @@
                     To create a question you have to fill in all the fields. <br>
                     Type your question, three fake answers and a correct answer. <br>
                     You can select tags if you want to categorize your question.<br>
-                    You can also create your own tag by typing in your desired tag.<br>
+                    You can also create your own tag by typing in your desired tag,<br>
+                    then hitting "+" to add it to the list of tags.<br>
                     When you have filled in all the fields and selected the tags <br>
                     that fit the question you can click 'Add question' and it will <br>
                     be saved to the questions list.<br> The questions list is available when you create a quiz.
@@ -108,7 +113,7 @@
                 </strong>
             </div>
         </div>
-        <button style="margin-top: 150px; margin-left: 285px; font-size: 35px; border-radius: 50%; height: 250px" class="button_5050" th:onClick="togglePopup()">Need help?<br> Click me!</button>
+        <button style="margin-top: 150px; margin-left: 305px; font-size: 35px; border-radius: 50%; height: 250px" class="button_5050" th:onClick="togglePopup()">Need help?<br> Click me!</button>
 
 
 
