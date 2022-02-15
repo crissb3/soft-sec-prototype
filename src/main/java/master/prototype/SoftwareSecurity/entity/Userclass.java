@@ -13,20 +13,12 @@ public class Userclass {
     private Long uid;
 
     private String username;
-    private String email;
+//    private String email;
     private int score;
-    private boolean isAdmin;
+//    private boolean isAdmin;
     private int lives;
     @ElementCollection
     private Set<String> lifelines;
-
-    public Userclass(Long uid, String username, String email, int score, boolean isAdmin){
-        this.uid = uid;
-        this.username = username;
-        this.email = email;
-        this.score = score;
-        this.isAdmin = isAdmin;
-    }
 
     public Userclass() {}
 }

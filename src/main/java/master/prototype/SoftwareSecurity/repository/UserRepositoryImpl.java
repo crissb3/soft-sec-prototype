@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository("userRepository")
 public interface UserRepositoryImpl extends JpaRepository<Userclass, Long> {
     Userclass findByUsername(@Param("username") String username);
-    Userclass findByEmail(@Param("email") String email);
+//    Userclass findByEmail(@Param("email") String email);
     Userclass findByUid(@Param("uid")Long uid);
 }
