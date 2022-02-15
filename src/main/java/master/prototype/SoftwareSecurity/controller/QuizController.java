@@ -327,7 +327,12 @@ public class QuizController {
                              @RequestParam("user") long uid){
         List<Userclass> scores;
         Userclass user = userService.findUserById(uid);
-        user.setUsername(name);
+        if(name == ""){
+            user.setUsername("User "+uid);
+        }
+        if(name != ""){
+            user.setUsername(name);
+        }
         userService.save(user);
         Quiz quiz = quizService.findByqId(id);
         if(quiz.getScores().isEmpty()){
