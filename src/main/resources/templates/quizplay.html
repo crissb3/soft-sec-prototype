@@ -114,23 +114,30 @@
                 </button></p>
         </form>
         <form class="center_score" style="color: white; font-size: large; margin-top: 100px; margin-left: 10%" th:action="@{page(page=${page}, id=${quiz.QId})}" th:object="${quiz}">
-            <p th:if="${user.lifelines.contains('call')}">
+            <div th:if="${user.lifelines.contains('call')}">
                 <input type="hidden" name="page" th:value="${page}">
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="user" th:value="${user.uid}">
                 <input type="hidden" name="call" th:value="${user.lifelines}">
-                <div style="margin-left: 30%">
                 <button th:if="${user.lifelines.contains('call')}" title="If you use this lifeline it will open a site to help you find the answer, and you have 90 seconds to answer before you lose the chance to answer."
                         class="button_5050" type="submit"
-                        onclick="window.open('https://stackoverflow.com/search?q=' + document.getElementById('search_word').value,
+                        onclick="window.open('/testcall',
                         'name', 'height=500, width=650, left=0, top=0')" style="float: left">
+
+
+<!--                    onclick="window.open('https://stackoverflow.com/search?q=' + document.getElementById('search_word').value,-->
+<!--                    'name', 'height=500, width=650, left=0, top=0')" style="float: left">-->
+
+
+
                     <i class="fas fa-phone-alt"></i>
+
                 </button>
-                <input th:if="${user.lifelines.contains('call')}" placeholder="Enter search words" type="text" id="search_word" style="color: black; float: left; font-size: 12px; font-family: poetsenone, sans-serif"
-                onblur="this.placeholder='Enter search words'"
-                onfocus="this.placeholder=''">
-        </div>
-            </p>
+            </div>
+<!--                <input th:if="${user.lifelines.contains('call')}" placeholder="Enter search words" type="text" id="search_word" style="color: black; float: left; font-size: 12px; font-family: poetsenone, sans-serif"-->
+<!--                onblur="this.placeholder='Enter search words'"-->
+<!--                onfocus="this.placeholder=''">-->
+
 
         </form>
 
@@ -191,6 +198,22 @@
         </div>
         <strong style="color: white; float: right; margin-right: 3%; font-size: 20px" th:text="${'Score: '+user.score+' / '+quiz.qas.size*10}"></strong>
     </div>
+
+<!--    <div class="gcse-searchbox-only" data-newWindow="true">-->
+<!--        <input type="text" id="testgoogle">-->
+<!--        <script>-->
+<!--            (function() {-->
+<!--                var cx = '012899561505164599335:sxqdbjuqaxm';-->
+<!--                var gcse = document.createElement('script');-->
+<!--                gcse.type = 'text/javascript';-->
+<!--                gcse.async = true;-->
+<!--                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;-->
+<!--                var s = document.getElementsByTagName('script')[0];-->
+<!--                s.parentNode.insertBefore(gcse, s);-->
+<!--            })();-->
+<!--        </script>-->
+<!--    </div>-->
+
 </div>
 </body>
 

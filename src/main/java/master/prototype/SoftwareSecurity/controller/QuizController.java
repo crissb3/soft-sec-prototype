@@ -425,4 +425,9 @@ public class QuizController {
         return "testiterate";
     }
 
+    @GetMapping("/testcall")
+    public String testcall(){
+        return "testcall";
+    }
+
 }
