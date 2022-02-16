@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SecQuiz</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+<h1 style="color: white; text-shadow: 2px 2px black; font-size: 22pt">Countdown has started. <br>Search for answers before the time runs out</h1>
+<p style="color: white; text-shadow: 1px 1px black">Enter your search and then select the friend you want to call by clicking one of the three buttons.</p>
+
+<input type="text" id="search_word" placeholder="Enter Search" style="font-family: poetsenone, sans-serif" onfocus="this.placeholder=''"
+       onblur="this.placeholder='Enter Search'"><br>
+<button class="button_5050" type="submit"
+        onclick="whenClickedCapec()">Call Capec</button>
+
+<button class="button_5050" type="submit"
+        onclick="whenClickedCWE()">Call CWE</button>
+
+<button class="button_5050" type="submit"
+        onclick="whenClickedSO()">Call StackOverflow</button>
+
+<script>
+    function whenClickedCapec()
+    {
+        window.close();
+        window.open('/callCapec/?q=' + document.getElementById('search_word').value,'capec', 'height=500, width=650, left=0, top=0');
+
+    }
+</script>
+<script>
+    function whenClickedCWE()
+    {
+        window.close();
+        window.open('/callCWE/?q=' + document.getElementById('search_word').value,'cwe', 'height=500, width=650, left=0, top=0');
+
+    }
+</script>
+<script>
+    function whenClickedSO()
+    {
+        window.close();
+        window.open('/callSO/?q=' + document.getElementById('search_word').value,'so', 'height=500, width=650, left=0, top=0');
+
+    }
+</script>
+
+<!--    <div class="gcse-searchbox-only" data-autoSearchOnLoad ="true" data-queryParameterName ="capec">-->
+<!--        <script>-->
+<!--            (function() {-->
+<!--                var cx = '012899561505164599335:sxqdbjuqaxm';-->
+<!--                var gcse = document.createElement('script');-->
+<!--                gcse.type = 'text/javascript';-->
+<!--                gcse.async = true;-->
+<!--                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;-->
+<!--                var s = document.getElementsByTagName('script')[0];-->
+<!--                s.parentNode.insertBefore(gcse, s);-->
+<!--            })();-->
+<!--        </script>-->
+<!--    </div>-->
+</body>
+
+</html>

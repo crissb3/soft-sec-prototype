@@ -430,9 +430,21 @@ public class QuizController {
         return "testiterate";
     }
 
-    @GetMapping("/testcall")
-    public String testcall(){
-        return "testcall";
+    @GetMapping("/callFriend")
+    public String callFriend(){
+        return "callfriend";
+    }
+    @GetMapping("/callSO")
+    public String callSO(){
+        return "callso";
+    }
+    @GetMapping("/callCapec")
+    public String callCapec(){
+        return "callcapec";
+    }
+    @GetMapping("/callCWE")
+    public String callCWE(){
+        return "callcwe";
     }
 
 }

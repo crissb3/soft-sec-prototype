@@ -547,3 +547,7 @@ input[type=checkbox]{
 ::placeholder {
     color: black;
 }
+
+.gcse-searchbox-only input{
+    width: 100px;
+}

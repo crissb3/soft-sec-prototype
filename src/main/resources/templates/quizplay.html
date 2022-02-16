@@ -119,15 +119,16 @@
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="user" th:value="${user.uid}">
                 <input type="hidden" name="call" th:value="${user.lifelines}">
+<!--                <input type="text" id="search_word">-->
+
                 <button th:if="${user.lifelines.contains('call')}" title="If you use this lifeline it will open a site to help you find the answer, and you have 90 seconds to answer before you lose the chance to answer."
                         class="button_5050" type="submit"
-                        onclick="window.open('/testcall',
+                        onclick="window.open('/callFriend',
                         'name', 'height=500, width=650, left=0, top=0')" style="float: left">
 
 
 <!--                    onclick="window.open('https://stackoverflow.com/search?q=' + document.getElementById('search_word').value,-->
 <!--                    'name', 'height=500, width=650, left=0, top=0')" style="float: left">-->
-
 
 
                     <i class="fas fa-phone-alt"></i>
@@ -198,6 +199,7 @@
         </div>
         <strong style="color: white; float: right; margin-right: 3%; font-size: 20px" th:text="${'Score: '+user.score+' / '+quiz.qas.size*10}"></strong>
     </div>
+
 
 <!--    <div class="gcse-searchbox-only" data-newWindow="true">-->
 <!--        <input type="text" id="testgoogle">-->
