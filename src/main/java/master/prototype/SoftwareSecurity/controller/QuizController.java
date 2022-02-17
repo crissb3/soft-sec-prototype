@@ -434,9 +434,9 @@ public class QuizController {
     public String callFriend(){
         return "callfriend";
     }
-    @GetMapping("/callSO")
+    @GetMapping("/callJava")
     public String callSO(){
-        return "callso";
+        return "calljava";
     }
     @GetMapping("/callCapec")
     public String callCapec(){

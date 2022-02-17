@@ -19,7 +19,7 @@
         onclick="whenClickedCWE()">Call CWE</button>
 
 <button class="button_5050" type="submit"
-        onclick="whenClickedSO()">Call StackOverflow</button>
+        onclick="whenClickedJava()">Call Java Coding Standards</button>
 
 <script>
     function whenClickedCapec()
@@ -34,31 +34,15 @@
     {
         window.close();
         window.open('/callCWE/?q=' + document.getElementById('search_word').value,'cwe', 'height=500, width=650, left=0, top=0');
-
     }
 </script>
 <script>
-    function whenClickedSO()
+    function whenClickedJava()
     {
         window.close();
-        window.open('/callSO/?q=' + document.getElementById('search_word').value,'so', 'height=500, width=650, left=0, top=0');
+        window.open('/callJava/?q=' + document.getElementById('search_word').value,'so', 'height=500, width=650, left=0, top=0');
 
     }
 </script>
-
-<!--    <div class="gcse-searchbox-only" data-autoSearchOnLoad ="true" data-queryParameterName ="capec">-->
-<!--        <script>-->
-<!--            (function() {-->
-<!--                var cx = '012899561505164599335:sxqdbjuqaxm';-->
-<!--                var gcse = document.createElement('script');-->
-<!--                gcse.type = 'text/javascript';-->
-<!--                gcse.async = true;-->
-<!--                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;-->
-<!--                var s = document.getElementsByTagName('script')[0];-->
-<!--                s.parentNode.insertBefore(gcse, s);-->
-<!--            })();-->
-<!--        </script>-->
-<!--    </div>-->
 </body>
-
 </html>
