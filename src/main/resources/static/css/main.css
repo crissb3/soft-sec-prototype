@@ -91,10 +91,15 @@ ul.allCapec {
     font-family: poetsenone, sans-serif;
     border-radius: 12px;
 }
+.button_5050:disabled:hover,
+button[disabled] {
+    border: 2px solid #7d7d7d;
+    background-color: rgba(176, 206, 222, 0.35);
+}
 
 .button_5050:hover {
     background-color: #008CBA;
-    color: white;
+    color: black;
 }
 
 .center_image {
@@ -370,6 +375,9 @@ input[type=checkbox]{
 }
 
 .fa-phone-alt {
+    font-size: 28px;
+}
+.fa-users {
     font-size: 28px;
 }
 

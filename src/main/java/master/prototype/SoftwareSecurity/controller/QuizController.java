@@ -1,5 +1,8 @@
 package master.prototype.SoftwareSecurity.controller;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import master.prototype.SoftwareSecurity.entity.QA;
 import master.prototype.SoftwareSecurity.entity.Quiz;
 import master.prototype.SoftwareSecurity.entity.Tag;
@@ -13,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.*;
 
 
@@ -171,7 +176,7 @@ public class QuizController {
             Userclass user = new Userclass();
             user.setScore(score);
             user.setLives(quiz.getLives());
-            Set<String> lifelines = Set.of("5050","call","protection");
+            Set<String> lifelines = Set.of("5050","call","protection","audience");
             user.setLifelines(lifelines);
             userService.save(user);
 //            model.addAttribute("score", score);
@@ -225,7 +230,8 @@ public class QuizController {
                                @RequestParam(name = "5050", required = false) String fiftyfifty,
                                @RequestParam(name = "protection", required = false) String prot,
                                @RequestParam(name = "prot", required = false) String prot_used,
-                               @RequestParam(name = "call", required = false) String call){
+                               @RequestParam(name = "call", required = false) String call,
+                               @RequestParam(name= "audience", required = false)String audience){
         Quiz quiz = quizService.findByqId(id);
         Userclass userclass = userService.findUserById(uid);
         int score = userclass.getScore();
@@ -273,6 +279,16 @@ public class QuizController {
                 model.addAttribute("quiz", quiz);
                 model.addAttribute("user", userclass);
                 model.addAttribute("call", "call");
+                return "quizplay";
+            }
+            if(audience!=null){
+                userclass.getLifelines().remove("audience");
+                userService.save(userclass);
+                model.addAttribute("id", id);
+                model.addAttribute("page",page);
+                model.addAttribute("quiz", quiz);
+                model.addAttribute("user", userclass);
+                model.addAttribute("audience", "audience");
                 return "quizplay";
             }
         }
@@ -435,7 +451,7 @@ public class QuizController {
         return "callfriend";
     }
     @GetMapping("/callJava")
-    public String callSO(){
+    public String callJava(){
         return "calljava";
     }
     @GetMapping("/callCapec")
@@ -445,6 +461,43 @@ public class QuizController {
     @GetMapping("/callCWE")
     public String callCWE(){
         return "callcwe";
+    }
+    @GetMapping("/callSO")
+    public String callSO(){
+        return "callso";
+    }
+    @GetMapping("/askAudience")
+    public String askAudience(){
+        return "askaudience";
+    }
+
+    @GetMapping("/testAPI")
+    public String testapi() throws MalformedURLException {
+        String searchword = "Expressions and methods spoofing";
+        searchword = searchword.replaceAll("\\s+","%20");
+        System.out.println(searchword);
+        String url = "https://customsearch.googleapis.com/customsearch/v1?cx=602325f04a96e5851&num=10&q=" +
+                searchword+"&prettyPrint=true&key=AIzaSyD01AyjxliyuVTXE1lyTCPdLR76TEMAbqQ";
+
+
+        try(java.io.InputStream is =
+                    new java.net.URL(url).openStream()) {
+            String contents = new String(is.readAllBytes());
+            JsonObject jsonObject = JsonParser.parseString(contents).getAsJsonObject();
+            JsonArray items = jsonObject.getAsJsonArray("items");
+            System.out.println(items);
+
+            for(int i = 0; i<items.size(); i++){
+                JsonObject object = items.get(i).getAsJsonObject();
+                System.out.println(object.get("snippet").toString().substring(1,object.get("snippet").toString().length() - 1));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return "testapi";
     }
 
 }

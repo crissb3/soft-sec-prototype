@@ -91,83 +91,74 @@
             <i class="fas fa-heart" th:if="${user.lives>=1}"></i>
         </div>
 
-        <form class="center_score" style="color: white; font-size: large; margin-top: 100px" th:action="@{page(page=${page}, id=${quiz.QId})}" th:object="${quiz}">
-            <p th:if="${user.lifelines.contains('5050')}">
-            <input type="hidden" name="page" th:value="${page}">
-            <input type="hidden" name="id" th:value="${quiz.QId}">
-            <input type="hidden" name="user" th:value="${user.uid}">
-            <input type="hidden" name="5050" th:value="${user.lifelines}">
-            <button title="If you use this lifeline, two wrong answers will be removed."
-                    class="button_5050" type="submit">
+        <form class="center_score" style="color: white; font-size: large; margin-top: 100px; margin-left: -50px" th:action="@{page(page=${page}, id=${quiz.QId})}" th:object="${quiz}">
+            <p>
+                <input type="hidden" name="page" th:value="${page}">
+                <input type="hidden" name="id" th:value="${quiz.QId}">
+                <input type="hidden" name="user" th:value="${user.uid}">
+                <input type="hidden" name="5050" th:value="${user.lifelines}">
+                <button th:if="${user.lifelines.contains('5050')}" title="If you use this lifeline, two wrong answers will be removed."
+                        class="button_5050" type="submit" style="width: 145px;">
+                    <strong style="font-size: 26px">50/50</strong>
+                </button></p>
+            <button th:if="${!user.lifelines.contains('5050')}" disabled title="You already used this lifeline."
+                    class="button_5050" type="submit" style="width: 145px;">
                 <strong style="font-size: 26px">50/50</strong>
             </button></p>
         </form>
-        <form class="center_score" style="color: white; font-size: large; margin-top: 100px; margin-left: -10%" th:action="@{page(page=${page}, id=${quiz.QId})}" th:object="${quiz}">
-            <p th:if="${user.lifelines.contains('protection') && quiz.lives>0}">
+        <form class="center_score" style="color: white; font-size: large; margin-top: 100px; margin-left: -200px" th:action="@{page(page=${page}, id=${quiz.QId})}" th:object="${quiz}">
+            <p>
                 <input type="hidden" name="page" th:value="${page}">
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="user" th:value="${user.uid}">
                 <input type="hidden" name="protection" th:value="${user.lifelines}">
-                <button title="If you use this lifeline you will not lose a life if you answer wrong on this question."
-                        class="button_5050" type="submit">
+                <button th:if="${user.lifelines.contains('protection')}" title="If you use this lifeline you will not lose a life if you answer wrong on this question."
+                        class="button_5050" type="submit" style="width: 145px;">
                     <i class="fas fa-shield-alt"></i>
-                </button></p>
+                </button>
+                <button th:if="${!user.lifelines.contains('protection')}" disabled title="You already used this lifeline."
+                        class="button_5050" type="submit" style="width: 145px;">
+                    <i class="fas fa-shield-alt"></i>
+                </button>
+            </p>
         </form>
-        <form class="center_score" style="color: white; font-size: large; margin-top: 100px; margin-left: 10%" th:action="@{page(page=${page}, id=${quiz.QId})}" th:object="${quiz}">
-            <p th:if="${user.lifelines.contains('call')}">
+        <form class="center_score" style="color: white; font-size: large; margin-top: 100px; margin-left: 100px" th:action="@{page(page=${page}, id=${quiz.QId})}" th:object="${quiz}">
+            <div>
                 <input type="hidden" name="page" th:value="${page}">
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="user" th:value="${user.uid}">
                 <input type="hidden" name="call" th:value="${user.lifelines}">
-                <button title="If you use this lifeline it will open a site to help you find the answer, and you have 90 seconds to answer before you lose the chance to answer."
+                <button th:if="${user.lifelines.contains('call')}" title="If you use this lifeline it will open a site to help you find the answer, and you have 90 seconds to answer before you lose the chance to answer."
                         class="button_5050" type="submit"
-                        onclick="window.open('https://wiki.sei.cmu.edu/confluence/display/java','name','width=600,height=500')">
+                        onclick="window.open('/callFriend',
+                        'name', 'height=500, width=650, left=0, top=0')" style="float: left; width: 145px">
                     <i class="fas fa-phone-alt"></i>
                 </button>
-<!--                <input type="text">-->
-            </p>
-
+                <button th:if="${!user.lifelines.contains('call')}" disabled title="You already used this lifeline."
+                        class="button_5050" type="submit" style="float: left; width: 145px">
+                    <i class="fas fa-phone-alt"></i>
+                </button>
+            </div>
+        </form>
+        <form class="center_score" style="color: white; font-size: large; margin-top: 100px; margin-left: 250px" th:action="@{page(page=${page}, id=${quiz.QId})}" th:object="${quiz}">
+            <div>
+                <input type="hidden" name="page" th:value="${page}">
+                <input type="hidden" name="id" th:value="${quiz.QId}">
+                <input type="hidden" name="user" th:value="${user.uid}">
+                <input type="hidden" name="call" th:value="${user.lifelines}">
+                <button th:if="${user.lifelines.contains('audience')}" title="If you use this lifeline you will ask the audience what they think is the correct answer."
+                        class="button_5050" type="submit"
+                        onclick="window.open('/askAudience',
+                        'name', 'height=500, width=650')" style="float: left; width: 145px">
+                    <i class="fas fa-users"></i>
+                </button>
+                <button th:if="${!user.lifelines.contains('audience')}" disabled title="If you use this lifeline you will ask the audience what they think is the correct answer."
+                        class="button_5050" type="submit" style="float: left; width: 145px">
+                    <i class="fas fa-users"></i>
+                </button>
+            </div>
         </form>
 
-        <div class="center_answers" style="margin-top: 20px;">
-            <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
-                <input type="hidden" name="prot" th:if="${prot != null}" th:value="${prot}">
-                <input type="hidden" name="page" th:value="${page+1}">
-                <input type="hidden" name="id" th:value="${quiz.QId}">
-                <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[0]}">
-                <input type="hidden" name="user" th:value="${user.uid}">
-                <button class="button-3d" type="submit" th:text="${quiz.qas.get(page).answers[0]}"></button>
-            </form>
-            <span style="width: 20px;"></span>
-            <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
-                <input type="hidden" name="prot" th:if="${prot != null}" th:value="${prot}">
-                <input type="hidden" name="page" th:value="${page+1}">
-                <input type="hidden" name="id" th:value="${quiz.QId}">
-                <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[1]}">
-<!--                <input type="hidden" name="score" th:value="${score}">-->
-                <input type="hidden" name="user" th:value="${user.uid}">
-                <button class="button-3d" type="submit" th:text="${quiz.qas.get(page).answers[1]}"></button>
-            </form>
-            <span style="width: 20px;"></span>
-            <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
-                <input type="hidden" name="prot" th:if="${prot != null}" th:value="${prot}">
-                <input type="hidden" name="page" th:value="${page+1}">
-                <input type="hidden" name="id" th:value="${quiz.QId}">
-                <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[2]}">
-<!--                <input type="hidden" name="score" th:value="${score}">-->
-                <input type="hidden" name="user" th:value="${user.uid}">
-                <button class="button-3d" type="submit" th:text="${quiz.qas.get(page).answers[2]}"></button>
-            </form>
-            <span style="width: 20px;"></span>
-            <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
-                <input type="hidden" name="prot" th:if="${prot != null}" th:value="${prot}">
-                <input type="hidden" name="page" th:value="${page+1}">
-                <input type="hidden" name="id" th:value="${quiz.QId}">
-                <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[3]}">
-                <input type="hidden" name="user" th:value="${user.uid}">
-                <button class="button-3d" type="submit" th:text="${quiz.qas.get(page).answers[3]}"></button>
-            </form>
-        </div>
         <script th:inline="javascript">
             var scoreBenchmark  = [[${quiz.qas.size*10}]];
             var score           = [[${user.score}]];
@@ -184,7 +175,49 @@
         <div class="container_score_bar">
             <div class="score_bar"></div>
         </div>
-        <strong style="color: white; float: right; margin-right: 3%; font-size: 20px" th:text="${'Score: '+user.score+' / '+quiz.qas.size*10}"></strong>
+        <strong style="color: white; float: right; position: absolute; right: 2%; top: 20%; font-size: 20px" th:text="${'Score: '+user.score+' / '+quiz.qas.size*10}"></strong>
+        <div class="column" style="height: 100px; width: 1570px; position: absolute; top: 80%">
+            <div class="column" style="height: 70px; width: 23%; text-align: center; float: left">
+                <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
+                    <input type="hidden" name="prot" th:if="${prot != null}" th:value="${prot}">
+                    <input type="hidden" name="page" th:value="${page+1}">
+                    <input type="hidden" name="id" th:value="${quiz.QId}">
+                    <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[0]}">
+                    <input type="hidden" name="user" th:value="${user.uid}">
+                    <button class="button-3d" type="submit" th:text="${quiz.qas.get(page).answers[0]}"></button>
+                </form>
+            </div>
+            <div class="column" style="height: 70px; width: 23%; text-align: center; float: left">
+                <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
+                    <input type="hidden" name="prot" th:if="${prot != null}" th:value="${prot}">
+                    <input type="hidden" name="page" th:value="${page+1}">
+                    <input type="hidden" name="id" th:value="${quiz.QId}">
+                    <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[1]}">
+                    <input type="hidden" name="user" th:value="${user.uid}">
+                    <button class="button-3d" type="submit" th:text="${quiz.qas.get(page).answers[1]}"></button>
+                </form>
+            </div>
+            <div class="column" style="height: 70px; width: 23%; text-align: center; float: left">
+                <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
+                    <input type="hidden" name="prot" th:if="${prot != null}" th:value="${prot}">
+                    <input type="hidden" name="page" th:value="${page+1}">
+                    <input type="hidden" name="id" th:value="${quiz.QId}">
+                    <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[2]}">
+                    <input type="hidden" name="user" th:value="${user.uid}">
+                    <button class="button-3d" type="submit" th:text="${quiz.qas.get(page).answers[2]}"></button>
+                </form>
+            </div>
+            <div class="column" style="height: 70px; width: 23%; text-align: center; float: left">
+                <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
+                    <input type="hidden" name="prot" th:if="${prot != null}" th:value="${prot}">
+                    <input type="hidden" name="page" th:value="${page+1}">
+                    <input type="hidden" name="id" th:value="${quiz.QId}">
+                    <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[3]}">
+                    <input type="hidden" name="user" th:value="${user.uid}">
+                    <button class="button-3d" type="submit" th:text="${quiz.qas.get(page).answers[3]}"></button>
+                </form>
+            </div>
+        </div>
     </div>
     </div>
 </div>
