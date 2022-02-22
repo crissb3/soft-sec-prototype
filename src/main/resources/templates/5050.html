@@ -43,7 +43,7 @@
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="user" th:value="${user.uid}">
                 <input type="hidden" name="answer" th:value="${correct}">
-                <button class="button-3d" type="submit" th:text="${correct}"></button>
+                <button class="button-3d" style="width: 300px; max-width: 300px; height: 100px; white-space: normal; word-wrap: break-word" type="submit" th:text="${correct}"></button>
 
             </form>
 
@@ -53,7 +53,7 @@
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="answer" th:value="${fake}">
                 <input type="hidden" name="user" th:value="${user.uid}">
-                <button class="button-3d" type="submit" th:text="${fake}"></button>
+                <button class="button-3d" style="width: 300px; max-width: 300px; height: 100px; white-space: normal; word-wrap: break-word" type="submit" th:text="${fake}"></button>
             </form>
             <span style="width: 20px;"></span>
         </div>
