@@ -7,6 +7,7 @@ import master.prototype.SoftwareSecurity.entity.QA;
 import master.prototype.SoftwareSecurity.entity.Quiz;
 import master.prototype.SoftwareSecurity.entity.Tag;
 import master.prototype.SoftwareSecurity.entity.Userclass;
+import master.prototype.SoftwareSecurity.helpers.CosineSimilarity;
 import master.prototype.SoftwareSecurity.service.QAService;
 import master.prototype.SoftwareSecurity.service.QuizService;
 import master.prototype.SoftwareSecurity.service.TagService;
@@ -406,29 +407,29 @@ public class QuizController {
         return "index";
     }
 
-    @GetMapping("/testquiz")
-    public String gettestquiz(Model model, @ModelAttribute String name){
-        Quiz quiz = new Quiz(name);
-        List<QA> qas = qaService.findAll();
-        model.addAttribute("quiz", quiz);
-        model.addAttribute("qas", qas);
-        quizService.save(quiz);
-        return "quiztest";
-    }
-    @PostMapping("/testquiz")
-    public String testquiz(@ModelAttribute("quiz") Quiz quiz){
-        quizService.save(quiz);
-        System.out.println(quiz);
-
-        return "index";
-    }
-    @GetMapping("/testfind")
-    public String testfind(Model model){
-        List<Quiz> quizzes = quizService.findAll();
-        model.addAttribute("quizzes", quizzes);
-
-        return "testfind";
-    }
+//    @GetMapping("/testquiz")
+//    public String gettestquiz(Model model, @ModelAttribute String name){
+//        Quiz quiz = new Quiz(name);
+//        List<QA> qas = qaService.findAll();
+//        model.addAttribute("quiz", quiz);
+//        model.addAttribute("qas", qas);
+//        quizService.save(quiz);
+//        return "quiztest";
+//    }
+//    @PostMapping("/testquiz")
+//    public String testquiz(@ModelAttribute("quiz") Quiz quiz){
+//        quizService.save(quiz);
+//        System.out.println(quiz);
+//
+//        return "index";
+//    }
+//    @GetMapping("/testfind")
+//    public String testfind(Model model){
+//        List<Quiz> quizzes = quizService.findAll();
+//        model.addAttribute("quizzes", quizzes);
+//
+//        return "testfind";
+//    }
 
     @GetMapping("/testiterate")
     public String testIterate(Model model, @RequestParam(name="page", defaultValue = "0") int page){
@@ -467,7 +468,55 @@ public class QuizController {
         return "callso";
     }
     @GetMapping("/askAudience")
-    public String askAudience(){
+    public String askAudience(@RequestParam Long id,
+                              @RequestParam int page,
+                              Model model){
+        Quiz quiz = quizService.findByqId(id);
+
+        model.addAttribute("question", quiz.getQas().get(page).getQuestion());
+        System.out.println(quiz.getQas().get(page).getQuestion());
+
+        List<String> answers = quiz.getQas().get(page).getAnswers();
+        String question = quiz.getQas().get(page).getQuestion();
+
+        String searchword = question.replaceAll("\\s+","%20");
+        String url = "https://customsearch.googleapis.com/customsearch/v1?cx=602325f04a96e5851&num=10&q=" +
+                searchword+"&prettyPrint=true&key=AIzaSyD01AyjxliyuVTXE1lyTCPdLR76TEMAbqQ";
+
+        try(java.io.InputStream is =
+                    new java.net.URL(url).openStream()) {
+            String contents = new String(is.readAllBytes());
+            JsonObject jsonObject = JsonParser.parseString(contents).getAsJsonObject();
+            JsonArray items = jsonObject.getAsJsonArray("items");
+            String snippets = "";
+            if(items != null){
+                for(int i = 0; i<items.size(); i++){
+                    JsonObject object = items.get(i).getAsJsonObject();
+                    System.out.println(object.get("snippet").toString().substring(1,object.get("snippet").toString().length() - 1));
+                    snippets += object.get("snippet").toString().substring(1,object.get("snippet").toString().length() - 1);
+                }
+                double sum_cosine = 0;
+                HashMap<String, Double> cos_list = new HashMap<>();
+                for(String answer : answers){
+                    CosineSimilarity cosineSimilarity = new CosineSimilarity(answer,snippets);
+                    sum_cosine += cosineSimilarity.getCosineSimilarity();
+                    System.out.println(answer+": "+cosineSimilarity.getCosineSimilarity());
+                    cos_list.put(answer, cosineSimilarity.getCosineSimilarity());
+                }
+                for(String answer : answers){
+                    double percent = cos_list.get(answer)/sum_cosine*100;
+                    System.out.println(percent);
+                }
+            }
+            else{
+                model.addAttribute("message","The audience could not decide on this question.");
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return "askaudience";
     }
 

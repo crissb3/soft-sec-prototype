@@ -6,8 +6,10 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 
-<body>
-
+<body onLoad="setTimeout(window.close, 30000);">
+<h1 th:text="${question}">
+</h1>
+<h1 th:text="${message}"></h1>
 </body>
 
 </html>

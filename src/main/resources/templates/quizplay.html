@@ -142,13 +142,14 @@
         </form>
         <form class="center_score" style="color: white; font-size: large; margin-top: 100px; margin-left: 250px" th:action="@{page(page=${page}, id=${quiz.QId})}" th:object="${quiz}">
             <div>
-                <input type="hidden" name="page" th:value="${page}">
+                <input id="p" type="hidden" name="page" th:value="${page}">
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="user" th:value="${user.uid}">
                 <input type="hidden" name="audience" th:value="${user.lifelines}">
+                <input type="hidden" id="audience_question" th:value="${quiz.QId}">
                 <button th:if="${user.lifelines.contains('audience')}" title="If you use this lifeline you will ask the audience what they think is the correct answer."
                         class="button_5050" type="submit"
-                        onclick="window.open('/askAudience',
+                        onclick="window.open('/askAudience/?id='+document.getElementById('audience_question').value+'&page='+document.getElementById('p').value,
                         'name', 'height=500, width=650')" style="float: left; width: 145px">
                     <i class="fas fa-users"></i>
                 </button>

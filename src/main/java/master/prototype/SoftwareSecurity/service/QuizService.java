@@ -29,4 +29,5 @@ public class QuizService {
     public Quiz findByqId(Long qId){return quizRepository.findByqId(qId);}
 
     public void deleteByqId(Long qId){quizRepository.deleteById(qId);}
+
 }
