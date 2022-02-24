@@ -491,7 +491,7 @@ public class QuizController {
         String searchword = question.replaceAll("\\s+", "%20");
         searchword = searchword.replaceAll("[^a-zA-Z0-9%]", "");
         System.out.println(searchword);
-        String url = "https://customsearch.googleapis.com/customsearch/v1?cx=602325f04a96e5851&num=10&q=" +
+        String url = "https://customsearch.googleapis.com/customsearch/v1?cx=f5e58680532973aeb&num=10&q=" +
                 searchword + "&prettyPrint=true&key=AIzaSyD01AyjxliyuVTXE1lyTCPdLR76TEMAbqQ";
 
         try (java.io.InputStream is =
@@ -503,8 +503,7 @@ public class QuizController {
             if (items != null) {
                 for (int i = 0; i < items.size(); i++) {
                     JsonObject object = items.get(i).getAsJsonObject();
-                    System.out.println(object.get("snippet").toString().substring(1, object.get("snippet").toString().length() - 1));
-                    snippets += object.get("snippet").toString().substring(1, object.get("snippet").toString().length() - 1);
+                    snippets = snippets + object.get("snippet").toString().substring(1, object.get("snippet").toString().length() - 1);
                 }
                 double sum_cosine = 0;
                 HashMap<String, Double> cos_list = new HashMap<>();

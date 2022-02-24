@@ -192,10 +192,10 @@
         </div>
         <strong style="color: white; float: right; position: absolute; right: 2%; top: 20%; font-size: 20px" th:text="${'Score: '+user.score+' / '+quiz.qas.size*10}"></strong>
         <div class="column" style="height: 100px; width: 1570px; position: absolute; top: 80%; left: 42px; column-gap: 0px">
-        <b style="padding: 0px; position: absolute; left: 12%; top: 0; color: white; text-shadow: 1px 1px black">A</b>
-        <b style="padding: 0px; position: absolute; left: 36%; top: 0; color: white; text-shadow: 1px 1px black">B</b>
-        <b style="padding: 0px; position: absolute; left: 58.5%; top: 0; color: white; text-shadow: 1px 1px black">C</b>
-        <b style="padding: 0px; position: absolute; left: 82%; top: 0; color: white; text-shadow: 1px 1px black">D</b>
+            <b style="padding: 0; position: absolute; left: 12%; top: 0; color: white; text-shadow: 1px 1px black">A</b>
+            <b style="padding: 0; position: absolute; left: 568px; top: 0; color: white; text-shadow: 1px 1px black">B</b>
+            <b style="padding: 0; position: absolute; left: 938px; top: 0; color: white; text-shadow: 1px 1px black">C</b>
+            <b style="padding: 0; position: absolute; left: 1308px; top: 0; color: white; text-shadow: 1px 1px black">D</b>
         <div class="column" style="height: 70px; width: 23%; text-align: center; float: left; padding: 5px">
 
             <form th:action="@{page(page=${page+1}, id=${quiz.QId})}" th:object="${quiz}">
