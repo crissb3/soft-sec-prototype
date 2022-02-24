@@ -19,12 +19,14 @@
 <div class="center">
     <div class="container">
         <br>
-        <h1 style="color:white; font-size: large; text-align: center; font-weight: normal" th:text="${'Quiz ID: '+quiz.QId}"></h1>
-        <h1 style="color:white; font-size: large; text-align: center; font-weight: normal" th:text="${'Quiz name: '+quiz.name}"></h1>
+        <div style="width: 800px; margin-left: 400px">
+            <h1 style="color:white; font-size: large; text-align: center; font-weight: normal" th:text="${'Quiz ID: '+quiz.QId}"></h1>
+            <h1 style="color:white; font-size: large; text-align: center; font-weight: normal" th:text="${'Quiz name: '+quiz.name}"></h1>
+            <p style="color:white; font-size: large; text-align: center" th:text="${'Question: '+quiz.qas[__${page}__].question}">
+        </div>
 
-        <p style="color:white; font-size: large; text-align: center" th:text="${'Question: '+quiz.qas[__${page}__].question}">
         <p th:if="${quiz.qas[__${page}__].img != null}">
-            <img style="max-width: 500px; max-height: 300px;" class="center_image" th:src="*{'data:image/png;base64,'+quiz.qas[__${page}__].img}" alt=""/>
+            <img style="max-width: 500px; max-height: 270px;" class="center_image" th:src="*{'data:image/png;base64,'+quiz.qas[__${page}__].img}" alt=""/>
         </p>
 
         <strong class="center_score" th:if="${user.lives>0}" th:text="${'Lives left:'}" style="color: white; font-size: large; position: absolute;"></strong>
@@ -43,7 +45,7 @@
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="user" th:value="${user.uid}">
                 <input type="hidden" name="answer" th:value="${correct}">
-                <button class="button-3d" style="width: 300px; max-width: 300px; height: 100px; white-space: normal; word-wrap: break-word" type="submit" th:text="${correct}"></button>
+                <button class="button-3d" style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word" type="submit" th:text="${correct}"></button>
 
             </form>
 
@@ -53,7 +55,7 @@
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="answer" th:value="${fake}">
                 <input type="hidden" name="user" th:value="${user.uid}">
-                <button class="button-3d" style="width: 300px; max-width: 300px; height: 100px; white-space: normal; word-wrap: break-word" type="submit" th:text="${fake}"></button>
+                <button class="button-3d" style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word" type="submit" th:text="${fake}"></button>
             </form>
             <span style="width: 20px;"></span>
         </div>
