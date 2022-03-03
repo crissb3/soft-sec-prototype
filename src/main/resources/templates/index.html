@@ -17,60 +17,11 @@
 <div class="center">
     <div class="container">
         <div class="center">
-            <div class="button-3d" onclick="window.location.href='/Quiz/Select'"><div class="button_text">Start Quiz</div></div>
-            <div class="divider_in_menu"></div>
-            <div class="button-3d" onclick="window.location.href='/Quiz/Create'"><div class="button_text">Create Quiz</div></div>
-            <div class="divider_in_menu"></div>
-            <div class="button-3d" onclick="window.location.href='/addQuestion'"><div class="button_text">Create questions</div></div>
-            <div class="divider_in_menu"></div>
-            <div class="button-3d"><div class="button_text">Edit Quiz</div></div>
-            <div class="divider_in_menu"></div>
-            <div class="button-3d" onclick="window.location.href='/Quiz/Delete'"><div class="button_text">Delete Quiz</div></div>
+            <div class="button-3d" onclick="window.location.href='/Quiz/Select'"><div class="button_text" style="font-size: 72px">Start Quiz</div></div>
         </div>
-<!--        <form th:action="@{/searchQA}">-->
-<!--            <h3>Search for Question/Answer:</h3>-->
-<!--            Search:<input type="text" name="question"><br><br>-->
-<!--&lt;!&ndash;            <button type="submit"><div class="button-3d"><div class="button_text">Load Quiz</div></div></button>&ndash;&gt;-->
-<!--            <input type="submit" name="submit" value="Search">-->
-<!--        </form><br>-->
         <div class=message>
             <strong style="color:white; margin-left: 20%"><span class=message th:text="${message}"></span></strong>
         </div>
-<!--            <tr th:each="qa : ${qas}">-->
-<!--                <td>ID:</td>-->
-<!--                <td th:text="${qa.qaId}">QA Id</td>-->
-<!--                <td>Question:</td>-->
-<!--                <td th:text="${qa.question}">Question</td>-->
-<!--                <br>-->
-<!--                <td>Answer options:</td>-->
-<!--                <td th:text="${qa.getAnswers().get(0)}">Answer</td>-->
-<!--                <td th:text="${qa.getAnswers().get(1)}">Answer</td>-->
-<!--                <td th:text="${qa.getAnswers().get(2)}">Answer</td>-->
-<!--                <td th:text="${qa.getAnswers().get(3)}">Answer</td>-->
-<!--                <br>-->
-<!--                <td>Correct answer:</td>-->
-<!--                <td th:text="${qa.getCorrectAnswer()}">Correct Answer</td>-->
-<!--                <br>-->
-<!--            </tr>-->
-<!--        </div>-->
-<!--        <form th:action="@{/addQA}">-->
-<!--            Question:-->
-<!--            <br>-->
-<!--            <input type="text" name="addquestion">-->
-<!--            <input type="submit" name="addquestionsubmit" value="Add question">-->
-<!--            <br>-->
-<!--            Add 3 fake answers:-->
-<!--            <br>-->
-<!--            <input type="text" name="fakeanswer1">-->
-<!--            <br>-->
-<!--            <input type="text" name="fakeanswer2">-->
-<!--            <br>-->
-<!--            <input type="text" name="fakeanswer3">-->
-<!--            <br>-->
-<!--            Add 1 correct answer:-->
-<!--            <br>-->
-<!--            <input type="text" name="correctanswer">-->
-<!--        </form>-->
     </div>
 </div>
 </body>

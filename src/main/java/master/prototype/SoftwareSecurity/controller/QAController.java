@@ -1,9 +1,5 @@
 package master.prototype.SoftwareSecurity.controller;
 
-//import master.prototype.SoftwareSecurity.entity.Capec;
-//import master.prototype.SoftwareSecurity.entity.CodingStandards;
-//import master.prototype.SoftwareSecurity.service.CapecService;
-//import master.prototype.SoftwareSecurity.service.CodingStandardsService;
 import master.prototype.SoftwareSecurity.entity.Tag;
 import master.prototype.SoftwareSecurity.service.QAService;
 import master.prototype.SoftwareSecurity.service.TagService;
@@ -41,7 +37,7 @@ public class QAController {
         model.addAttribute("message", "Successfully searched for questions containing: "
                 + question);
 
-        return "index";
+        return "adminindex";
     }
 
     @GetMapping("/addQuestion")
@@ -54,8 +50,8 @@ public class QAController {
     @GetMapping("/deleteQ")
     public String deleteQtemp(Model model) {
         model.addAttribute("message", "Successfully deleted");
-        qaService.deleteAll(); // TEMPORARY
-        return "index";
+        //qaService.deleteAll(); // TEMPORARY
+        return "adminindex";
     }
 
     @PostMapping("/addQA")

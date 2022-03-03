@@ -34,6 +34,10 @@ public class QuizController {
     @Autowired
     private TagService tagService;
 
+    @GetMapping("/adminindex")
+    public String admin(){
+        return "adminindex";
+    }
     @GetMapping("/Quiz/Create/Search")
     public String searchQuiz(Model model,
                              @RequestParam String question,
@@ -93,7 +97,7 @@ public class QuizController {
             quizService.save(quiz);
             model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + ".\n  Copy and share this ID if you want others to play your quiz.");
         }
-        return "index";
+        return "adminindex";
     }
 
     @PostMapping("/Quiz/Create-random")
@@ -126,7 +130,7 @@ public class QuizController {
             quizService.save(quiz);
             model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + ".\n  Copy and share this ID if you want others to play your quiz.");
         }
-        return "index";
+        return "adminindex";
     }
 
     @GetMapping("Quiz/Select")
@@ -410,32 +414,8 @@ public class QuizController {
         String name = quizService.findByqId(id).getName();
         quizService.deleteByqId(id);
         model.addAttribute("message", "Deleted quiz with name: " + name);
-        return "index";
+        return "adminindex";
     }
-
-//    @GetMapping("/testquiz")
-//    public String gettestquiz(Model model, @ModelAttribute String name){
-//        Quiz quiz = new Quiz(name);
-//        List<QA> qas = qaService.findAll();
-//        model.addAttribute("quiz", quiz);
-//        model.addAttribute("qas", qas);
-//        quizService.save(quiz);
-//        return "quiztest";
-//    }
-//    @PostMapping("/testquiz")
-//    public String testquiz(@ModelAttribute("quiz") Quiz quiz){
-//        quizService.save(quiz);
-//        System.out.println(quiz);
-//
-//        return "index";
-//    }
-//    @GetMapping("/testfind")
-//    public String testfind(Model model){
-//        List<Quiz> quizzes = quizService.findAll();
-//        model.addAttribute("quizzes", quizzes);
-//
-//        return "testfind";
-//    }
 
     @GetMapping("/testiterate")
     public String testIterate() {

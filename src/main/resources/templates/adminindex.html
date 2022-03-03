@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SecQuiz</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+    <div class="text_frame_menu">
+        <div class="single_text_in_menu" onclick="window.location.href='/adminindex'">Home</div>
+        <div class="single_text_in_menu"></div>
+        <div class="single_text_in_menu" onclick="window.location.href='/Quiz/Leaderboard/Select'">Leaderboard</div>
+    </div>
+    <div class="logo_text">SoftSec Quiz</div>
+
+<div class="center">
+    <div class="container">
+        <div class="center">
+            <div class="button-3d" onclick="window.location.href='/Quiz/Select'"><div class="button_text">Start Quiz</div></div>
+            <div class="divider_in_menu"></div>
+            <div class="button-3d" onclick="window.location.href='/Quiz/Create'"><div class="button_text">Create Quiz</div></div>
+            <div class="divider_in_menu"></div>
+            <div class="button-3d" onclick="window.location.href='/addQuestion'"><div class="button_text">Create questions</div></div>
+            <div class="divider_in_menu"></div>
+<!--            <div class="button-3d"><div class="button_text">Edit Quiz</div></div>-->
+<!--            <div class="divider_in_menu"></div>-->
+            <div class="button-3d" onclick="window.location.href='/Quiz/Delete'"><div class="button_text">Delete Quiz</div></div>
+        </div>
+        <div class=message>
+            <strong style="color:white; margin-left: 20%"><span class=message th:text="${message}"></span></strong>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
