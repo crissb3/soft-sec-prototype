@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>SecQuiz</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script type="text/javascript" th:src="@{/js/popup.js}"></script>
+    <script src="https://kit.fontawesome.com/7401e2a6eb.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -16,26 +18,9 @@
 
     <div class="center">
         <div class="container">
-            <div class="center">
-                <div style="height:400px; width: 1000px; margin-left: 200px; overflow: auto; border: 1px solid black; font-size: 18px;">
-                    <div>
-                        <form th:action="@{/testimg}" method="post" enctype="multipart/form-data">
-                            <label>Upload:</label>
-                            <input type="file" name="img" accept="image/png, image/jpeg">
-                            <input style="margin-left: 50px; margin-top: 50px;" type="submit" name="submit" value="Upload">
-                        </form>
-                        <tr th:each="qa : ${qas}">
-                            <td>
-                                <img style="max-width: 100px; max-height: 100px" th:src="*{'data:image/png;base64,'+qa.img}" alt=""/>
-                            </td>
-                        </tr>
-                        <form>
-                        <a th:href="@{'https://www.stackoverflow.com/'+'search?q=Test/'}" target="popup"
-                           onclick="window.open('https://www.stackoverflow.com/'+'search?q=Test','name','width=600,height=500')">Ask Stackoverflow</a>
-                        </form>
-                    </div>
-                </div>
-            </div>
+
+
+
         </div>
     </div>
 </body>

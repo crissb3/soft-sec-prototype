@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <title>SecQuiz</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/popup.js}"></script>
     <link rel="stylesheet" th:href="@{/chosen/chosen.css}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body>
     <div class="text_frame_menu">
         <div class="single_text_in_menu" onclick="window.location.href='/'">Home</div>
-        <div class="single_text_in_menu">Achievements</div>
+        <div class="single_text_in_menu"></div>
         <div class="single_text_in_menu" onclick="window.location.href='/Quiz/Leaderboard/Select'">Leaderboard</div>
     </div>
     <div class="logo_text">SoftSec Quiz</div>
@@ -58,6 +59,8 @@
                 $("ul.chosen-choices").css({ "overflow": 'auto', "max-height": "70px", "float": "left"});
             </script>
             </div>
+            <strong style="color: white; font-weight: normal; text-shadow: 2px 2px black">Add an explanation to the answer:</strong><br>
+            <textarea type="text" name="explanation" style="float: left"></textarea><br><br>
             <input class="button_5050" type="submit" name="addquestionsubmit" value="Add question" style="float: left; margin-right: 10px; position: absolute">
 <!--            <ul style="float: bottom">-->
 <!--&lt;!&ndash;                <strong style="font-weight: normal; color: white; text-shadow: 2px 2px black">Tags:</strong><br>&ndash;&gt;-->
@@ -70,7 +73,7 @@
 
 
         </form>
-        <form th:method="post" style="float: left; margin-top: 35%; margin-left: -23%" th:action="@{/addTag}">
+        <form th:method="post" style="float: left; margin-top: 40%; margin-left: -23%" th:action="@{/addTag}">
             <label class="custom-field one" style="top: -2px">
                 <input type="text" name="custom_tag" placeholder=" "><span class="placeholder">Enter Custom Tag</span>
             </label>

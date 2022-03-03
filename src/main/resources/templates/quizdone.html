@@ -4,18 +4,34 @@
     <meta charset="UTF-8">
     <title>SecQuiz</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/popup.js}"></script>
 </head>
 
-<body>
+<body onload="popupload()">
     <div class="text_frame_menu">
         <div class="single_text_in_menu" onclick="window.location.href='/'">Home</div>
-        <div class="single_text_in_menu">Achievements</div>
+        <div class="single_text_in_menu"></div>
         <div class="single_text_in_menu" onclick="window.location.href='/Quiz/Leaderboard/Select'">Leaderboard</div>
     </div>
     <div class="logo_text">SoftSec Quiz</div>
 
 <div class="center">
     <div class="container">
+        <script>function popupload(){togglePopup();}</script>
+        <div class="popup" id="popup-1" style="float:right;">
+            <div class="overlay" th:onClick="togglePopup()"></div>
+            <div class="content">
+                <div class="close-btn" th:onClick="togglePopup()">&times;</div>
+                <h1>Question:</h1>
+                <strong th:if="${page>0}" style="color: black; font-weight: normal; font-size: 22px; text-overflow: ellipsis; width: 900px; display:inline-block" th:text="${quiz.qas.get(page -1).question}"></strong>
+                <h1>Correct answer:</h1>
+                <strong th:if="${page>0}" style="font-size: 22px; text-overflow: ellipsis; width: 900px; display:inline-block" th:text="${quiz.qas.get(page -1).correctAnswer}"></strong>
+                <h1>Explanation:</h1>
+                <strong th:if="${page>0}" style="font-size: 22px; text-overflow: ellipsis; width: 900px; display:inline-block" th:text="${quiz.qas.get(page -1).explanation}"></strong>
+            </div>
+        </div>
+
         <div class="center">
             <strong style="color:white; font-size: large;" th:text="${'Quiz ID: '+quiz.QId}"></strong>
             <br>

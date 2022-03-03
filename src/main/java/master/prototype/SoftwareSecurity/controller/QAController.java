@@ -64,6 +64,7 @@ public class QAController {
                             @RequestParam String fakeanswer2,
                             @RequestParam String fakeanswer3,
                             @RequestParam String correctanswer,
+                            @RequestParam(required = false) String explanation,
                             @RequestParam(value = "file", required = false) MultipartFile file,
                             @RequestParam(value = "tags", required = false) List<String> tags,
                             Model model) throws IOException {
@@ -79,7 +80,7 @@ public class QAController {
         || fakeanswer1.length()>255
         || fakeanswer2.length()>255
         || fakeanswer3.length()>255){
-            model.addAttribute("message", "The maximum length of a question or an answer can be is 255 characters.");
+            model.addAttribute("message", "The maximum length that a question or an answer can be is 255 characters.");
             return "createquestion";
         }
         else {
@@ -96,7 +97,13 @@ public class QAController {
                 String fileName = StringUtils.cleanPath(file.getOriginalFilename());
                 qa.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
             }
-
+            if(!explanation.equals(""))
+            {
+                qa.setExplanation(explanation);
+            }
+            if(explanation.equals("")){
+                qa.setExplanation("No explanation added.");
+            }
             qaService.save(qa);
             model.addAttribute("tags",tagService.findAll());
             model.addAttribute("message", "Created question: " + addquestion);

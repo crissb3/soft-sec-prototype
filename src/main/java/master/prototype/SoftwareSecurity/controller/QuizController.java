@@ -302,9 +302,10 @@ public class QuizController {
                 score += 10;
                 userclass.setScore(score);
                 userService.save(userclass);
+                model.addAttribute("correct", "Your answer was correct!"); //<<<<<<------>>>>>>
             }
             model.addAttribute("id", id);
-            model.addAttribute("page", 0);
+            model.addAttribute("page", page);
             model.addAttribute("quiz", quiz);
 //            model.addAttribute("score", score);
             model.addAttribute("user", userclass);
@@ -320,7 +321,7 @@ public class QuizController {
             }
             if (lives == 0) {
                 model.addAttribute("id", id);
-                model.addAttribute("page", 0);
+                model.addAttribute("page", page);
                 model.addAttribute("quiz", quiz);
 //                model.addAttribute("score", score);
                 model.addAttribute("user", userclass);
@@ -345,10 +346,10 @@ public class QuizController {
                              @RequestParam("user") long uid) {
         List<Userclass> scores;
         Userclass user = userService.findUserById(uid);
-        if (name == "") {
+        if (name.equals("")) {
             user.setUsername("User " + uid);
         }
-        if (name != "") {
+        if (!name.equals("")) {
             user.setUsername(name);
         }
         userService.save(user);
@@ -437,17 +438,7 @@ public class QuizController {
 //    }
 
     @GetMapping("/testiterate")
-    public String testIterate(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
-
-        List<Quiz> quizzes = quizService.findAll();
-        if (quizzes.size() == page) {
-            model.addAttribute("quizzes", quizzes);
-            model.addAttribute("page", 0);
-        } else {
-            model.addAttribute("quizzes", quizzes);
-            model.addAttribute("page", page);
-        }
-
+    public String testIterate() {
         return "testiterate";
     }
 

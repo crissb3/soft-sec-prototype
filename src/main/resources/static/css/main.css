@@ -381,6 +381,10 @@ input[type=checkbox]{
     font-size: 28px;
 }
 
+.fa-bitcoin-sign {
+    font-size: 28px;
+}
+
 .protection_glow {
     border-radius: 20%;
     box-shadow:

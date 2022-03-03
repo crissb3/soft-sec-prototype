@@ -15,6 +15,7 @@ public class QA {
 
     private String question;
     private String correctAnswer;
+    private String explanation;
     @ElementCollection
     private List<String> answers;
     @ElementCollection
