@@ -28,22 +28,25 @@
             <strong style="font-weight: normal; color: white; font-size: 18px; float: bottom">Use the links below to help construct your questions.</strong>
         </div>
         <form th:action="@{/addQA}" style="font-size: 24px; margin-left: 50px; margin-top: 50px; float: left" th:method="post" enctype="multipart/form-data">
-            <strong style="color: white; font-weight: normal; text-shadow: 2px 2px black">Question:</strong>
-            <input type="file" name="file" accept="image/png, image/jpeg">
+            <strong style="color: white; font-weight: normal; text-shadow: 2px 2px black">Image as question:</strong>
+            <input type="file" name="file" accept="image/png, image/jpeg" style="font-family: poetsenone, sans-serif; color: white">
             <br>
-            <textarea type="text" name="addquestion" style="height: 50px;"></textarea>
-            <br>
-            <strong style="color: white; font-weight: normal; text-shadow: 2px 2px black">Add 3 fake answers:</strong>
-            <br>
-            <textarea type="text" name="fakeanswer1"></textarea>
-            <br>
-            <textarea type="text" name="fakeanswer2"></textarea>
-            <br>
-            <textarea type="text" name="fakeanswer3"></textarea>
-            <br>
-            <strong style="color:white; font-weight: normal; text-shadow: 2px 2px black">Add the correct answer:</strong>
-            <br>
-            <textarea type="text" name="correctanswer"></textarea>
+            <textarea class="textarea_custom" type="text" name="addquestion" style="height: 50px;" placeholder="Enter question"
+                      onfocus="this.placeholder=''" onblur="this.placeholder='Enter question'"></textarea>
+
+            <strong style="color: white; font-weight: normal; text-shadow: 2px 2px black">Add 3 fake answers and the correct answer:</strong>
+
+            <textarea class="textarea_custom" placeholder="Enter first fake answer"
+                      onfocus="this.placeholder=''" onblur="this.placeholder='Enter first fake answer'" type="text" name="fakeanswer1"></textarea>
+
+            <textarea class="textarea_custom" placeholder="Enter second fake answer"
+                      onfocus="this.placeholder=''" onblur="this.placeholder='Enter second fake answer'" type="text" name="fakeanswer2"></textarea>
+
+            <textarea class="textarea_custom" placeholder="Enter third fake answer"
+                      onfocus="this.placeholder=''" onblur="this.placeholder='Enter third fake answer'" type="text" name="fakeanswer3"></textarea>
+
+            <textarea class="textarea_custom" placeholder="Enter the correct answer"
+                      onfocus="this.placeholder=''" onblur="this.placeholder='Enter the correct answer'" type="text" name="correctanswer"></textarea>
             <br>
             <strong style="color: white; font-weight: normal; text-shadow: 2px 2px black">Add Tags to question:</strong>
             <div style="height: 75px">
@@ -59,27 +62,19 @@
                 $("ul.chosen-choices").css({ "overflow": 'auto', "max-height": "70px", "float": "left"});
             </script>
             </div>
-            <strong style="color: white; font-weight: normal; text-shadow: 2px 2px black">Add an explanation to the answer:</strong><br>
-            <textarea type="text" name="explanation" style="float: left"></textarea><br><br>
-            <input class="button_5050" type="submit" name="addquestionsubmit" value="Add question" style="float: left; margin-right: 10px; position: absolute">
-<!--            <ul style="float: bottom">-->
-<!--&lt;!&ndash;                <strong style="font-weight: normal; color: white; text-shadow: 2px 2px black">Tags:</strong><br>&ndash;&gt;-->
-<!--&lt;!&ndash;                <strong style="font-weight: normal; margin-right: 6px; color: white">Network</strong><input type="checkbox" name="tag1" th:value="NETWORK">&ndash;&gt;-->
-<!--&lt;!&ndash;                <strong style="font-weight: normal; margin-right: 6px; color: white">Software Security</strong><input type="checkbox" name="tag2" th:value="SOFTWARE_SECURITY">&ndash;&gt;-->
-<!--&lt;!&ndash;                <strong style="font-weight: normal; margin-right: 6px; color: white">Coding Standard</strong><input type="checkbox" name="tag3" th:value="CODING_STANDARD">&ndash;&gt;-->
-<!--            </ul>-->
-
-
+            <textarea class="textarea_custom" placeholder="Add an explanation to the answer"
+                      onfocus="this.placeholder=''" onblur="this.placeholder='Add an explanation to the answer'" type="text" name="explanation" style="float: left"></textarea><br><br>
+            <input class="button_5050" type="submit" name="addquestionsubmit" value="Add question" style="float: left; top: 78%; left: 30%; font-size: 20px; position: absolute">
 
 
         </form>
-        <form th:method="post" style="float: left; margin-top: 40%; margin-left: -23%" th:action="@{/addTag}">
+        <form th:method="post" style="float: left; margin-top: 40%; margin-left: -30%" th:action="@{/addTag}">
             <label class="custom-field one" style="top: -2px">
                 <input type="text" name="custom_tag" placeholder=" "><span class="placeholder">Enter Custom Tag</span>
             </label>
             <button type="submit" class="button_plus">+</button>
         </form>
-        <form style="margin-top: 50px; margin-left: 40%;">
+        <form style="margin-top: 50px; margin-left: 51%;">
             <a style="width: 35%" class="button_5050" th:href="@{'https://capec.mitre.org/data/definitions/1000.html'}" target="popup"
                onclick="window.open('https://capec.mitre.org/data/definitions/1000.html','name','width=600,height=500')">Capec - Mechanisms Of Attack</a>
             <br>

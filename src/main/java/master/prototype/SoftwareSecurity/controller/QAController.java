@@ -70,6 +70,7 @@ public class QAController {
                 || fakeanswer3.isEmpty()
                 || correctanswer.isEmpty()) {
             model.addAttribute("message", "You can't leave an empty field.");
+            model.addAttribute("tags",tagService.findAll());
             return "createquestion";
         }
         if(addquestion.length()>255
@@ -77,6 +78,7 @@ public class QAController {
         || fakeanswer2.length()>255
         || fakeanswer3.length()>255){
             model.addAttribute("message", "The maximum length that a question or an answer can be is 255 characters.");
+            model.addAttribute("tags",tagService.findAll());
             return "createquestion";
         }
         else {

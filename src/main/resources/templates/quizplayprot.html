@@ -178,7 +178,7 @@
             var scoreBenchmark  = [[${quiz.qas.size*10}]];
             var score           = [[${user.score}]];
             function init(){
-                $('.score_bar').attr('style', 'height:' + (((score / scoreBenchmark) * 100)*3.5) + 'px' );
+                $('.score_bar').attr('style', 'height:' + (((score / scoreBenchmark) * 100)*3.9) + 'px' );
             };
 
 
@@ -190,7 +190,20 @@
         <div class="container_score_bar">
             <div class="score_bar"></div>
         </div>
-        <strong style="color: white; float: right; position: absolute; right: 2%; top: 20%; font-size: 20px" th:text="${'Score: '+user.score+' / '+quiz.qas.size*10}"></strong>
+        <strong style="color: white; float: right; position: absolute; right: 2%; top: 20%; font-size: 20px" th:text="${user.score*1000+' / '+quiz.qas.size*10000}"></strong>
+        <i class="fas fa-coins" style="font-size: 68px; position: absolute; right: 4%; top: 10%; float: right; color: gold;"></i>
+        <div class="score_rows">
+            <th:block th:each="i: ${#numbers.sequence(quiz.qas.size() - 1, 0, -1)}">
+                <div class="tenPercent" th:if="${i == 3 || i == 5 || i == 8}" th:style="${user.score*1000==i*10000 ? 'background-color: #1cb3df; color: gold;' : 'color: gold'}">
+                    <strong th:text="${i*10000}"></strong>
+                </div>
+                <div class="tenPercent" th:if="!${i == 3 || i == 5 || i == 8}" th:style="${user.score*1000==i*10000 ? 'background-color: #1cb3df; color: black;' : ''}">
+                    <strong th:text="${i*10000}"></strong>
+                </div>
+
+            </th:block>
+        </div>
+        <strong style="color: white; float: right; position: absolute; right: 2%; top: 20%; font-size: 20px" th:text="${user.score*1000+' / '+quiz.qas.size*10000}"></strong>
         <div class="column" style="height: 100px; width: 1570px; position: absolute; top: 80%; left: 42px; column-gap: 0px">
             <b style="padding: 0; position: absolute; left: 12%; top: 0; color: white; text-shadow: 1px 1px black">A</b>
             <b style="padding: 0; position: absolute; left: 568px; top: 0; color: white; text-shadow: 1px 1px black">B</b>

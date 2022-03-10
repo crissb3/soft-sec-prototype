@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -33,6 +34,7 @@ public class QuizController {
     private UserService userService;
     @Autowired
     private TagService tagService;
+
 
     @GetMapping("/adminindex")
     public String admin(){
@@ -91,9 +93,12 @@ public class QuizController {
 
         if (quiz.getName().isEmpty()) {
             model.addAttribute("message", "Can't create quiz without a name.");
-        } else {
+        }
+        if (quiz.getQas().size()>10){
+            model.addAttribute("message", "The maximum number of questions allowed is 10.");
+        }
+        else {
             quiz.setLives(lives);
-
             quizService.save(quiz);
             model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + ".\n  Copy and share this ID if you want others to play your quiz.");
         }
@@ -133,7 +138,7 @@ public class QuizController {
         return "adminindex";
     }
 
-    @GetMapping("Quiz/Select")
+    @GetMapping("")
     public String selectQuiz(Model model) {
         List<Quiz> quizzes = quizService.findAll();
         model.addAttribute("quizzes", quizzes);
@@ -208,6 +213,9 @@ public class QuizController {
             model.addAttribute("id", id);
             model.addAttribute("page", page);
             model.addAttribute("quiz", quiz);
+
+            userclass = userService.userScore(userclass, quiz);
+            userService.save(userclass);
             model.addAttribute("user", userclass);
             return "quizdone";
         }
@@ -215,6 +223,9 @@ public class QuizController {
             model.addAttribute("id", id);
             model.addAttribute("page", page);
             model.addAttribute("quiz", quiz);
+
+            userclass = userService.userScore(userclass, quiz);
+            userService.save(userclass);
             model.addAttribute("user", userclass);
             return "quizdone";
         }
@@ -311,7 +322,9 @@ public class QuizController {
             model.addAttribute("id", id);
             model.addAttribute("page", page);
             model.addAttribute("quiz", quiz);
-//            model.addAttribute("score", score);
+
+            userclass = userService.userScore(userclass, quiz);
+            userService.save(userclass);
             model.addAttribute("user", userclass);
             return "quizdone";
         } else if (answer.equals(quiz.getQas().get(page - 1).getCorrectAnswer())) {
@@ -327,7 +340,9 @@ public class QuizController {
                 model.addAttribute("id", id);
                 model.addAttribute("page", page);
                 model.addAttribute("quiz", quiz);
-//                model.addAttribute("score", score);
+
+                userclass = userService.userScore(userclass, quiz);
+                userService.save(userclass);
                 model.addAttribute("user", userclass);
                 return "quizdone";
             }
@@ -338,7 +353,6 @@ public class QuizController {
         model.addAttribute("id", id);
         model.addAttribute("page", page);
         model.addAttribute("quiz", quiz);
-//            model.addAttribute("score", score);
         model.addAttribute("user", userclass);
         return "quizplay";
     }
@@ -364,16 +378,19 @@ public class QuizController {
             scores = quiz.getScores();
         }
         if (user.getScore() > (quiz.getQas().size() * 10)) {
-            model.addAttribute("message", "You cheated! Score not posted for user: " + name);
+            if(name.equals(""))model.addAttribute("message", "You cheated! Score not posted for user: User " + uid);
+            if(!name.equals(""))model.addAttribute("message", "You cheated! Score not posted for user: " + name);
             return "index";
         }
+
         scores.add(user);
         quiz.setScores(scores);
         quizService.save(quiz);
 
         model.addAttribute("name", name);
         model.addAttribute("score", user.getScore());
-        model.addAttribute("message", "Score posted to leaderboard for user: " + name);
+        if(name.equals(""))model.addAttribute("message", "Score posted to leaderoard for user: User "+uid);
+        if(!name.equals(""))model.addAttribute("message", "Score posted to leaderboard for user: " + name);
         return "index";
     }
 
@@ -390,7 +407,8 @@ public class QuizController {
         Quiz quiz = quizService.findByqId(id);
         List<Userclass> scores = quiz.getScores();
         Collections.sort(scores, Comparator.comparingInt(Userclass::getScore).reversed());
-        model.addAttribute("scores", scores);
+        List<Userclass> top10 = scores.stream().limit(10).collect(Collectors.toList());
+        model.addAttribute("scores", top10);
         return "leaderboard";
     }
 
@@ -454,14 +472,13 @@ public class QuizController {
         Quiz quiz = quizService.findByqId(id);
 
         model.addAttribute("question", quiz.getQas().get(page).getQuestion());
-        System.out.println(quiz.getQas().get(page).getQuestion());
 
         List<String> answers = quiz.getQas().get(page).getAnswers();
         String question = quiz.getQas().get(page).getQuestion();
 
         String searchword = question.replaceAll("\\s+", "%20");
         searchword = searchword.replaceAll("[^a-zA-Z0-9%]", "");
-        System.out.println(searchword);
+
         String url = "https://customsearch.googleapis.com/customsearch/v1?cx=f5e58680532973aeb&num=10&q=" +
                 searchword + "&prettyPrint=true&key=AIzaSyD01AyjxliyuVTXE1lyTCPdLR76TEMAbqQ";
 
@@ -481,15 +498,12 @@ public class QuizController {
                 for (String answer : answers) {
                     CosineSimilarity cosineSimilarity = new CosineSimilarity(answer, snippets);
                     sum_cosine += cosineSimilarity.getCosineSimilarity();
-                    System.out.println(answer + ": " + cosineSimilarity.getCosineSimilarity());
                     cos_list.put(answer, cosineSimilarity.getCosineSimilarity());
                 }
                 int counter = 0;
                 List<String> abcd = new ArrayList<>(Arrays.asList("A", "B", "C", "D"));
                 for (String answer : answers) {
                     double percent = cos_list.get(answer) / sum_cosine * 100;
-                    System.out.println(answer);
-                    System.out.println(percent);
                     model.addAttribute(abcd.get(counter),String.format("%.0f",percent));
                     counter++;
                 }

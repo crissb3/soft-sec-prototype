@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/popup.js}"></script>
+    <script type="text/javascript" th:src="@{/js/popupquizplay.js}"></script>
     <script src="https://kit.fontawesome.com/7401e2a6eb.js" crossorigin="anonymous"></script>
 </head>
 
@@ -55,9 +56,6 @@
 
                         if (seconds <= 0) {
                             clearInterval(countdownTimer);
-                            // const params = new Proxy(new URLSearchParams(window.location.search), {
-                            //     get: (searchParams, prop) => searchParams.get(prop),
-                            // });
                             var qid = "[[${quiz.QId}]]";
                             var uid = "[[${user.uid}]]";
                             var page = "[[${page+1}]]";
@@ -197,7 +195,7 @@
             const score = [[${user.score}]];
 
             function init() {
-                $('.score_bar').attr('style', 'height:' + (((score / scoreBenchmark) * 100) * 3.5) + 'px');
+                $('.score_bar').attr('style', 'height:' + (((score / scoreBenchmark) * 100) * 3.9) + 'px');
             }
 
 
@@ -210,7 +208,18 @@
         </div>
         <strong style="color: white; float: right; position: absolute; right: 2%; top: 20%; font-size: 20px"
                 th:text="${user.score*1000+' / '+quiz.qas.size*10000}"></strong>
-        <i class="fas fa-coins" style="font-size: 38px; position: absolute; right: 4%; top: 15%; float: right; color: gold;"></i>
+        <i class="fas fa-coins" style="font-size: 68px; position: absolute; right: 4%; top: 10%; float: right; color: gold;"></i>
+        <div class="score_rows">
+        <th:block th:each="i: ${#numbers.sequence(quiz.qas.size() - 1, 0, -1)}">
+            <div class="tenPercent" th:if="${i == 3 || i == 5 || i == 8}" th:style="${user.score*1000==i*10000 ? 'background-color: #1cb3df; color: gold;' : 'color: gold'}">
+                <strong th:text="${i*10000}"></strong>
+            </div>
+            <div class="tenPercent" th:if="!${i == 3 || i == 5 || i == 8}" th:style="${user.score*1000==i*10000 ? 'background-color: #1cb3df; color: black;' : ''}">
+                <strong th:text="${i*10000}"></strong>
+            </div>
+
+        </th:block>
+        </div>
 
         <div class="column" style="height: 100px; width: 1570px; position: absolute; top: 80%; left: 42px; column-gap: 0">
             <b style="padding: 0; position: absolute; left: 12%; top: 0; color: white; text-shadow: 1px 1px black">A</b>
@@ -267,24 +276,29 @@
                 </form>
             </div>
         </div>
+        <div class="popup" id="popup-2" style="float:right;">
+            <div class="overlay" th:onClick="togglePopupQuizPlay()"></div>
+            <div class="content">
+                <div class="close-btn" th:onClick="togglePopupQuizPlay()">&times;</div>
+                <br><br><br>
+                <h1 style="">Score:</h1>
+                <strong style="color: black; font-weight: normal; font-size: 22px">
+                    Reach the golden scores so that you don't drop in score.
+                    <br>If you do not reach the golden score you will drop down<br>
+                    to the previous golden score or 0 if you didn't<br> reach any yet.<br>
+                </strong>
+                <h1>Lifelines:</h1>
+                <strong style="font-size: 22px">
+                    Shield - You don't lose a life if you answer wrong.<br>
+                    50/50 - Two of the wrong answers gets eliminated.<br>
+                    Call a friend - You write your question in the search box <br> and select
+                    which friend you want to call.<br>
+                    Ask the audience - You ask the audience what they think the correct answer is.
+                </strong>
+            </div>
+        </div>
+        <button style="position: absolute; top: 5%; left: 4%; padding: 1px 8px; font-size: 30px" class="button_5050" th:onClick="togglePopupQuizPlay()">?</button>
     </div>
-
-
-    <!--    <div class="gcse-searchbox-only" data-newWindow="true">-->
-    <!--        <input type="text" id="testgoogle">-->
-    <!--        <script>-->
-    <!--            (function() {-->
-    <!--                var cx = '012899561505164599335:sxqdbjuqaxm';-->
-    <!--                var gcse = document.createElement('script');-->
-    <!--                gcse.type = 'text/javascript';-->
-    <!--                gcse.async = true;-->
-    <!--                gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;-->
-    <!--                var s = document.getElementsByTagName('script')[0];-->
-    <!--                s.parentNode.insertBefore(gcse, s);-->
-    <!--            })();-->
-    <!--        </script>-->
-    <!--    </div>-->
-
 </div>
 </body>
 

@@ -30,7 +30,7 @@
                     <tr th:each="score : ${scores}">
                         <td align="center" th:text="${score.uid}"></td>
                         <td align="center" th:text="${score.username}"></td>
-                        <td align="center" th:text="${score.score}"></td>
+                        <td align="center" th:text="${score.score*1000}"></td>
                     </tr>
                 </table>
             </div>
