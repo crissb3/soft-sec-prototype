@@ -400,6 +400,34 @@ public class QuizController {
         model.addAttribute("quizzes", quizzes);
         return "quizselectleaderboard";
     }
+    @GetMapping("Quiz/Leaderboard/Search-name")
+    public String selectLeaderboardSearchName(Model model,
+                                       @RequestParam(required = false) String name) {
+        List<Quiz> quizzes;
+        if (!(name.equals(""))) {
+            quizzes = quizService.findByName(name);
+        } else {
+            quizzes = quizService.findAll();
+        }
+        model.addAttribute("quizzes", quizzes);
+        return "quizselectleaderboard";
+    }
+    @GetMapping("Quiz/Leaderboard/Search-id")
+    public String selectLeaderboardSearchID(Model model,
+                                   @RequestParam(required = false) Long qid) {
+        List<Quiz> quizzes = new ArrayList<>();
+        if (!(qid == null)) {
+            if (!(quizService.findByqId(qid) == null)) {
+                Quiz quiz = quizService.findByqId(qid);
+                quizzes.add(quiz);
+            }
+        }
+        else {
+            quizzes = quizService.findAll();
+        }
+        model.addAttribute("quizzes", quizzes);
+        return "quizselectleaderboard";
+    }
 
     @GetMapping("/Quiz/Leaderboard/{id}")
     public String leaderboard(Model model,
