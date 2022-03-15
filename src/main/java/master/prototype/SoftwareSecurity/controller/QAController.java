@@ -43,7 +43,7 @@ public class QAController {
     @GetMapping("/addQuestion")
     public String createQuestion(Model model) {
         model.addAttribute("tags",tagService.findAll());
-        model.addAttribute("message", "Create questions page!");
+        model.addAttribute("message", "Create questions page! Use the links below to help construct your questions.");
         return "createquestion";
     }
 
@@ -69,7 +69,7 @@ public class QAController {
                 || fakeanswer2.isEmpty()
                 || fakeanswer3.isEmpty()
                 || correctanswer.isEmpty()) {
-            model.addAttribute("message", "You can't leave an empty field.");
+            model.addAttribute("message", "You can't leave an empty field. Use the links below to help construct your questions.");
             model.addAttribute("tags",tagService.findAll());
             return "createquestion";
         }
@@ -77,7 +77,7 @@ public class QAController {
         || fakeanswer1.length()>255
         || fakeanswer2.length()>255
         || fakeanswer3.length()>255){
-            model.addAttribute("message", "The maximum length that a question or an answer can be is 255 characters.");
+            model.addAttribute("message", "The maximum length that a question or an answer can be is 255 characters. ");
             model.addAttribute("tags",tagService.findAll());
             return "createquestion";
         }
@@ -104,7 +104,7 @@ public class QAController {
             }
             qaService.save(qa);
             model.addAttribute("tags",tagService.findAll());
-            model.addAttribute("message", "Created question: " + addquestion);
+            model.addAttribute("message", "Created question: " + addquestion +".");
         }
 
         return "createquestion";
@@ -114,16 +114,14 @@ public class QAController {
         Tag tag = new Tag();
         boolean isFound = tagService.findAll().stream().anyMatch(o -> o.getTag().equalsIgnoreCase(custom_tag));
         if(isFound){
-            model.addAttribute("tags",tagService.findAll());
-            model.addAttribute("message", "Tag already exists. ");
-            return "createquestion";
+            model.addAttribute("message", "Tag already exists.");
         }
         else{
             tag.setTag(custom_tag);
             tagService.save(tag);
+            model.addAttribute("message", "Tag created: "+tag.getTag());
         }
         model.addAttribute("tags",tagService.findAll());
-        model.addAttribute("message", "Create questions page!");
         return "createquestion";
     }
 

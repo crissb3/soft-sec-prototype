@@ -11,8 +11,8 @@
 </head>
 <body>
     <div class="text_frame_menu">
-        <div class="single_text_in_menu" onclick="window.location.href='/adminindex'">Home</div>
-        <div class="single_text_in_menu"></div>
+        <div class="single_text_in_menu" onclick="window.location.href='/'">Home</div>
+        <div class="single_text_in_menu" onclick="window.location.href='/adminindex'">Admin</div>
         <div class="single_text_in_menu" onclick="window.location.href='/Quiz/Leaderboard/Select'">Leaderboard</div>
     </div>
     <div class="logo_text">SoftSec Quiz</div>
@@ -21,16 +21,13 @@
     <div class="container">
         <div class="center">
         </div>
-        <br>
-        <br>
-        <div style="margin-left: 30%">
+        <div style="margin-left: 30%; width: 700px; max-width: 700px; white-space: nowrap; overflow: hidden">
             <strong style="font-weight: normal; color: white; font-size: 18px;" th:text="${message}"></strong>
-            <strong style="font-weight: normal; color: white; font-size: 18px; float: bottom">Use the links below to help construct your questions.</strong>
         </div>
-        <form th:action="@{/addQA}" style="font-size: 24px; margin-left: 50px; margin-top: 50px; float: left" th:method="post" enctype="multipart/form-data">
+        <form th:action="@{/addQA}" style="font-size: 24px; margin-left: 50px; margin-top: 50px; float: left;" th:method="post" enctype="multipart/form-data">
             <strong style="color: white; font-weight: normal; text-shadow: 2px 2px black">Image as question:</strong>
             <input type="file" name="file" accept="image/png, image/jpeg" style="font-family: poetsenone, sans-serif; color: white">
-            <br>
+
             <textarea class="textarea_custom" type="text" name="addquestion" style="height: 50px;" placeholder="Enter question"
                       onfocus="this.placeholder=''" onblur="this.placeholder='Enter question'"></textarea>
 
@@ -47,9 +44,9 @@
 
             <textarea class="textarea_custom" placeholder="Enter the correct answer"
                       onfocus="this.placeholder=''" onblur="this.placeholder='Enter the correct answer'" type="text" name="correctanswer"></textarea>
-            <br>
+
             <strong style="color: white; font-weight: normal; text-shadow: 2px 2px black">Add Tags to question:</strong>
-            <div style="height: 75px">
+            <div style="height: 75px; margin-top: 12px;">
             <select name="tags" data-placeholder="Select tags" multiple class="chosen-select" style="width: 120px; overflow-y: scroll; height: 10px;">
                 <div th:each="tag : ${tags}">
                     <option name="tags_list" th:value="${tag.TId}" th:text="${tag.tag}"></option>
@@ -64,11 +61,10 @@
             </div>
             <textarea class="textarea_custom" placeholder="Add an explanation to the answer"
                       onfocus="this.placeholder=''" onblur="this.placeholder='Add an explanation to the answer'" type="text" name="explanation" style="float: left"></textarea><br><br>
-            <input class="button_5050" type="submit" name="addquestionsubmit" value="Add question" style="float: left; top: 78%; left: 30%; font-size: 20px; position: absolute">
-
+            <input class="button_5050" type="submit" name="addquestionsubmit" value="Add question" style="float: left; top: 71%; left: 30%; font-size: 20px; position: absolute">
 
         </form>
-        <form th:method="post" style="float: left; margin-top: 40%; margin-left: -30%" th:action="@{/addTag}">
+        <form th:method="post" style="float: left; position: absolute; top: 62%; left: 12%" th:action="@{/addTag}">
             <label class="custom-field one" style="top: -2px">
                 <input type="text" name="custom_tag" placeholder=" "><span class="placeholder">Enter Custom Tag</span>
             </label>
