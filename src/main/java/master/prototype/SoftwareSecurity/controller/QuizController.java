@@ -58,7 +58,7 @@ public class QuizController {
             Set<QA> qaSet = new HashSet<>(qas);
             qas.clear();
             qas.addAll(qaSet);
-            Collections.sort(qas, Comparator.comparingLong(QA::getQaId));
+            qas.sort(Comparator.comparingLong(QA::getQaId));
         }
         Quiz quiz = new Quiz();
         model.addAttribute("tags", tagService.findAll());
@@ -73,8 +73,14 @@ public class QuizController {
     public String createQuiz(Model model, @ModelAttribute String name) {
         Quiz quiz = new Quiz();
         if (!name.isEmpty()) {
-            quiz.setName(name);
-            quizService.save(quiz);
+            boolean isFound = quizService.findAll().stream().anyMatch(o -> o.getName().equalsIgnoreCase(name));
+            if(isFound){
+                model.addAttribute("message", "Quiz name already exists! ");
+            }
+            else{
+                quiz.setName(name);
+                quizService.save(quiz);
+            }
         }
         model.addAttribute("quiz", quiz);
 
@@ -98,9 +104,20 @@ public class QuizController {
             model.addAttribute("message", "The maximum number of questions allowed is 10.");
         }
         else {
+            boolean isFound = quizService.findAll().stream().anyMatch(o -> o.getName().equalsIgnoreCase(quiz.getName()));
+            if(isFound){
+
+                quiz.setLives(lives);
+                quizService.save(quiz);
+                quiz.setName(quiz.getName()+" "+quiz.getQId());
+                quizService.save(quiz);
+                model.addAttribute("message", "Warning: Quiz name already exists! Quiz created with name: "
+                        +quiz.getName()+" and ID: "+quiz.getQId()+ ".\nCopy and share this ID if you want others to play your quiz.");
+                return "adminindex";
+            }
             quiz.setLives(lives);
             quizService.save(quiz);
-            model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + ".\n  Copy and share this ID if you want others to play your quiz.");
+            model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + ".\nCopy and share this ID if you want others to play your quiz.");
         }
         return "adminindex";
     }
@@ -124,13 +141,25 @@ public class QuizController {
             }
             Random rand = new Random();
             Quiz quiz = new Quiz();
-            quiz.setLives(lives);
-            quiz.setName(name);
+
             for (int i = 0; i < Integer.parseInt(quiz_size); i++) {
                 int randomIndex = rand.nextInt(qasList.size());
                 random_QA_list.add(qasList.get(randomIndex));
                 qasList.remove(randomIndex);
             }
+            boolean isFound = quizService.findAll().stream().anyMatch(o -> o.getName().equalsIgnoreCase(name));
+            if(isFound){
+                quiz.setLives(lives);
+                quizService.save(quiz);
+                quiz.setName(name+" "+quiz.getQId());
+                quiz.setQas(random_QA_list);
+                quizService.save(quiz);
+                model.addAttribute("message", "Warning: Quiz name already exists! Quiz created with name: "
+                        +quiz.getName()+" and ID: "+quiz.getQId()+ ".\nCopy and share this ID if you want others to play your quiz.");
+                return "adminindex";
+            }
+            quiz.setName(name);
+            quiz.setLives(lives);
             quiz.setQas(random_QA_list);
             quizService.save(quiz);
             model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + ".\n  Copy and share this ID if you want others to play your quiz.");
@@ -141,6 +170,7 @@ public class QuizController {
     @GetMapping("")
     public String selectQuiz(Model model) {
         List<Quiz> quizzes = quizService.findAll();
+        quizzes.sort(Comparator.comparingLong(Quiz::getQId).reversed());
         model.addAttribute("quizzes", quizzes);
         return "quizselect";
     }
@@ -157,6 +187,7 @@ public class QuizController {
         } else {
             quizzes = quizService.findAll();
         }
+        quizzes.sort(Comparator.comparingLong(Quiz::getQId).reversed());
         model.addAttribute("quizzes", quizzes);
         return "quizselect";
     }
@@ -170,6 +201,7 @@ public class QuizController {
         } else {
             quizzes = quizService.findAll();
         }
+        quizzes.sort(Comparator.comparingLong(Quiz::getQId).reversed());
         model.addAttribute("quizzes", quizzes);
         return "quizselect";
     }
@@ -262,13 +294,12 @@ public class QuizController {
                 String correct = quiz.getQas().get(page).getCorrectAnswer();
                 for (String ans : quiz.getQas().get(page).getAnswers()) {
                     if (!ans.equals(correct)) {
-                        String fake = ans;
                         model.addAttribute("id", id);
                         model.addAttribute("page", page);
                         model.addAttribute("quiz", quiz);
                         model.addAttribute("user", userclass);
                         model.addAttribute("correct", correct);
-                        model.addAttribute("fake", fake);
+                        model.addAttribute("fake", ans);
                         return "5050";
                     }
                 }
@@ -313,6 +344,7 @@ public class QuizController {
         }
 
         if (quiz.getQas().size() == page) {
+            assert answer != null;
             if (answer.equals(quiz.getQas().get(page - 1).getCorrectAnswer())) {
                 score += 10;
                 userclass.setScore(score);
@@ -327,27 +359,30 @@ public class QuizController {
             userService.save(userclass);
             model.addAttribute("user", userclass);
             return "quizdone";
-        } else if (answer.equals(quiz.getQas().get(page - 1).getCorrectAnswer())) {
-            score += 10;
-            userclass.setScore(score);
-            userService.save(userclass);
-        } else if (!answer.equals(quiz.getQas().get(page - 1).getCorrectAnswer())) {
-            int lives = userclass.getLives();
-            if (prot_used == null) {
-                lives -= 1;
-            }
-            if (lives == 0) {
-                model.addAttribute("id", id);
-                model.addAttribute("page", page);
-                model.addAttribute("quiz", quiz);
-
-                userclass = userService.userScore(userclass, quiz);
+        } else {
+            assert answer != null;
+            if (answer.equals(quiz.getQas().get(page - 1).getCorrectAnswer())) {
+                score += 10;
+                userclass.setScore(score);
                 userService.save(userclass);
-                model.addAttribute("user", userclass);
-                return "quizdone";
+            } else if (!answer.equals(quiz.getQas().get(page - 1).getCorrectAnswer())) {
+                int lives = userclass.getLives();
+                if (prot_used == null) {
+                    lives -= 1;
+                }
+                if (lives == 0) {
+                    model.addAttribute("id", id);
+                    model.addAttribute("page", page);
+                    model.addAttribute("quiz", quiz);
+
+                    userclass = userService.userScore(userclass, quiz);
+                    userService.save(userclass);
+                    model.addAttribute("user", userclass);
+                    return "quizdone";
+                }
+                userclass.setLives(lives);
+                userService.save(userclass);
             }
-            userclass.setLives(lives);
-            userService.save(userclass);
         }
 
         model.addAttribute("id", id);
@@ -397,6 +432,7 @@ public class QuizController {
     @GetMapping("/Quiz/Leaderboard/Select")
     public String selectLeaderboard(Model model) {
         List<Quiz> quizzes = quizService.findAll();
+        quizzes.sort(Comparator.comparingLong(Quiz::getQId).reversed());
         model.addAttribute("quizzes", quizzes);
         return "quizselectleaderboard";
     }
@@ -409,6 +445,7 @@ public class QuizController {
         } else {
             quizzes = quizService.findAll();
         }
+        quizzes.sort(Comparator.comparingLong(Quiz::getQId).reversed());
         model.addAttribute("quizzes", quizzes);
         return "quizselectleaderboard";
     }
@@ -425,6 +462,7 @@ public class QuizController {
         else {
             quizzes = quizService.findAll();
         }
+        quizzes.sort(Comparator.comparingLong(Quiz::getQId).reversed());
         model.addAttribute("quizzes", quizzes);
         return "quizselectleaderboard";
     }
@@ -434,7 +472,7 @@ public class QuizController {
                               @PathVariable long id) {
         Quiz quiz = quizService.findByqId(id);
         List<Userclass> scores = quiz.getScores();
-        Collections.sort(scores, Comparator.comparingInt(Userclass::getScore).reversed());
+        scores.sort(Comparator.comparingInt(Userclass::getScore).reversed());
         List<Userclass> top10 = scores.stream().limit(10).collect(Collectors.toList());
         model.addAttribute("scores", top10);
         return "leaderboard";
@@ -515,16 +553,16 @@ public class QuizController {
             String contents = new String(is.readAllBytes());
             JsonObject jsonObject = JsonParser.parseString(contents).getAsJsonObject();
             JsonArray items = jsonObject.getAsJsonArray("items");
-            String snippets = "";
+            StringBuilder snippets = new StringBuilder();
             if (items != null) {
                 for (int i = 0; i < items.size(); i++) {
                     JsonObject object = items.get(i).getAsJsonObject();
-                    snippets = snippets + object.get("snippet").toString().substring(1, object.get("snippet").toString().length() - 1);
+                    snippets.append(object.get("snippet").toString(), 1, object.get("snippet").toString().length() - 1);
                 }
                 double sum_cosine = 0;
                 HashMap<String, Double> cos_list = new HashMap<>();
                 for (String answer : answers) {
-                    CosineSimilarity cosineSimilarity = new CosineSimilarity(answer, snippets);
+                    CosineSimilarity cosineSimilarity = new CosineSimilarity(answer, snippets.toString());
                     sum_cosine += cosineSimilarity.getCosineSimilarity();
                     cos_list.put(answer, cosineSimilarity.getCosineSimilarity());
                 }
