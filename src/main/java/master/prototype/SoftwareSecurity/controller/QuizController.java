@@ -58,8 +58,9 @@ public class QuizController {
             Set<QA> qaSet = new HashSet<>(qas);
             qas.clear();
             qas.addAll(qaSet);
-            qas.sort(Comparator.comparingLong(QA::getQaId));
+            qas.sort(Comparator.comparingLong(QA::getQaId).reversed());
         }
+        qas.sort(Comparator.comparingLong(QA::getQaId).reversed());
         Quiz quiz = new Quiz();
         model.addAttribute("tags", tagService.findAll());
         model.addAttribute("qas", qas);
@@ -76,6 +77,7 @@ public class QuizController {
         model.addAttribute("quiz", quiz);
 
         List<QA> qas = qaService.findAll();
+        qas.sort(Comparator.comparingLong(QA::getQaId).reversed());
         model.addAttribute("qas", qas);
         model.addAttribute("tags", tagService.findAll());
 
