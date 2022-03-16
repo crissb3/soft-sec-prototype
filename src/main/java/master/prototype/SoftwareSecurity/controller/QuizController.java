@@ -70,18 +70,9 @@ public class QuizController {
     }
 
     @GetMapping("/Quiz/Create")
-    public String createQuiz(Model model, @ModelAttribute String name) {
+    public String createQuiz(Model model) {
         Quiz quiz = new Quiz();
-        if (!name.isEmpty()) {
-            boolean isFound = quizService.findAll().stream().anyMatch(o -> o.getName().equalsIgnoreCase(name));
-            if(isFound){
-                model.addAttribute("message", "Quiz name already exists! ");
-            }
-            else{
-                quiz.setName(name);
-                quizService.save(quiz);
-            }
-        }
+
         model.addAttribute("quiz", quiz);
 
         List<QA> qas = qaService.findAll();
@@ -97,11 +88,13 @@ public class QuizController {
             Model model,
             @RequestParam("lives") int lives) {
 
-        if (quiz.getName().isEmpty()) {
+        if (quiz.getName().equals("")) {
             model.addAttribute("message", "Can't create quiz without a name.");
+            return "adminindex";
         }
         if (quiz.getQas().size()>10){
             model.addAttribute("message", "The maximum number of questions allowed is 10.");
+            return "adminindex";
         }
         else {
             boolean isFound = quizService.findAll().stream().anyMatch(o -> o.getName().equalsIgnoreCase(quiz.getName()));
@@ -557,7 +550,7 @@ public class QuizController {
             if (items != null) {
                 for (int i = 0; i < items.size(); i++) {
                     JsonObject object = items.get(i).getAsJsonObject();
-                    snippets.append(object.get("snippet").toString(), 1, object.get("snippet").toString().length() - 1);
+                    if(!(object.get("snippet") == null))snippets.append(object.get("snippet").toString(), 1, object.get("snippet").toString().length() - 1);
                 }
                 double sum_cosine = 0;
                 HashMap<String, Double> cos_list = new HashMap<>();

@@ -10,7 +10,7 @@
     <script src="https://kit.fontawesome.com/7401e2a6eb.js" crossorigin="anonymous"></script>
 </head>
 
-<body onload="popupload()">
+<body>
 <div class="text_frame_menu">
     <div class="single_text_in_menu" onclick="window.location.href='/'">Home</div>
     <div class="single_text_in_menu" onclick="window.location.href='/adminindex'">Admin</div>
@@ -20,10 +20,11 @@
 
 <div class="center">
     <div class="container">
+        <button style="position: absolute; top: 5.5%; left: 8%; padding: 6px" th:if="${page>0}" onclick="popupload()" class="button_5050">Explanation for previous question.</button>
         <script th:if="${page>0 && call==null && audience == null}">function popupload(){togglePopup();}</script>
         <div class="popup" id="popup-1" style="float:right;">
             <div class="overlay" th:onClick="togglePopup()"></div>
-            <div class="content">
+            <div class="content" style="z-index: 3">
                 <div class="close-btn" th:onClick="togglePopup()">&times;</div>
                 <h1>Question:</h1>
                 <strong th:if="${page>0}" style="color: black; font-weight: normal; font-size: 22px; text-overflow: ellipsis; width: 900px; display:inline-block" th:text="${quiz.qas.get(page -1).question}"></strong>
@@ -93,7 +94,7 @@
                th:text="${'Question: '+quiz.qas[__${page}__].question}">
         </div>
         <p th:if="${quiz.qas[__${page}__].img != null}">
-            <img style="max-width: 500px; max-height: 270px;" class="center_image"
+            <img style="max-width: 500px; max-height: 270px; z-index: 2" class="center_image"
                  th:src="*{'data:image/png;base64,'+quiz.qas[__${page}__].img}" alt=""/>
         </p>
 

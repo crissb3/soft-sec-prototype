@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>SecQuiz</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script type="text/javascript" th:src="@{/js/popup.js}"></script>
+    <script type="text/javascript" th:src="@{/js/popupquizplay.js}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/7401e2a6eb.js" crossorigin="anonymous"></script>
 </head>
@@ -19,7 +21,20 @@
 <div class="center">
     <div class="protection_glow">
     <div class="container">
-
+        <button style="position: absolute; top: 5.5%; left: 8%; padding: 6px" th:if="${page>0}" onclick="popupload()" class="button_5050">Explanation for previous question.</button>
+        <script th:if="${page>0 && call==null && audience == null}">function popupload(){togglePopup();}</script>
+        <div class="popup" id="popup-1" style="float:right;">
+            <div class="overlay" th:onClick="togglePopup()"></div>
+            <div class="content" style="z-index: 3">
+                <div class="close-btn" th:onClick="togglePopup()">&times;</div>
+                <h1>Question:</h1>
+                <strong th:if="${page>0}" style="color: black; font-weight: normal; font-size: 22px; text-overflow: ellipsis; width: 900px; display:inline-block" th:text="${quiz.qas.get(page -1).question}"></strong>
+                <h1>Correct answer:</h1>
+                <strong th:if="${page>0}" style="font-size: 22px; text-overflow: ellipsis; width: 900px; display:inline-block" th:text="${quiz.qas.get(page -1).correctAnswer}"></strong>
+                <h1>Explanation:</h1>
+                <strong th:if="${page>0}" style="font-size: 22px; text-overflow: ellipsis; width: 900px; display:inline-block" th:text="${quiz.qas.get(page -1).explanation}"></strong>
+            </div>
+        </div>
 
         <div style="margin-top: 0; margin-right: 10%; padding-top: 13%; float: right" th:if="${call != null}">
             <div id="app"></div>
@@ -259,6 +274,28 @@
             </form>
         </div>
     </div>
+        <div class="popup" id="popup-2" style="float:right;">
+            <div class="overlay" th:onClick="togglePopupQuizPlay()"></div>
+            <div class="content">
+                <div class="close-btn" th:onClick="togglePopupQuizPlay()">&times;</div>
+                <br><br><br>
+                <h1 style="">Score:</h1>
+                <strong style="color: black; font-weight: normal; font-size: 22px">
+                    Reach the golden scores so that you don't drop in score.
+                    <br>If you do not reach the golden score you will drop down<br>
+                    to the previous golden score or 0 if you didn't<br> reach any yet.<br>
+                </strong>
+                <h1>Lifelines:</h1>
+                <strong style="font-size: 22px">
+                    Shield - You don't lose a life if you answer wrong.<br>
+                    50/50 - Two of the wrong answers gets eliminated.<br>
+                    Call a friend - You write your question in the search box <br> and select
+                    which friend you want to call.<br>
+                    Ask the audience - You ask the audience what they think the correct answer is.
+                </strong>
+            </div>
+        </div>
+        <button style="position: absolute; top: 5%; left: 4%; padding: 1px 8px; font-size: 30px" class="button_5050" th:onClick="togglePopupQuizPlay()">?</button>
     </div>
     </div>
 </div>

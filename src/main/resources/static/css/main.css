@@ -597,3 +597,14 @@ input[type=checkbox]{
     border-radius: 6px;
     margin-bottom: 0;
 }
+
+img {
+    transition: transform 0.35s ease;
+}
+
+img:hover {
+    animation: normal;
+    margin-left: -14%;
+    -webkit-transform: scale(2);
+    transform: scale(2);
+}
