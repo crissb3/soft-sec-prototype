@@ -304,17 +304,16 @@ public class QuizController {
                         model.addAttribute("user", userclass);
                         model.addAttribute("correct", correct);
                         model.addAttribute("fake", ans);
-//                        model.addAttribute("token", token);
                         return "5050";
                     }
                 }
-//                model.addAttribute("id", id);
-//                model.addAttribute("page", page);
-//                model.addAttribute("quiz", quiz);
-//                model.addAttribute("user", userclass);
-//                model.addAttribute("correct", correct);
-//                model.addAttribute("fake", correct);
-//                return "5050";
+                model.addAttribute("id", id);
+                model.addAttribute("page", page);
+                model.addAttribute("quiz", quiz);
+                model.addAttribute("user", userclass);
+                model.addAttribute("correct", correct);
+                model.addAttribute("fake", correct);
+                return "5050";
             }
             if (prot != null) {
                 userclass.getLifelines().remove("protection");
@@ -324,7 +323,6 @@ public class QuizController {
                 model.addAttribute("quiz", quiz);
                 model.addAttribute("user", userclass);
                 model.addAttribute("prot", prot);
-//                model.addAttribute("token", token);
                 return "quizplayprot";
             }
             if (call != null) {

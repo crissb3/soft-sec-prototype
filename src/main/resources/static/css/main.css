@@ -163,6 +163,8 @@ button[disabled] {
 
 /* Testing 3d button */
 .button-3d {
+    font-family: poetsenone, sans-serif;
+    text-shadow: 1px 1px black;
     position:relative;
     width: auto;
     color: #ecf0f1;
