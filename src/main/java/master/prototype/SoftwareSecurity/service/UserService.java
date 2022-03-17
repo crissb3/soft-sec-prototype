@@ -37,7 +37,7 @@ public class UserService {
                 }
             }
         }
-        if(quiz.getQas().size()>=3 && user.getScore()<30){
+        if(quiz.getQas().size()>3 && user.getScore()<30){
             user.setScore(0);
             return user;
         }
