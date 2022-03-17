@@ -3,6 +3,7 @@ package master.prototype.SoftwareSecurity.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -19,6 +20,8 @@ public class Userclass {
     private int lives;
     @ElementCollection
     private Set<String> lifelines;
+    @ElementCollection
+    private List<Integer> answered;
 
     public Userclass() {}
 }

@@ -5,6 +5,10 @@ import master.prototype.SoftwareSecurity.entity.Userclass;
 import master.prototype.SoftwareSecurity.repository.UserRepositoryImpl;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserService {
     private UserRepositoryImpl userRepository;
@@ -33,8 +37,29 @@ public class UserService {
                 }
             }
         }
-        else if(quiz.getQas().size()>=3 && user.getScore()<30) user.setScore(0);
+        if(quiz.getQas().size()>=3 && user.getScore()<30){
+            user.setScore(0);
+            return user;
+        }
+        if(quiz.getQas().size()==(user.getScore()/10)){
+            return user;
+        }
         user.setScore(score);
+        return user;
+    }
+
+    public Userclass answeredList(Userclass user, int page){
+        List<Integer> ansList;
+        if(user.getAnswered() == null){
+            ansList = new ArrayList<>();
+        }
+        else{
+            ansList = user.getAnswered();
+        }
+        if(!ansList.contains(page)){
+            ansList.add(page);
+        }
+        user.setAnswered(ansList);
         return user;
     }
 

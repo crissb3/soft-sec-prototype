@@ -216,8 +216,9 @@ public class QuizController {
             user.setLives(quiz.getLives());
             Set<String> lifelines = Set.of("5050", "call", "protection", "audience");
             user.setLifelines(lifelines);
+            user = userService.answeredList(user, page); //answeredlist
             userService.save(user);
-//            model.addAttribute("score", score);
+//            model.addAttribute("token",0);
             model.addAttribute("page", page);
             model.addAttribute("quiz", quiz);
             model.addAttribute("user", user);
@@ -231,6 +232,7 @@ public class QuizController {
                           @RequestParam long id,
                           @RequestParam(name = "page", defaultValue = "-1") int page,
                           @RequestParam("user") long uid) {
+
         Quiz quiz = quizService.findByqId(id);
         Userclass userclass = userService.findUserById(uid);
         int lives = userclass.getLives();
@@ -242,6 +244,7 @@ public class QuizController {
             model.addAttribute("quiz", quiz);
 
             userclass = userService.userScore(userclass, quiz);
+            userclass = userService.answeredList(userclass, page);
             userService.save(userclass);
             model.addAttribute("user", userclass);
             return "quizdone";
@@ -252,23 +255,26 @@ public class QuizController {
             model.addAttribute("quiz", quiz);
 
             userclass = userService.userScore(userclass, quiz);
+            userclass = userService.answeredList(userclass, page);
             userService.save(userclass);
             model.addAttribute("user", userclass);
             return "quizdone";
         }
         userclass.setLives(lives);
+        userclass = userService.answeredList(userclass, page);
         userService.save(userclass);
 
         model.addAttribute("id", id);
         model.addAttribute("page", page);
         model.addAttribute("quiz", quiz);
         model.addAttribute("user", userclass);
+//        model.addAttribute("token", token);
 
         return "quizplay";
     }
 
     @GetMapping("/Quiz/Start/page")
-    public String playQuiztest(Model model,
+    public String playQuiz(Model model,
                                @RequestParam long id,
                                @RequestParam(name = "page", defaultValue = "-1") int page,
                                @RequestParam("user") long uid,
@@ -277,10 +283,13 @@ public class QuizController {
                                @RequestParam(name = "protection", required = false) String prot,
                                @RequestParam(name = "prot", required = false) String prot_used,
                                @RequestParam(name = "call", required = false) String call,
-                               @RequestParam(name = "audience", required = false) String audience) {
+                               @RequestParam(name = "audience", required = false) String audience,
+                               @RequestParam(name = "tokenref", required = false) String reload) {
+
         Quiz quiz = quizService.findByqId(id);
         Userclass userclass = userService.findUserById(uid);
         int score = userclass.getScore();
+
 
         if (answer == null) {
             if (fiftyfifty != null) {
@@ -295,16 +304,17 @@ public class QuizController {
                         model.addAttribute("user", userclass);
                         model.addAttribute("correct", correct);
                         model.addAttribute("fake", ans);
+//                        model.addAttribute("token", token);
                         return "5050";
                     }
                 }
-                model.addAttribute("id", id);
-                model.addAttribute("page", page);
-                model.addAttribute("quiz", quiz);
-                model.addAttribute("user", userclass);
-                model.addAttribute("correct", correct);
-                model.addAttribute("fake", correct);
-                return "5050";
+//                model.addAttribute("id", id);
+//                model.addAttribute("page", page);
+//                model.addAttribute("quiz", quiz);
+//                model.addAttribute("user", userclass);
+//                model.addAttribute("correct", correct);
+//                model.addAttribute("fake", correct);
+//                return "5050";
             }
             if (prot != null) {
                 userclass.getLifelines().remove("protection");
@@ -314,6 +324,7 @@ public class QuizController {
                 model.addAttribute("quiz", quiz);
                 model.addAttribute("user", userclass);
                 model.addAttribute("prot", prot);
+//                model.addAttribute("token", token);
                 return "quizplayprot";
             }
             if (call != null) {
@@ -324,6 +335,7 @@ public class QuizController {
                 model.addAttribute("quiz", quiz);
                 model.addAttribute("user", userclass);
                 model.addAttribute("call", "call");
+//                model.addAttribute("token", token);
                 return "quizplay";
             }
             if (audience != null) {
@@ -333,44 +345,53 @@ public class QuizController {
                 model.addAttribute("page", page);
                 model.addAttribute("quiz", quiz);
                 model.addAttribute("user", userclass);
+//                model.addAttribute("token", token);
                 model.addAttribute("audience", "audience");
                 return "quizplay";
             }
         }
 
-        if (quiz.getQas().size() == page) {
-            assert answer != null;
+        assert answer != null;
+        if(quiz.getQas().size() == page) {
             if (answer.equals(quiz.getQas().get(page - 1).getCorrectAnswer())) {
-                score += 10;
+                if(!userclass.getAnswered().contains(page)){
+                    score += 10;
+                }
                 userclass.setScore(score);
                 userService.save(userclass);
-                model.addAttribute("correct", "Your answer was correct!"); //<<<<<<------>>>>>>
             }
             model.addAttribute("id", id);
             model.addAttribute("page", page);
             model.addAttribute("quiz", quiz);
 
             userclass = userService.userScore(userclass, quiz);
+            userclass = userService.answeredList(userclass, page);
             userService.save(userclass);
             model.addAttribute("user", userclass);
             return "quizdone";
         } else {
-            assert answer != null;
             if (answer.equals(quiz.getQas().get(page - 1).getCorrectAnswer())) {
-                score += 10;
+                if(!userclass.getAnswered().contains(page)) {
+                    score += 10;
+                }
                 userclass.setScore(score);
                 userService.save(userclass);
+
             } else if (!answer.equals(quiz.getQas().get(page - 1).getCorrectAnswer())) {
                 int lives = userclass.getLives();
-                if (prot_used == null) {
-                    lives -= 1;
+                if (!userclass.getAnswered().contains(page)) {
+                    if(prot_used == null){
+                        lives -= 1;
+                    }
                 }
+
                 if (lives == 0) {
                     model.addAttribute("id", id);
                     model.addAttribute("page", page);
                     model.addAttribute("quiz", quiz);
 
                     userclass = userService.userScore(userclass, quiz);
+                    userclass = userService.answeredList(userclass, page);
                     userService.save(userclass);
                     model.addAttribute("user", userclass);
                     return "quizdone";
@@ -379,7 +400,8 @@ public class QuizController {
                 userService.save(userclass);
             }
         }
-
+        userclass = userService.answeredList(userclass, page);
+        userService.save(userclass);
         model.addAttribute("id", id);
         model.addAttribute("page", page);
         model.addAttribute("quiz", quiz);
