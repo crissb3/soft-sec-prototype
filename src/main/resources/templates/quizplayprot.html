@@ -21,7 +21,7 @@
 <div class="center">
     <div class="protection_glow">
     <div class="container">
-        <button style="position: absolute; top: 5.5%; left: 8%; padding: 6px" th:if="${page>0}" onclick="popupload()" class="button_5050">Explanation for previous question.</button>
+        <button style="position: absolute; top: 5.5%; left: 8%; padding: 6px; border: 2px solid black" th:if="${page>0}" onclick="popupload()" class="button_5050">Explanation for previous question.</button>
         <script th:if="${page>0 && call==null && audience == null}">function popupload(){togglePopup();}</script>
         <div class="popup" id="popup-1" style="float:right;">
             <div class="overlay" th:onClick="togglePopup()"></div>
@@ -295,7 +295,7 @@
                 </strong>
             </div>
         </div>
-        <button style="position: absolute; top: 5%; left: 4%; padding: 1px 8px; font-size: 30px" class="button_5050" th:onClick="togglePopupQuizPlay()">?</button>
+        <button style="position: absolute; top: 5%; left: 4%; padding: 1px 8px; font-size: 30px; border: 2px solid black" class="button_5050" th:onClick="togglePopupQuizPlay()">?</button>
     </div>
     </div>
 </div>
