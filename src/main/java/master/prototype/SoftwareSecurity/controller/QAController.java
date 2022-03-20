@@ -110,7 +110,14 @@ public class QAController {
         return "createquestion";
     }
     @PostMapping("/addTag")
-    public String addTag(@RequestParam String custom_tag, Model model){
+    public String addTag(@RequestParam String custom_tag,
+                         Model model,
+                         @RequestParam(name="correctanswer", required = false) String correct,
+                         @RequestParam(name="question", required = false) String question,
+                         @RequestParam(name="explanation", required = false) String expl,
+                         @RequestParam(name="f1", required = false) String fake1,
+                         @RequestParam(name="f2", required = false) String fake2,
+                         @RequestParam(name="f3", required = false) String fake3){
         Tag tag = new Tag();
         boolean isFound = tagService.findAll().stream().anyMatch(o -> o.getTag().equalsIgnoreCase(custom_tag));
         if(isFound){
@@ -121,6 +128,13 @@ public class QAController {
             tagService.save(tag);
             model.addAttribute("message", "Tag created: "+tag.getTag());
         }
+        if(correct!=null)model.addAttribute("correctanswer", correct);
+        if(question!=null)model.addAttribute("addquestion", question);
+        if(fake1!=null)model.addAttribute("fakeanswer1", fake1);
+        if(fake2!=null)model.addAttribute("fakeanswer2", fake2);
+        if(fake3!=null)model.addAttribute("fakeanswer3", fake3);
+        if(expl!=null)model.addAttribute("explanation", expl);
+
         model.addAttribute("tags",tagService.findAll());
         return "createquestion";
     }
