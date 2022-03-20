@@ -41,7 +41,7 @@
         </div>
 
         <p th:if="${quiz.qas[__${page}__].img != null}">
-            <img style="max-width: 500px; max-height: 270px;" class="center_image" th:src="*{'data:image/png;base64,'+quiz.qas[__${page}__].img}" alt=""/>
+            <img style="max-width: 500px; max-height: 270px; z-index: 2" class="center_image" th:src="*{'data:image/png;base64,'+quiz.qas[__${page}__].img}" alt=""/>
         </p>
 
         <strong class="center_score" th:if="${user.lives>0}" th:text="${'Lives left:'}" style="color: white; font-size: large; position: absolute;"></strong>
