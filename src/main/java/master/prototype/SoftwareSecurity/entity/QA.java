@@ -16,6 +16,7 @@ public class QA {
     private String question;
     private String correctAnswer;
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String explanation;
     @ElementCollection
     private List<String> answers;
