@@ -54,6 +54,26 @@ public class QAService {
         qa.setAnswers(answers);
         return qa;
     }
+
+    public QA shuffleAnswersEdit(Long qaId,
+                                 String addquestion,
+                                 String fakeanswer1,
+                                 String fakeanswer2,
+                                 String fakeanswer3,
+                                 String correctanswer){
+        QA qa = findByQaId(qaId);
+        qa.setQuestion(addquestion);
+        qa.setCorrectAnswer(correctanswer);
+        List<String> answers = new ArrayList<>();
+        answers.add(fakeanswer1);
+        answers.add(fakeanswer2);
+        answers.add(fakeanswer3);
+        answers.add(correctanswer);
+        Collections.shuffle(answers);
+        qa.setAnswers(answers);
+        return qa;
+    }
+
     public Set<QA.Tags> setTag(String tag1, String tag2, String tag3){
         Set<QA.Tags> tags = new HashSet<>();
         if(!(tag1==null)) tags.add(QA.Tags.valueOf(tag1));

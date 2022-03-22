@@ -1,6 +1,8 @@
 package master.prototype.SoftwareSecurity.controller;
 
+import master.prototype.SoftwareSecurity.entity.Quiz;
 import master.prototype.SoftwareSecurity.entity.Tag;
+import master.prototype.SoftwareSecurity.entity.Userclass;
 import master.prototype.SoftwareSecurity.service.QAService;
 import master.prototype.SoftwareSecurity.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,7 @@ import master.prototype.SoftwareSecurity.entity.QA;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class QAController {
@@ -139,6 +139,41 @@ public class QAController {
         return "createquestion";
     }
 
+    @PostMapping("/Question/Edit/addTag")
+    public String EditQuestionaddTag(@RequestParam String custom_tag,
+                         Model model,
+                         @RequestParam(name="correctanswer", required = false) String correct,
+                         @RequestParam(name="question", required = false) String question,
+                         @RequestParam(name="explanation", required = false) String expl,
+                         @RequestParam(name="f1", required = false) String fake1,
+                         @RequestParam(name="f2", required = false) String fake2,
+                         @RequestParam(name="f3", required = false) String fake3,
+                         @RequestParam(name = "qaId") Long qaId){
+        Tag tag = new Tag();
+        boolean isFound = tagService.findAll().stream().anyMatch(o -> o.getTag().equalsIgnoreCase(custom_tag));
+        if(isFound){
+            model.addAttribute("message", "Tag already exists.");
+        }
+        else{
+            tag.setTag(custom_tag);
+            tagService.save(tag);
+            model.addAttribute("message", "Tag created: "+tag.getTag());
+        }
+        if(correct!=null)model.addAttribute("correctanswer", correct);
+        if(question!=null)model.addAttribute("addquestion", question);
+        if(fake1!=null)model.addAttribute("fakeanswer1", fake1);
+        if(fake2!=null)model.addAttribute("fakeanswer2", fake2);
+        if(fake3!=null)model.addAttribute("fakeanswer3", fake3);
+        if(expl!=null)model.addAttribute("explanation", expl);
+
+        QA qa = qaService.findByQaId(qaId);
+        model.addAttribute("qa", qa);
+        model.addAttribute("qaId", qaId);
+        model.addAttribute("tags",tagService.findAll());
+        return "editquestion";
+    }
+
+
     @GetMapping("/testimg")
     public String testImage(Model model){
         List<QA> qas = qaService.findAll();
@@ -170,6 +205,118 @@ public class QAController {
         return "testiterate";
     }
 
+    @GetMapping("Question/Select/Search-id")
+    public String selectQuestionSearchID(Model model,
+                                   @RequestParam(required = false) Long qid) {
+        List<QA> qas = new ArrayList<>();
+        if (!(qid == null)) {
+            if (!(qaService.findByQaId(qid) == null)) {
+                QA qa = qaService.findByQaId(qid);
+                qas.add(qa);
+            }
+        } else {
+            qas = qaService.findAll();
+        }
+        qas.sort(Comparator.comparingLong(QA::getQaId).reversed());
+        model.addAttribute("qas", qas);
+        return "questionselect";
+    }
+
+    @GetMapping("Question/Select/Search-name")
+    public String selectQuestionSearch(Model model,
+                                       @RequestParam(required = false) String name) {
+        List<QA> qas;
+        if (!(name.equals(""))) {
+            qas = qaService.findByWord(name);
+        } else {
+            qas = qaService.findAll();
+        }
+        qas.sort(Comparator.comparingLong(QA::getQaId).reversed());
+        model.addAttribute("qas", qas);
+        return "questionselect";
+    }
+
+    @GetMapping("Question/Edit/Select")
+    public String selectQuiz(Model model) {
+        List<QA> qas = qaService.findAll();
+        qas.sort(Comparator.comparingLong(QA::getQaId).reversed());
+        model.addAttribute("qas", qas);
+        return "questionselect";
+    }
+
+    @GetMapping("/Question/Edit/{id}")
+    public String startQuiz(Model model,
+                            @PathVariable long id) {
+        QA qa = qaService.findByQaId(id);
+        int count = 1;
+        for(String ans : qa.getAnswers()){
+            if(ans != qa.getCorrectAnswer()){
+                model.addAttribute("fakeanswer"+count,ans);
+                count++;
+            }
+        }
+        model.addAttribute("qa", qa);
+        model.addAttribute("message",qa.getQaId());
+        model.addAttribute("tags", tagService.findAll());
+
+        return "editquestion";
+    }
+
+    @PostMapping("/updateQA")
+    public String updateQA(@RequestParam String addquestion,
+                        @RequestParam String fakeanswer1,
+                        @RequestParam String fakeanswer2,
+                        @RequestParam String fakeanswer3,
+                        @RequestParam String correctanswer,
+                        @RequestParam(required = false) String explanation,
+                        @RequestParam(value = "file", required = false) MultipartFile file,
+                        @RequestParam(value = "tags", required = false) List<String> tags,
+                        Model model,
+                        @RequestParam("qaId") Long qaId) throws IOException {
+        if(addquestion.isEmpty()
+                || fakeanswer1.isEmpty()
+                || fakeanswer2.isEmpty()
+                || fakeanswer3.isEmpty()
+                || correctanswer.isEmpty()) {
+            model.addAttribute("message", "You can't leave an empty field. Use the links below to help construct your questions.");
+            model.addAttribute("tags",tagService.findAll());
+            return "editquestion";
+        }
+        if(addquestion.length()>255
+                || fakeanswer1.length()>255
+                || fakeanswer2.length()>255
+                || fakeanswer3.length()>255){
+            model.addAttribute("message", "The maximum length that a question or an answer can be is 255 characters. ");
+            model.addAttribute("tags",tagService.findAll());
+            return "editquestion";
+        }
+        else {
+            QA qa = qaService.shuffleAnswersEdit(qaId, addquestion, fakeanswer1, fakeanswer2, fakeanswer3, correctanswer);
+            if(tags != null){
+                List<Tag> tagList = new ArrayList<>();
+                for(String tag : tags){
+                    tagList.add(tagService.findBytId(Long.valueOf(tag)));
+                }
+                qa.setCustomtags(tagList);
+            }
+//            qa.setTags(qaService.setTag(tag1, tag2, tag3));
+            if(!(file == null)){
+                String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+                qa.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
+            }
+            if(!explanation.equals(""))
+            {
+                qa.setExplanation(explanation);
+            }
+            if(explanation.equals("")){
+                qa.setExplanation("No explanation added.");
+            }
+            qaService.save(qa);
+            model.addAttribute("message", "Saved question: " + addquestion +".");
+        }
+
+        return "adminindex";
+    }
 //    @PostMapping("/addQAcapec")
 //    public String addQAcapec(@RequestParam String addquestion,
 //                            @RequestParam String fakeanswer1,
