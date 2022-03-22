@@ -250,12 +250,20 @@ public class QAController {
         QA qa = qaService.findByQaId(id);
         int count = 1;
         for(String ans : qa.getAnswers()){
-            if(ans != qa.getCorrectAnswer()){
+            if(!ans.equals(qa.getCorrectAnswer())){
                 model.addAttribute("fakeanswer"+count,ans);
                 count++;
             }
         }
+        if(count != 4){
+            for(int i = count; i<4; i++){
+                model.addAttribute("fakeanswer"+i, "...");
+            }
+        }
         model.addAttribute("qa", qa);
+        model.addAttribute("addquestion", qa.getQuestion());
+        model.addAttribute("explanation", qa.getExplanation());
+        model.addAttribute("correctanswer", qa.getCorrectAnswer());
         model.addAttribute("message",qa.getQaId());
         model.addAttribute("tags", tagService.findAll());
 
@@ -279,6 +287,7 @@ public class QAController {
                 || fakeanswer3.isEmpty()
                 || correctanswer.isEmpty()) {
             model.addAttribute("message", "You can't leave an empty field. Use the links below to help construct your questions.");
+            model.addAttribute("qa", qaService.findByQaId(qaId));
             model.addAttribute("tags",tagService.findAll());
             return "editquestion";
         }
@@ -287,22 +296,32 @@ public class QAController {
                 || fakeanswer2.length()>255
                 || fakeanswer3.length()>255){
             model.addAttribute("message", "The maximum length that a question or an answer can be is 255 characters. ");
+            model.addAttribute("qa", qaService.findByQaId(qaId));
             model.addAttribute("tags",tagService.findAll());
             return "editquestion";
         }
         else {
             QA qa = qaService.shuffleAnswersEdit(qaId, addquestion, fakeanswer1, fakeanswer2, fakeanswer3, correctanswer);
             if(tags != null){
-                List<Tag> tagList = new ArrayList<>();
+                List<Tag> tagList;
+                if(qa.getCustomtags()!=null){
+                    tagList = qa.getCustomtags();
+                }
+                else{
+                    tagList = new ArrayList<>();
+                }
                 for(String tag : tags){
-                    tagList.add(tagService.findBytId(Long.valueOf(tag)));
+                    if(!tagList.contains(tagService.findBytId(Long.valueOf(tag)))){
+                        tagList.add(tagService.findBytId(Long.valueOf(tag)));
+                    }
                 }
                 qa.setCustomtags(tagList);
             }
 //            qa.setTags(qaService.setTag(tag1, tag2, tag3));
-            if(!(file == null)){
-                String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-                qa.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
+            if(file != null){
+                if(file.getBytes().length != 0){
+                    qa.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
+                }
             }
             if(!explanation.equals(""))
             {
