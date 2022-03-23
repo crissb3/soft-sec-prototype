@@ -516,10 +516,7 @@ public class QuizController {
         return "adminindex";
     }
 
-    @GetMapping("/testiterate")
-    public String testIterate() {
-        return "testiterate";
-    }
+
 
     @GetMapping("/callFriend")
     public String callFriend() {
@@ -604,33 +601,33 @@ public class QuizController {
         return "askaudience";
     }
 
-    @GetMapping("/testAPI")
-    public String testapi() throws MalformedURLException {
-        String searchword = "Expressions and methods spoofing";
-        searchword = searchword.replaceAll("\\s+", "%20");
-        System.out.println(searchword);
-        String url = "https://customsearch.googleapis.com/customsearch/v1?cx=602325f04a96e5851&num=10&q=" +
-                searchword + "&prettyPrint=true&key=AIzaSyD01AyjxliyuVTXE1lyTCPdLR76TEMAbqQ";
-
-
-        try (java.io.InputStream is =
-                     new java.net.URL(url).openStream()) {
-            String contents = new String(is.readAllBytes());
-            JsonObject jsonObject = JsonParser.parseString(contents).getAsJsonObject();
-            JsonArray items = jsonObject.getAsJsonArray("items");
-            System.out.println(items);
-
-            for (int i = 0; i < items.size(); i++) {
-                JsonObject object = items.get(i).getAsJsonObject();
-                System.out.println(object.get("snippet").toString().substring(1, object.get("snippet").toString().length() - 1));
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        return "testapi";
-    }
+//    @GetMapping("/testAPI")
+//    public String testapi() throws MalformedURLException {
+//        String searchword = "Expressions and methods spoofing";
+//        searchword = searchword.replaceAll("\\s+", "%20");
+//        System.out.println(searchword);
+//        String url = "https://customsearch.googleapis.com/customsearch/v1?cx=602325f04a96e5851&num=10&q=" +
+//                searchword + "&prettyPrint=true&key=AIzaSyD01AyjxliyuVTXE1lyTCPdLR76TEMAbqQ";
+//
+//
+//        try (java.io.InputStream is =
+//                     new java.net.URL(url).openStream()) {
+//            String contents = new String(is.readAllBytes());
+//            JsonObject jsonObject = JsonParser.parseString(contents).getAsJsonObject();
+//            JsonArray items = jsonObject.getAsJsonArray("items");
+//            System.out.println(items);
+//
+//            for (int i = 0; i < items.size(); i++) {
+//                JsonObject object = items.get(i).getAsJsonObject();
+//                System.out.println(object.get("snippet").toString().substring(1, object.get("snippet").toString().length() - 1));
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        return "testapi";
+//    }
 
 }
