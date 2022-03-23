@@ -17,7 +17,7 @@
 <div class="center">
     <div class="container">
         <div class="center">
-            <div style="height:430px; width: 700px; margin-left: 100px; overflow: auto; border: 1px solid white; font-size: 19px">
+            <div style="height:430px; width: 700px; margin-left: 100px; overflow: auto; border: 2px solid white; border-radius: 12px; font-size: 19px">
                 <form th:action="@{/Quiz/Delete/{quizID}(quizID=${quiz.QId})}" th:object="${quiz}" method="post">
                     <strong style="margin-top: 15px; margin-left: 40px; color: white">ID:</strong>
                     <strong style="color: white" th:text="${quiz.QId}"></strong>
@@ -26,7 +26,7 @@
                     <strong style="color: white" th:text="${quiz.name}"></strong>
                     <input type="hidden" th:field="*{QId}">
                     <br><br>
-                    <button class="button_5050" style="margin-left: 10px" type="submit">Delete quiz</button>
+                    <button class="button_5050_delete" style="margin-left: 10px" type="submit">Delete quiz</button>
                 </form>
             </div>
         </div>

@@ -4,6 +4,7 @@ import master.prototype.SoftwareSecurity.entity.Quiz;
 import master.prototype.SoftwareSecurity.entity.Tag;
 import master.prototype.SoftwareSecurity.entity.Userclass;
 import master.prototype.SoftwareSecurity.service.QAService;
+import master.prototype.SoftwareSecurity.service.QuizService;
 import master.prototype.SoftwareSecurity.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,8 @@ public class QAController {
     private QAService qaService;
     @Autowired
     private TagService tagService;
+    @Autowired
+    private QuizService quizService;
 //    @Autowired
 //    private CapecService capecService;
 //    @Autowired
@@ -165,6 +168,8 @@ public class QAController {
         if(fake2!=null)model.addAttribute("fakeanswer2", fake2);
         if(fake3!=null)model.addAttribute("fakeanswer3", fake3);
         if(expl!=null)model.addAttribute("explanation", expl);
+        boolean found = quizService.findAll().stream().anyMatch(o -> o.getQas().contains(qaService.findByQaId(qaId)));
+        if(!found)model.addAttribute("notfound",1);
 
         QA qa = qaService.findByQaId(qaId);
         model.addAttribute("qa", qa);
@@ -244,8 +249,16 @@ public class QAController {
         return "questionselect";
     }
 
+    @GetMapping("Question/Delete/{id}")
+    public String deleteQuestion(Model model,
+                                 @PathVariable long id) {
+        qaService.deleteByqaId(id);
+        model.addAttribute("message", "Deleted question with ID: "+id);
+        return "adminindex";
+    }
+
     @GetMapping("/Question/Edit/{id}")
-    public String startQuiz(Model model,
+    public String editQuestion(Model model,
                             @PathVariable long id) {
         QA qa = qaService.findByQaId(id);
         int count = 1;
@@ -260,6 +273,9 @@ public class QAController {
                 model.addAttribute("fakeanswer"+i, "...");
             }
         }
+        boolean found = quizService.findAll().stream().anyMatch(o -> o.getQas().contains(qa));
+        if(!found)model.addAttribute("notfound",1);
+
         model.addAttribute("qa", qa);
         model.addAttribute("addquestion", qa.getQuestion());
         model.addAttribute("explanation", qa.getExplanation());
@@ -281,6 +297,7 @@ public class QAController {
                         @RequestParam(value = "tags", required = false) List<String> tags,
                         Model model,
                         @RequestParam("qaId") Long qaId) throws IOException {
+
         if(addquestion.isEmpty()
                 || fakeanswer1.isEmpty()
                 || fakeanswer2.isEmpty()

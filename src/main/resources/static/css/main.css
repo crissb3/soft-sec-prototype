@@ -102,6 +102,48 @@ button[disabled] {
     color: black;
 }
 
+.button_5050_delete {
+    border: 2px solid #920107;
+    background-color: white;
+    color: black;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+    font-family: poetsenone, sans-serif;
+    border-radius: 12px;
+}
+.button_5050_delete:disabled:hover,
+button[disabled] {
+    border: 2px solid #7d7d7d;
+    background-color: rgba(176, 206, 222, 0.35);
+}
+
+.button_5050_delete:hover {
+    background-color: #920107;
+    color: black;
+}
+
+.button_5050_delete_disabled {
+    border: 2px solid #7d7d7d;
+    background-color: rgba(176, 206, 222, 0.35);
+    color: black;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+    font-family: poetsenone, sans-serif;
+    border-radius: 12px;
+}
+
 .center_image {
     margin: 0;
     position: absolute;

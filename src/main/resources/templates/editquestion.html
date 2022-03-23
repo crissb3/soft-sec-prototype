@@ -81,6 +81,14 @@
                       onfocus="this.placeholder=''" onblur="this.placeholder='Add an explanation to the answer'" type="text" name="explanation" style="float: left"></textarea><br><br>
             <input type="hidden" name="qaId" th:value="${qa.qaId}">
             <input class="button_5050" type="submit" name="addquestionsubmit" value="Save question" style="float: left; top: 71%; left: 30%; font-size: 20px; position: absolute">
+            <input class="button_5050_delete" th:if="${notfound == 1}"
+                   th:onClick="'window.location.href= \''+@{/Question/Delete/{questionID}(questionID=${qa.qaId})}+'\''"
+                   name="deletequestionsubmit" value="Delete question"
+                   style="float: left; top: 81%; left: 30%; font-size: 20px; position: absolute; width: 190px; padding-left: 2px; padding-right: 2px;">
+            <input class="button_5050_delete_disabled" th:if="${notfound != 1}" disabled title="This question belongs to an active quiz. Delete the quiz it belongs to first,
+             if you want to delete the question."
+                   name="deletequestionsubmit" value="Delete question"
+                   style="float: left; top: 81%; left: 30%; font-size: 20px; position: absolute; width: 190px; padding-left: 2px; padding-right: 2px;">
 
         </form>
         <form th:method="post" style="float: left; position: absolute; top: 62%; left: 12%" th:action="@{/Question/Edit/addTag}">
@@ -110,26 +118,14 @@
             <div class="overlay" th:onClick="togglePopup()"></div>
             <div class="content">
                 <div class="close-btn" th:onClick="togglePopup()">&times;</div>
-                <h1 style="">Select image as question:</h1>
-                <strong style="color: black; font-weight: normal; font-size: 22px">
-                    You can select image as question by clicking the select file feature <br> and picking the desired picture from your files.
-                </strong>
-                <h1>How to:</h1>
+                <h1>Edit:</h1>
                 <strong style="font-size: 22px">
-                    To create a question you have to fill in all the fields. <br>
-                    Type your question, three fake answers and a correct answer. <br>
-                    You can select tags if you want to categorize your question.<br>
-                    You can also create your own tag by typing in your desired tag,<br>
-                    then hitting "+" to add it to the list of tags.<br>
-                    When you have filled in all the fields and selected the tags <br>
-                    that fit the question you can click 'Add question' and it will <br>
-                    be saved to the questions list.<br> The questions list is available when you create a quiz.
+                    To edit your question, you simply insert desired question,<br> answers and explanation as if you would create the question.<br>
+                    It is also possible to replace current image with a new one by selecting a new image.
                 </strong>
-                <h1>Links:</h1>
+                <h1>Delete question:</h1>
                 <strong style="font-size: 22px">
-                    There are three links that you can find above, these can help you <br>
-                    construct questions about software and hardware weaknesses/threats <br> and how to fight them,
-                    and also Java Coding Standards.
+                    It is only possible to delete questions that are not currently in any quiz.
                 </strong>
             </div>
         </div>

@@ -91,4 +91,5 @@ public class QAService {
         qa.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
         qaRepository.save(qa);
     }
+    public void deleteByqaId(Long QaId){qaRepository.deleteById(QaId);}
 }
