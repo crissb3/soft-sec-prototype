@@ -84,20 +84,21 @@
             <script type="text/javascript" th:src="@{/js/countdown.js}"></script>
         </div>
         <br>
-        <div th:if="${call != null}" style="width: 800px; margin-left: 400px">
-            <h1 style="color:white; font-size: large; text-align: center; font-weight: normal"
+<!--        <div th:if="${call != null}" style="width: 800px; margin-left: 400px">-->
+<!--            <h1 style="color:white; font-size: large; text-align: center; font-weight: normal"-->
+<!--                th:text="${'Quiz ID: '+quiz.QId}"></h1>-->
+<!--            <h1 style="color:white; font-size: large; text-align: center; font-weight: normal;"-->
+<!--                th:text="${'Quiz name: '+quiz.name}"></h1>-->
+<!--            <p style="color:white; font-size: 24px; text-shadow: 2px 2px black; text-align: center"-->
+<!--               th:text="${'Question: '+quiz.qas[__${page}__].question}">-->
+<!--        </div>-->
+        <div style="width: 800px; margin-left: 400px">
+            <h1 style="color:white; font-size: large; text-align: center; font-weight: normal; position: absolute; left: 5%; top: 20%"
                 th:text="${'Quiz ID: '+quiz.QId}"></h1>
-            <h1 style="color:white; font-size: large; text-align: center; font-weight: normal"
+            <h1 style="color:white; font-size: large; text-align: center; font-weight: normal; position: absolute; left: 5%; top: 25%"
                 th:text="${'Quiz name: '+quiz.name}"></h1>
-            <p style="color:white; font-size: large; text-align: center"
-               th:text="${'Question: '+quiz.qas[__${page}__].question}">
-        </div>
-        <div th:if="${call == null}" style="width: 800px; margin-left: 400px">
-            <h1 style="color:white; font-size: large; text-align: center; font-weight: normal"
-                th:text="${'Quiz ID: '+quiz.QId}"></h1>
-            <h1 style="color:white; font-size: large; text-align: center; font-weight: normal"
-                th:text="${'Quiz name: '+quiz.name}"></h1>
-            <p style="color:white; font-size: large; text-align: center"
+            <p style="color:white; font-size: 24px; text-shadow: 2px 2px black; text-align: center;
+            position: absolute; width: 800px; max-width: 800px; left: 26%;"
                th:text="${'Question: '+quiz.qas[__${page}__].question}">
         </div>
         <p th:if="${quiz.qas[__${page}__].img != null}">
@@ -241,7 +242,7 @@
                     <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[0]}">
                     <input type="hidden" name="user" th:value="${user.uid}">
                     <button class="button-3d" type="submit"
-                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: white;"
+                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black;"
                             th:text="${quiz.qas.get(page).answers[0]}"></button>
                 </form>
             </div>
@@ -253,7 +254,7 @@
                     <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[1]}">
                     <input type="hidden" name="user" th:value="${user.uid}">
                     <button class="button-3d" type="submit"
-                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: white"
+                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black"
                             th:text="${quiz.qas.get(page).answers[1]}"></button>
                 </form>
             </div>
@@ -265,7 +266,7 @@
                     <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[2]}">
                     <input type="hidden" name="user" th:value="${user.uid}">
                     <button class="button-3d" type="submit"
-                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: white"
+                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black"
                             th:text="${quiz.qas.get(page).answers[2]}"></button>
                 </form>
             </div>
@@ -277,7 +278,7 @@
                     <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[3]}">
                     <input type="hidden" name="user" th:value="${user.uid}">
                     <button class="button-3d" type="submit"
-                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: white"
+                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black"
                             th:text="${quiz.qas.get(page).answers[3]}"></button>
                 </form>
             </div>

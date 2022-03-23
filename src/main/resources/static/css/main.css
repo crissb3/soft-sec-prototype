@@ -193,10 +193,10 @@ button[disabled] {
 }
 .button_text{
     font-family: poetsenone, sans-serif;
-    color: white; /* white */
+    color: #49b9d5; /* white */
     user-select: none;
     font-size: 34px;
-    text-shadow: -1px 0 black, 1px 0 black, 0 -1px black, 0 1px black;
+    text-shadow: -2px 0 black, 2px 0 black, 0 -2px black, 0 2px black;
 }
 .divider_in_menu{
     margin-bottom: 20px;
@@ -206,14 +206,14 @@ button[disabled] {
 /* Testing 3d button */
 .button-3d {
     font-family: poetsenone, sans-serif;
-    text-shadow: 1px 1px black;
+    text-shadow: 0px 0px black;
     position:relative;
     width: auto;
-    color: #ecf0f1;
+    color: black;
     text-decoration:none;
     border-radius:5px;
-    border:solid 1px #1485b9; /* If purple with white text -> #5f2388 */
-    background: #1cb3df;      /* #2f41a4 */
+    border:solid 1px #008CBA; /* If purple with white text -> #5f2388 */
+    background: rgb(255, 255, 255);      /* #2f41a4 */
     text-align:center;
     padding:16px 18px 14px;
 
@@ -221,16 +221,16 @@ button[disabled] {
     -moz-transition: all 0.1s;
     transition: all 0.1s;
 
-    -webkit-box-shadow: 0 6px 0 #1485b9;/* #d35400; *//* purple white text -> #052f7e this for rest */
-    -moz-box-shadow: 0 6px 0 #1485b9;
-    box-shadow: 0 6px 0 #1485b9;
+    -webkit-box-shadow: 0 6px 0 #008CBA;/* #d35400; *//* purple white text -> #052f7e this for rest */
+    -moz-box-shadow: 0 6px 0 #008CBA;
+    box-shadow: 0 6px 0 #008CBA;
 
     cursor: pointer;
 }
 .button-3d:active{
-    -webkit-box-shadow: 0 2px 0 #1485b9;
-    -moz-box-shadow: 0 2px 0 #1485b9;
-    box-shadow: 0 2px 0 #1485b9;
+    -webkit-box-shadow: 0 2px 0 #008CBA;
+    -moz-box-shadow: 0 2px 0 #008CBA;
+    box-shadow: 0 2px 0 #008CBA;
     position:relative;
     top:4px;
 }

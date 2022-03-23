@@ -93,7 +93,6 @@ public class QAController {
                 }
                 qa.setCustomtags(tagList);
             }
-//            qa.setTags(qaService.setTag(tag1, tag2, tag3));
             if(!(file == null)){
                 String fileName = StringUtils.cleanPath(file.getOriginalFilename());
                 qa.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
@@ -179,37 +178,6 @@ public class QAController {
     }
 
 
-    @GetMapping("/testimg")
-    public String testImage(Model model){
-        List<QA> qas = qaService.findAll();
-        model.addAttribute("qas", qas);
-
-        return "testiterate";
-    }
-    @PostMapping("/testimg")
-    public String testImg(@RequestParam("img") MultipartFile multipartFile) throws IOException {
-//        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-//        QA qa = new QA();
-//        qa.setImg(fileName);
-//        QA savedQA = qaService.save(qa);
-//
-//        String uploadDir = "./qa-images/" + savedQA.getQaId();
-//        Path uploadPath = Paths.get(uploadDir);
-//        if(!Files.exists(uploadPath)){
-//            Files.createDirectories(uploadPath);
-//        }
-//
-//        try(InputStream inputStream = multipartFile.getInputStream()) {
-//            Path filePath = uploadPath.resolve(fileName);
-//            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-//        } catch (IOException e){
-//            throw new IOException();
-//        }
-//        System.out.println(qaService.findByQaId(savedQA.getQaId()).getImg());
-        qaService.testimage(multipartFile);
-        return "testiterate";
-    }
-
     @GetMapping("Question/Select/Search-id")
     public String selectQuestionSearchID(Model model,
                                    @RequestParam(required = false) Long qid) {
@@ -280,7 +248,7 @@ public class QAController {
         model.addAttribute("addquestion", qa.getQuestion());
         model.addAttribute("explanation", qa.getExplanation());
         model.addAttribute("correctanswer", qa.getCorrectAnswer());
-        model.addAttribute("message",qa.getQaId());
+        model.addAttribute("message","Question ID: "+qa.getQaId());
         model.addAttribute("tags", tagService.findAll());
 
         return "editquestion";
@@ -334,7 +302,7 @@ public class QAController {
                 }
                 qa.setCustomtags(tagList);
             }
-//            qa.setTags(qaService.setTag(tag1, tag2, tag3));
+
             if(file != null){
                 if(file.getBytes().length != 0){
                     qa.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
