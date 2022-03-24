@@ -674,7 +674,7 @@ public class QuizController {
         System.out.println(quiz.getQas());
         if (quiz.getName().equals("")) {
             model.addAttribute("response", "error");
-            model.addAttribute("message1", "Can not create quiz without a name.");
+            model.addAttribute("message1", "Can not save quiz without a name.");
             return "adminindex";
         }
         if (quiz.getQas().size()>10){
@@ -690,7 +690,7 @@ public class QuizController {
                 oldQuiz.setName(quiz.getName()+" "+oldQuiz.getQId());
                 quizService.save(oldQuiz);
                 model.addAttribute("response", "warn");
-                model.addAttribute("message1", "Warning: Quiz name already exists! Quiz created with name: "
+                model.addAttribute("message1", "Warning: Quiz name already exists! Quiz saved with name: "
                         +oldQuiz.getName()+" and ID: "+oldQuiz.getQId()+ ". Copy and share this ID if you want others to play your quiz.");
                 return "adminindex";
             }
@@ -699,7 +699,7 @@ public class QuizController {
             oldQuiz.setQas(quiz.getQas());
             quizService.save(oldQuiz);
             model.addAttribute("response", "success");
-            model.addAttribute("message1", "Created quiz with ID: " + oldQuiz.getQId() + ". Copy and share this ID if you want others to play your quiz.");
+            model.addAttribute("message1", "Saved quiz with ID: " + oldQuiz.getQId() + ". Copy and share this ID if you want others to play your quiz.");
         }
         return "adminindex";
     }
