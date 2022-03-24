@@ -18,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -91,11 +90,13 @@ public class QuizController {
             @RequestParam("lives") int lives) {
 
         if (quiz.getName().equals("")) {
-            model.addAttribute("message", "Can't create quiz without a name.");
+            model.addAttribute("response", "error");
+            model.addAttribute("message1", "Can not create quiz without a name.");
             return "adminindex";
         }
         if (quiz.getQas().size()>10){
-            model.addAttribute("message", "The maximum number of questions allowed is 10.");
+            model.addAttribute("response", "error");
+            model.addAttribute("message1", "The maximum number of questions allowed is 10.");
             return "adminindex";
         }
         else {
@@ -106,13 +107,15 @@ public class QuizController {
                 quizService.save(quiz);
                 quiz.setName(quiz.getName()+" "+quiz.getQId());
                 quizService.save(quiz);
-                model.addAttribute("message", "Warning: Quiz name already exists! Quiz created with name: "
-                        +quiz.getName()+" and ID: "+quiz.getQId()+ ".\nCopy and share this ID if you want others to play your quiz.");
+                model.addAttribute("response", "warn");
+                model.addAttribute("message1", "Warning: Quiz name already exists! Quiz created with name: "
+                        +quiz.getName()+" and ID: "+quiz.getQId()+ ". Copy and share this ID if you want others to play your quiz.");
                 return "adminindex";
             }
             quiz.setLives(lives);
             quizService.save(quiz);
-            model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + ".\nCopy and share this ID if you want others to play your quiz.");
+            model.addAttribute("response", "success");
+            model.addAttribute("message1", "Created quiz with ID: " + quiz.getQId() + ". Copy and share this ID if you want others to play your quiz.");
         }
         return "adminindex";
     }
@@ -127,9 +130,13 @@ public class QuizController {
         List<QA> qasList = new ArrayList<>();
         List<QA> random_QA_list = new ArrayList<>();
         if (name.isEmpty()) {
-            model.addAttribute("message", "Can't create quiz without a name.");
-        } else if (qas == null) {
-            model.addAttribute("message", "Can't create quiz without questions");
+            model.addAttribute("response", "error");
+            model.addAttribute("message1", "Can not create quiz without a name.");
+            return "adminindex";
+        } else if (Objects.equals(quiz_size, "0")) {
+            model.addAttribute("response", "error");
+            model.addAttribute("message1", "Can not create quiz without questions");
+            return "adminindex";
         } else {
             for (String qa : qas) {
                 qasList.add(qaService.findByQaId(Long.valueOf(qa)));
@@ -149,15 +156,17 @@ public class QuizController {
                 quiz.setName(name+" "+quiz.getQId());
                 quiz.setQas(random_QA_list);
                 quizService.save(quiz);
-                model.addAttribute("message", "Warning: Quiz name already exists! Quiz created with name: "
-                        +quiz.getName()+" and ID: "+quiz.getQId()+ ".\nCopy and share this ID if you want others to play your quiz.");
+                model.addAttribute("response", "warn");
+                model.addAttribute("message1", "Quiz name already exists! Quiz created with name: "
+                        +quiz.getName()+" and ID: "+quiz.getQId()+ ". Copy and share this ID if you want others to play your quiz.");
                 return "adminindex";
             }
             quiz.setName(name);
             quiz.setLives(lives);
             quiz.setQas(random_QA_list);
             quizService.save(quiz);
-            model.addAttribute("message", "Created quiz with ID: " + quiz.getQId() + ".\n  Copy and share this ID if you want others to play your quiz.");
+            model.addAttribute("response", "success");
+            model.addAttribute("message1", "Created quiz with ID: " + quiz.getQId() + ". Copy and share this ID if you want others to play your quiz.");
         }
         return "adminindex";
     }
@@ -207,7 +216,8 @@ public class QuizController {
                             @RequestParam(name = "page", defaultValue = "0") int page) {
         Quiz quiz = quizService.findByqId(id);
         if (quiz.getQas().isEmpty()) {
-            model.addAttribute("message", "Can't start a quiz without questions");
+            model.addAttribute("response", "error");
+            model.addAttribute("message1", "Can not start a quiz without questions");
             return "index";
         } else {
             int score = 0;
@@ -283,8 +293,7 @@ public class QuizController {
                                @RequestParam(name = "protection", required = false) String prot,
                                @RequestParam(name = "prot", required = false) String prot_used,
                                @RequestParam(name = "call", required = false) String call,
-                               @RequestParam(name = "audience", required = false) String audience,
-                               @RequestParam(name = "tokenref", required = false) String reload) {
+                               @RequestParam(name = "audience", required = false) String audience) {
 
         Quiz quiz = quizService.findByqId(id);
         Userclass userclass = userService.findUserById(uid);
@@ -437,10 +446,11 @@ public class QuizController {
         quiz.setScores(scores);
         quizService.save(quiz);
 
-        model.addAttribute("name", name);
-        model.addAttribute("score", user.getScore());
-        if(name.equals(""))model.addAttribute("message", "Score posted to leaderoard for user: User "+uid);
-        if(!name.equals(""))model.addAttribute("message", "Score posted to leaderboard for user: " + name);
+//        model.addAttribute("name", name);
+//        model.addAttribute("score", user.getScore());
+        model.addAttribute("response", "success");
+        if(name.equals(""))model.addAttribute("message1", "Score posted to leaderoard for user: User "+uid);
+        if(!name.equals(""))model.addAttribute("message1", "Score posted to leaderboard for user: " + name);
         return "index";
     }
 
@@ -512,7 +522,9 @@ public class QuizController {
     public String deleteQuizconfirm(Model model, @PathVariable long id) {
         String name = quizService.findByqId(id).getName();
         quizService.deleteByqId(id);
-        model.addAttribute("message", "Deleted quiz with name: " + name);
+        model.addAttribute("response", "success");
+        model.addAttribute("message1", "Deleted quiz with ID: "+id);
+//        model.addAttribute("message", "Deleted quiz with name: " + name);
         return "adminindex";
     }
 

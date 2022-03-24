@@ -4,9 +4,42 @@
     <meta charset="UTF-8">
     <title>SecQuiz</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function success(){
+            let response = "[[${response}]]";
+            let msg = "[[${message1}]]"
+            if(response === 'success'){
+                Swal.fire({
+                    title: 'Success!',
+                    text: msg,
+                    icon: 'success',
+                    confirmButtonColor: '#008CBA'
+                });
+            }
+            else if(response === 'warn')
+            {
+                Swal.fire({
+                    title: 'Warning!',
+                    text: msg,
+                    icon: 'warning',
+                    confirmButtonColor: '#008CBA',
+                });
+            }
+            else if(response === 'error')
+            {
+                Swal.fire({
+                    title: 'Error!',
+                    text: msg,
+                    icon: 'error',
+                    confirmButtonColor: '#008CBA',
+                });
+            }
+        }
+    </script>
 </head>
 
-<body>
+<body onload="success()">
     <div class="text_frame_menu">
         <div class="single_text_in_menu" onclick="window.location.href='/'">Home</div>
         <div class="single_text_in_menu" onclick="window.location.href='/adminindex'">Admin</div>

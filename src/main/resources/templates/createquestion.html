@@ -24,10 +24,44 @@
             document.getElementById("explanation").value = explanation;
         }
     </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function success(){
+            let response = "[[${response}]]";
+            let id = "[[${id}]]"
+            let msg = "[[${message1}]]"
+            if(response === 'success'){
+                Swal.fire({
+                    title: 'Success!',
+                    text: "Question created successfully! ID: " +id,
+                    icon: 'success',
+                    confirmButtonColor: '#008CBA'
+                });
+            }
+            else if(response === 'warn')
+            {
+                Swal.fire({
+                    title: 'Warning!',
+                    text: 'Question was not created. '+msg,
+                    icon: 'warning',
+                    confirmButtonColor: '#008CBA'
+                });
+            }
+            else if(response === 'error')
+            {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Question was not created. '+msg,
+                    icon: 'error',
+                    confirmButtonColor: '#008CBA',
+                });
+            }
 
+        }
+    </script>
 
 </head>
-<body>
+<body onload="success()">
     <div class="text_frame_menu">
         <div class="single_text_in_menu" onclick="window.location.href='/'">Home</div>
         <div class="single_text_in_menu" onclick="window.location.href='/adminindex'">Admin</div>

@@ -72,7 +72,9 @@ public class QAController {
                 || fakeanswer2.isEmpty()
                 || fakeanswer3.isEmpty()
                 || correctanswer.isEmpty()) {
-            model.addAttribute("message", "You can't leave an empty field. Use the links below to help construct your questions.");
+            model.addAttribute("response","error");
+            model.addAttribute("message", "Use the links below to help construct your question/answers.");
+            model.addAttribute("message1", "You can not leave the question or answers empty.");
             model.addAttribute("tags",tagService.findAll());
             return "createquestion";
         }
@@ -80,7 +82,9 @@ public class QAController {
         || fakeanswer1.length()>255
         || fakeanswer2.length()>255
         || fakeanswer3.length()>255){
-            model.addAttribute("message", "The maximum length that a question or an answer can be is 255 characters. ");
+            model.addAttribute("response","error");
+            model.addAttribute("message", "Use the links below to help construct your question/answers.");
+            model.addAttribute("message1", "The maximum length that a question or an answer can be is 255 characters.");
             model.addAttribute("tags",tagService.findAll());
             return "createquestion";
         }
@@ -105,6 +109,8 @@ public class QAController {
                 qa.setExplanation("No explanation added.");
             }
             qaService.save(qa);
+            model.addAttribute("id",qa.getQaId());
+            model.addAttribute("response","success");
             model.addAttribute("tags",tagService.findAll());
             model.addAttribute("message", "Created question: " + addquestion +".");
         }
@@ -221,7 +227,9 @@ public class QAController {
     public String deleteQuestion(Model model,
                                  @PathVariable long id) {
         qaService.deleteByqaId(id);
-        model.addAttribute("message", "Deleted question with ID: "+id);
+        model.addAttribute("response","success");
+        model.addAttribute("message1","Deleted question with ID: "+id);
+//        model.addAttribute("message", "Deleted question with ID: "+id);
         return "adminindex";
     }
 
@@ -271,7 +279,9 @@ public class QAController {
                 || fakeanswer2.isEmpty()
                 || fakeanswer3.isEmpty()
                 || correctanswer.isEmpty()) {
-            model.addAttribute("message", "You can't leave an empty field. Use the links below to help construct your questions.");
+            model.addAttribute("response", "error");
+            model.addAttribute("message", "Use the links below to help construct your question/answers.");
+            model.addAttribute("message1", "You can not leave the question or answers empty.");
             model.addAttribute("qa", qaService.findByQaId(qaId));
             model.addAttribute("tags",tagService.findAll());
             return "editquestion";
@@ -280,7 +290,9 @@ public class QAController {
                 || fakeanswer1.length()>255
                 || fakeanswer2.length()>255
                 || fakeanswer3.length()>255){
-            model.addAttribute("message", "The maximum length that a question or an answer can be is 255 characters. ");
+            model.addAttribute("response", "error");
+            model.addAttribute("message", "Use the links below to help construct your question/answers.");
+            model.addAttribute("message1", "The maximum length that a question or an answer can be is 255 characters.");
             model.addAttribute("qa", qaService.findByQaId(qaId));
             model.addAttribute("tags",tagService.findAll());
             return "editquestion";
@@ -316,7 +328,8 @@ public class QAController {
                 qa.setExplanation("No explanation added.");
             }
             qaService.save(qa);
-            model.addAttribute("message", "Saved question: " + addquestion +".");
+            model.addAttribute("response", "success");
+            model.addAttribute("message1", "Saved question with ID: " + qaId +".");
         }
 
         return "adminindex";

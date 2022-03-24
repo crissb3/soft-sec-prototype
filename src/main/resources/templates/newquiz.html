@@ -110,7 +110,7 @@
 <!--                            border-radius: 6px; border: 2px solid black; margin-right: 5px; margin-top: 10px;"> Number of questions:-->
 <!--                        </strong>-->
                         <select style="border: 2px solid black; border-radius: 6px; padding: 5px; font-family: poetsenone, sans-serif" name="quiz_size">
-                            <option value="1">Number of questions:</option>
+                            <option th:value="0" name="quiz_size">Number of questions:</option>
                             <option th:if="${qas.size()<10}" th:each="i : ${#numbers.sequence(1,qas.size(),1)}" th:text="${i}" th:value="${i}" name="quiz_size">
                             <option th:if="${qas.size()>=10}" th:each="i : ${#numbers.sequence(1,10,1)}" th:text="${i}" th:value="${i}" name="quiz_size">
                             </option>
