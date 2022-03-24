@@ -671,6 +671,7 @@ public class QuizController {
             @RequestParam("lives") int lives,
             @RequestParam("id") Long id) {
         Quiz oldQuiz = quizService.findByqId(id);
+        System.out.println(quiz.getQas());
         if (quiz.getName().equals("")) {
             model.addAttribute("response", "error");
             model.addAttribute("message1", "Can not create quiz without a name.");
@@ -683,9 +684,8 @@ public class QuizController {
         }
         else {
             boolean isFound = quizService.findAll().stream().anyMatch(o -> o.getName().equalsIgnoreCase(quiz.getName()));
-            if(isFound){
-
-                oldQuiz.setLives(lives);
+            if(isFound && !Objects.equals(quiz.getName(), oldQuiz.getName())){
+                if(lives != -2)oldQuiz.setLives(lives);
                 quizService.save(oldQuiz);
                 oldQuiz.setName(quiz.getName()+" "+oldQuiz.getQId());
                 quizService.save(oldQuiz);
@@ -694,8 +694,8 @@ public class QuizController {
                         +oldQuiz.getName()+" and ID: "+oldQuiz.getQId()+ ". Copy and share this ID if you want others to play your quiz.");
                 return "adminindex";
             }
+            if(lives != -2)oldQuiz.setLives(lives);
             oldQuiz.setName(quiz.getName());
-            oldQuiz.setLives(lives);
             oldQuiz.setQas(quiz.getQas());
             quizService.save(oldQuiz);
             model.addAttribute("response", "success");
