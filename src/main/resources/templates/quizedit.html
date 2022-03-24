@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SecQuiz</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function order(){
+        let list = $("ul"),
+            origOrder = list.children();
+
+        list.on("click", ":checkbox", function() {
+            let i, checked = document.createDocumentFragment(),
+                unchecked = document.createDocumentFragment();
+            for (i = 0; i < origOrder.length; i++) {
+                if (origOrder[i].getElementsByTagName("input")[0].checked) {
+                    checked.appendChild(origOrder[i]);
+                } else {
+                    unchecked.appendChild(origOrder[i]);
+                }
+            }
+            list.append(checked).append(unchecked);
+        });
+        }
+    </script>
+</head>
+
+<body onload="order()">
+<div class="text_frame_menu">
+    <div class="single_text_in_menu" onclick="window.location.href='/'">Home</div>
+    <div class="single_text_in_menu" onclick="window.location.href='/adminindex'">Admin</div>
+    <div class="single_text_in_menu" onclick="window.location.href='/Quiz/Leaderboard/Select'">Leaderboard</div>
+</div>
+<div class="logo_text">SoftSec Quiz</div>
+
+<div class="center">
+    <div class="container">
+        <form th:action="@{/Quiz/Edit}" th:object="${quiz}" method="post" style="max-height: 720px">
+            <input type="hidden" th:value="${quiz.QId}" name="id">
+            <label class="custom-field one">
+                <input type="text" name="name" th:field="*{name}" placeholder=" "><span class="placeholder">Enter Quiz Name</span>
+            </label>
+            <select name="lives"
+                    style="font-family: poetsenone, sans-serif; padding: 5px; border-radius: 6px; border: 2px solid black;">
+                <option value="-1">Amount of errors:</option>
+                <option value="-1">Infinite</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <button class="button_5050" style="" type="submit">
+                Create quiz
+            </button>
+            <h1 style="color: white; text-shadow: 2px 2px black;">Questions list:</h1>
+            <div style="height:380px; width: 750px; max-width: 1000px; overflow: auto;
+                    text-overflow: ellipsis; border: 2px solid white; border-radius: 25px; font-size: 19px; color: white; word-break: break-word">
+                <ul>
+                    <div th:each="qa : ${qas}">
+                        <input style="margin-right: 10px; margin-bottom: 15px; float: bottom" type="checkbox"
+                               name="quizqa" th:value="${qa.qaId}" th:field="${quiz.qas}">
+                        <label style="margin-right: 10px;" th:text="${qa.qaId}"></label>
+                        <label style="margin-right: 10px" th:text="${qa.question}"></label>
+                    </div>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>

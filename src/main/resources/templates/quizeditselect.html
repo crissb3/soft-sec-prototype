@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SecQuiz</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+    <div class="text_frame_menu">
+        <div class="single_text_in_menu" onclick="window.location.href='/'">Home</div>
+        <div class="single_text_in_menu" onclick="window.location.href='/adminindex'">Admin</div>
+        <div class="single_text_in_menu" onclick="window.location.href='/Quiz/Leaderboard/Select'">Leaderboard</div>
+    </div>
+    <div class="logo_text">SoftSec Quiz</div>
+
+<div class="center">
+    <div class="container">
+        <div class="center">
+            <h1 style="color: white; text-shadow: 2px 2px black; margin-left: 15%">Select the question you want to edit</h1>
+            <form th:action="@{/Quiz/Edit/Select/Search-id}" style="float: left; margin-left: 15%">
+                <strong style="font-size: 20px; color: white; text-shadow: 1px 1px black;">Search by Question ID:</strong>
+                <label class="custom-field one" style="left: 43px">
+                    <input type="text" name="id" placeholder=" "><span class="placeholder">Enter Quiz ID</span>
+                </label>
+                <input style="margin-left: 43px; padding: 10px" type="submit" name="submit" value="Search" class="button_5050"><br><br>
+            </form>
+            <form th:action="@{/Quiz/Edit/Select/Search-name}" style="float: left; margin-left: 15%">
+                <strong style="font-size: 20px; color: white; text-shadow: 1px 1px black;">Search by Quiz name:</strong>
+                <label class="custom-field one" style="left: 67px">
+                    <input type="text" name="name" placeholder=" "><span class="placeholder">Enter Quiz name</span>
+                </label>
+                <input style="margin-left: 67px; padding: 10px;" type="submit" name="submit" value="Search" class="button_5050"><br><br>
+            </form>
+            <div style="height:430px; width: 700px; margin-left: 100px; overflow: auto; border: 2px solid white; border-radius: 18px; font-size: 19px;">
+                <table th:class="DescMit">
+                    <tr>
+                        <th style="font-weight: normal; text-shadow: 1px 1px 0px black">Id</th>
+                        <th style="font-weight: normal; text-shadow: 1px 1px 0px black">Name</th>
+                        <th class=th-hidden></th>
+                    </tr>
+                    <tr th:each="quiz : ${quizzes}">
+                        <td align="center" th:text="${quiz.QId}"></td>
+                        <td align="center" style="cursor: pointer" th:text="${quiz.name}"
+                            th:onClick="'window.location.href= \''+
+						    @{/Quiz/Edit/{quizID}(quizID=${quiz.QId})}+'\''"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

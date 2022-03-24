@@ -506,6 +506,7 @@ public class QuizController {
     @GetMapping("/Quiz/Delete")
     public String deleteSelect(Model model) {
         List<Quiz> quizzes = quizService.findAll();
+        quizzes.sort(Comparator.comparingLong(Quiz::getQId).reversed());
         model.addAttribute("quizzes", quizzes);
 
         return "quizselectdelete";
@@ -584,8 +585,8 @@ public class QuizController {
                     if(!(object.get("snippet") == null))snippets.append(object.get("snippet").toString(), 1, object.get("snippet").toString().length() - 1);
                 }
                 snippets.append(quiz.getQas().get(page).getExplanation());
-                System.out.println(quiz.getQas().get(page).getExplanation());
-                System.out.println(snippets);
+//                System.out.println(quiz.getQas().get(page).getExplanation());
+//                System.out.println(snippets);
                 double sum_cosine = 0;
                 HashMap<String, Double> cos_list = new HashMap<>();
                 for (String answer : answers) {
@@ -611,6 +612,96 @@ public class QuizController {
         }
 
         return "askaudience";
+    }
+
+    @GetMapping("Quiz/Edit/Select/Search-id")
+    public String selectQuizSearchID(Model model,
+                                         @RequestParam(required = false) Long id) {
+        List<Quiz> quizzes = new ArrayList<>();
+        if (!(id == null)) {
+            if (!(quizService.findByqId(id) == null)) {
+                Quiz quiz = quizService.findByqId(id);
+                quizzes.add(quiz);
+            }
+        } else {
+            quizzes = quizService.findAll();
+        }
+        quizzes.sort(Comparator.comparingLong(Quiz::getQId).reversed());
+        model.addAttribute("quizzes", quizzes);
+        return "quizeditselect";
+    }
+
+    @GetMapping("Quiz/Edit/Select/Search-name")
+    public String selectQuizSearch(Model model,
+                                       @RequestParam(required = false) String name) {
+        List<Quiz> quizzes;
+        if (!(name.equals(""))) {
+            quizzes = quizService.findByName(name);
+        } else {
+            quizzes = quizService.findAll();
+        }
+        quizzes.sort(Comparator.comparingLong(Quiz::getQId).reversed());
+        model.addAttribute("quizzes", quizzes);
+        return "quizeditselect";
+    }
+
+    @GetMapping("Quiz/Edit/Select")
+    public String selectQuizEdit(Model model) {
+        List<Quiz> quizzes = quizService.findAll();
+        quizzes.sort(Comparator.comparingLong(Quiz::getQId).reversed());
+        model.addAttribute("quizzes", quizzes);
+        return "quizeditselect";
+    }
+
+    @GetMapping("/Quiz/Edit/{id}")
+    public String editQuestion(Model model,
+                               @PathVariable long id) {
+        Quiz quiz = quizService.findByqId(id);
+        List<QA> qas = qaService.findAll();
+        qas.sort(Comparator.comparingLong(QA::getQaId).reversed());
+        model.addAttribute("qas", qas);
+        model.addAttribute("quiz", quiz);
+        return "quizedit";
+    }
+
+    @PostMapping("/Quiz/Edit")
+    public String editQuiz(
+            @ModelAttribute("quiz") Quiz quiz,
+            Model model,
+            @RequestParam("lives") int lives,
+            @RequestParam("id") Long id) {
+        Quiz oldQuiz = quizService.findByqId(id);
+        if (quiz.getName().equals("")) {
+            model.addAttribute("response", "error");
+            model.addAttribute("message1", "Can not create quiz without a name.");
+            return "adminindex";
+        }
+        if (quiz.getQas().size()>10){
+            model.addAttribute("response", "error");
+            model.addAttribute("message1", "The maximum number of questions allowed is 10.");
+            return "adminindex";
+        }
+        else {
+            boolean isFound = quizService.findAll().stream().anyMatch(o -> o.getName().equalsIgnoreCase(quiz.getName()));
+            if(isFound){
+
+                oldQuiz.setLives(lives);
+                quizService.save(oldQuiz);
+                oldQuiz.setName(quiz.getName()+" "+oldQuiz.getQId());
+                quizService.save(oldQuiz);
+                model.addAttribute("response", "warn");
+                model.addAttribute("message1", "Warning: Quiz name already exists! Quiz created with name: "
+                        +oldQuiz.getName()+" and ID: "+oldQuiz.getQId()+ ". Copy and share this ID if you want others to play your quiz.");
+                return "adminindex";
+            }
+            oldQuiz.setName(quiz.getName());
+            oldQuiz.setLives(lives);
+            oldQuiz.setQas(quiz.getQas());
+            quizService.save(oldQuiz);
+            model.addAttribute("response", "success");
+            model.addAttribute("message1", "Created quiz with ID: " + oldQuiz.getQId() + ". Copy and share this ID if you want others to play your quiz.");
+        }
+        return "adminindex";
     }
 
 //    @GetMapping("/testAPI")
