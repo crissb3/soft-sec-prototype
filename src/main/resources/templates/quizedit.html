@@ -38,11 +38,13 @@
     <div class="container">
         <form th:action="@{/Quiz/Edit}" th:object="${quiz}" method="post" style="max-height: 720px">
             <input type="hidden" th:value="${quiz.QId}" name="id">
+            <div style="position: absolute; right: 53%; top: 23%;">
             <label class="custom-field one">
                 <input type="text" name="name" th:field="*{name}" placeholder=" "><span class="placeholder">Enter Quiz Name</span>
             </label>
+            </div>
             <select name="lives"
-                    style="font-family: poetsenone, sans-serif; padding: 5px; border-radius: 6px; border: 2px solid black;">
+                    style="font-family: poetsenone, sans-serif; padding: 5px; border-radius: 6px; border: 2px solid black; position: absolute; top: 24%; right: 43%">
                 <option value="-2">Amount of errors:</option>
                 <option value="-1">Infinite</option>
                 <option value="1">1</option>
@@ -51,12 +53,13 @@
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select>
-            <button class="button_5050" style="" type="submit">
+            <button class="button_5050" style="position: absolute; top: 21%; right: 34%" type="submit">
                 Save quiz
             </button>
-            <h1 style="color: white; text-shadow: 2px 2px black;">Questions list:</h1>
+            <h1 style="color: white; text-shadow: 2px 2px black; position: absolute; top: 30%; right: 57%">Questions list:</h1>
             <div style="height:380px; width: 750px; max-width: 1000px; overflow: auto;
-                    text-overflow: ellipsis; border: 2px solid white; border-radius: 25px; font-size: 19px; color: white; word-break: break-word">
+                    text-overflow: ellipsis; border: 2px solid white; border-radius: 25px; font-size: 19px; color: white; word-break: break-word;
+                    position: absolute; right: 25%; top: 40%; ">
                 <ul>
                     <div th:each="qa : ${qas}">
                         <input style="margin-right: 10px; margin-bottom: 15px; float: bottom" type="checkbox"
