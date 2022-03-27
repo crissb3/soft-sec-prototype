@@ -70,6 +70,10 @@
                 </ul>
             </div>
         </form>
+        <form th:action="@{/Quiz/Delete/{quizID}(quizID=${quiz.QId})}" th:object="${quiz}" method="post">
+            <input type="hidden" th:field="*{QId}">
+            <button class="button_5050_delete" style="position: absolute; top: 21%; right: 24%">Delete quiz</button>
+        </form>
     </div>
 </div>
 </body>

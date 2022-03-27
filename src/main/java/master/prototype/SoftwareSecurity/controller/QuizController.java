@@ -521,11 +521,9 @@ public class QuizController {
 
     @PostMapping("/Quiz/Delete/{id}")
     public String deleteQuizconfirm(Model model, @PathVariable long id) {
-        String name = quizService.findByqId(id).getName();
         quizService.deleteByqId(id);
         model.addAttribute("response", "success");
         model.addAttribute("message1", "Deleted quiz with ID: "+id);
-//        model.addAttribute("message", "Deleted quiz with name: " + name);
         return "adminindex";
     }
 
@@ -671,7 +669,7 @@ public class QuizController {
             @RequestParam("lives") int lives,
             @RequestParam("id") Long id) {
         Quiz oldQuiz = quizService.findByqId(id);
-        System.out.println(quiz.getQas());
+
         if (quiz.getName().equals("")) {
             model.addAttribute("response", "error");
             model.addAttribute("message1", "Can not save quiz without a name.");

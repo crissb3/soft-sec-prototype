@@ -193,10 +193,10 @@ button[disabled] {
 }
 .button_text{
     font-family: poetsenone, sans-serif;
-    color: #49b9d5; /* white */
+    color: #00adef; /* white */
     user-select: none;
     font-size: 34px;
-    text-shadow: -2px 0 black, 2px 0 black, 0 -2px black, 0 2px black;
+    text-shadow: -1px 0 black, 1px 0 black, 0 -1px black, 0 1px black;
 }
 .divider_in_menu{
     margin-bottom: 20px;

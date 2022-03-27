@@ -71,10 +71,11 @@ public class QAController {
                 || fakeanswer1.isEmpty()
                 || fakeanswer2.isEmpty()
                 || fakeanswer3.isEmpty()
-                || correctanswer.isEmpty()) {
+                || correctanswer.isEmpty()
+                || explanation.isEmpty()) {
             model.addAttribute("response","error");
             model.addAttribute("message", "Use the links below to help construct your question/answers.");
-            model.addAttribute("message1", "You can not leave the question or answers empty.");
+            model.addAttribute("message1", "You can not leave any of the fields empty.");
             model.addAttribute("tags",tagService.findAll());
             return "createquestion";
         }
@@ -101,13 +102,7 @@ public class QAController {
                 String fileName = StringUtils.cleanPath(file.getOriginalFilename());
                 qa.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
             }
-            if(!explanation.equals(""))
-            {
-                qa.setExplanation(explanation);
-            }
-            if(explanation.equals("")){
-                qa.setExplanation("No explanation added.");
-            }
+
             qaService.save(qa);
             model.addAttribute("id",qa.getQaId());
             model.addAttribute("response","success");
