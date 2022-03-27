@@ -102,7 +102,7 @@ public class QAController {
                 String fileName = StringUtils.cleanPath(file.getOriginalFilename());
                 qa.setImg(Base64.getEncoder().encodeToString(file.getBytes()));
             }
-
+            qa.setExplanation(explanation);
             qaService.save(qa);
             model.addAttribute("id",qa.getQaId());
             model.addAttribute("response","success");
