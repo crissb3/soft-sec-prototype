@@ -1,8 +1,6 @@
 package master.prototype.SoftwareSecurity.controller;
 
-import master.prototype.SoftwareSecurity.entity.Quiz;
 import master.prototype.SoftwareSecurity.entity.Tag;
-import master.prototype.SoftwareSecurity.entity.Userclass;
 import master.prototype.SoftwareSecurity.service.QAService;
 import master.prototype.SoftwareSecurity.service.QuizService;
 import master.prototype.SoftwareSecurity.service.TagService;

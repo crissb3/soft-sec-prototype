@@ -10,6 +10,7 @@
     <script src="https://kit.fontawesome.com/7401e2a6eb.js" crossorigin="anonymous"></script>
 </head>
 
+
 <body>
 <!--<audio id="backgroundaudio" autoplay th:src="@{/audio/background2.mp3}" loop="loop">-->
 <!--</audio>-->
@@ -163,7 +164,7 @@
                 <input type="hidden" name="user" th:value="${user.uid}">
                 <input type="hidden" name="call" th:value="${user.lifelines}">
                 <button th:if="${user.lifelines.contains('call')}"
-                        title="If you use this lifeline it will open a site to help you find the answer, and you have 90 seconds to answer before you lose the chance to answer."
+                        title="If you use this lifeline it will open a site to help you find the answer, and you have 2 minutes to answer before you lose the chance to answer."
                         class="button_5050" type="submit"
                         onclick="window.open('/callFriend',
                         'name', 'height=500, width=650, left=0, top=0')" style="float: left; width: 145px">
@@ -241,7 +242,10 @@
                     <input type="hidden" name="id" th:value="${quiz.QId}">
                     <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[0]}">
                     <input type="hidden" name="user" th:value="${user.uid}">
-                    <button class="button-3d" type="submit"
+                    <button th:if="${quiz.qas.get(page).answers[0].length() >= 100}" class="button-3d" type="submit"
+                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black;"
+                            th:text="${quiz.qas.get(page).answers[0].substring(0,100) + ' ...'}" th:data-title="${quiz.qas.get(page).answers[0]}"></button>
+                    <button th:if="${quiz.qas.get(page).answers[0].length() < 100}" class="button-3d" type="submit"
                             style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black;"
                             th:text="${quiz.qas.get(page).answers[0]}"></button>
                 </form>
@@ -253,8 +257,11 @@
                     <input type="hidden" name="id" th:value="${quiz.QId}">
                     <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[1]}">
                     <input type="hidden" name="user" th:value="${user.uid}">
-                    <button class="button-3d" type="submit"
-                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black"
+                    <button th:if="${quiz.qas.get(page).answers[1].length() >= 100}" class="button-3d" type="submit"
+                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black;"
+                            th:text="${quiz.qas.get(page).answers[1].substring(0,100) + ' ...'}" th:data-title="${quiz.qas.get(page).answers[1]}"></button>
+                    <button th:if="${quiz.qas.get(page).answers[1].length() < 100}" class="button-3d" type="submit"
+                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black;"
                             th:text="${quiz.qas.get(page).answers[1]}"></button>
                 </form>
             </div>
@@ -265,8 +272,11 @@
                     <input type="hidden" name="id" th:value="${quiz.QId}">
                     <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[2]}">
                     <input type="hidden" name="user" th:value="${user.uid}">
-                    <button class="button-3d" type="submit"
-                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black"
+                    <button th:if="${quiz.qas.get(page).answers[2].length() >= 100}" class="button-3d" type="submit"
+                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black;"
+                            th:text="${quiz.qas.get(page).answers[2].substring(0,100) + ' ...'}" th:data-title="${quiz.qas.get(page).answers[2]}"></button>
+                    <button th:if="${quiz.qas.get(page).answers[2].length() < 100}" class="button-3d" type="submit"
+                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black;"
                             th:text="${quiz.qas.get(page).answers[2]}"></button>
                 </form>
             </div>
@@ -277,8 +287,11 @@
                     <input type="hidden" name="id" th:value="${quiz.QId}">
                     <input type="hidden" name="answer" th:value="${quiz.qas.get(page).answers[3]}">
                     <input type="hidden" name="user" th:value="${user.uid}">
-                    <button class="button-3d" type="submit"
-                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black"
+                    <button th:if="${quiz.qas.get(page).answers[3].length() >= 100}" class="button-3d" type="submit"
+                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black;"
+                            th:text="${quiz.qas.get(page).answers[3].substring(0,100) + ' ...'}" th:data-title="${quiz.qas.get(page).answers[3]}"></button>
+                    <button th:if="${quiz.qas.get(page).answers[3].length() < 100}" class="button-3d" type="submit"
+                            style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black;"
                             th:text="${quiz.qas.get(page).answers[3]}"></button>
                 </form>
             </div>

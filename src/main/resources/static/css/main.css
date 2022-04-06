@@ -652,3 +652,31 @@ img:hover {
     -webkit-transform: scale(2);
     transform: scale(2);
 }
+
+[data-title] {
+    font-size: 18px;
+    position: relative;
+}
+
+[data-title]:hover::before {
+    content: attr(data-title);
+    position: absolute;
+    bottom: 25px;
+    left: -0px;
+    padding: 10px;
+    background: #000;
+    color: #fff;
+    font-size: 16px;
+    z-index: 3;
+    border-radius: 12px;
+    overflow-wrap: break-word;
+    inline-size: 250px;
+}
+[data-title]:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 8px;
+    border: 8px solid transparent;
+    border-bottom: 8px solid #000;
+}

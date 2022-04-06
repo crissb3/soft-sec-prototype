@@ -64,8 +64,12 @@
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="user" th:value="${user.uid}">
                 <input type="hidden" name="answer" th:value="${correct}">
-                <button class="button-3d" style="width: 300px; max-width: 300px; height: 115px; white-space: normal;
-                word-wrap: break-word; font-size: 18px" type="submit" th:text="${correct}"></button>
+                <button th:if="${correct.length() >= 100}" class="button-3d" type="submit"
+                        style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black;"
+                        th:text="${correct.substring(0,100) + ' ...'}" th:data-title="${correct}"></button>
+                <button th:if="${correct.length() < 100}" class="button-3d" type="submit"
+                        style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black;"
+                        th:text="${correct}"></button>
 
             </form>
 
@@ -75,8 +79,12 @@
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="answer" th:value="${fake}">
                 <input type="hidden" name="user" th:value="${user.uid}">
-                <button class="button-3d" style="width: 300px; max-width: 300px; height: 115px; white-space: normal;
-                word-wrap: break-word; font-size: 18px" type="submit" th:text="${fake}"></button>
+                <button th:if="${fake.length() >= 100}" class="button-3d" type="submit"
+                        style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black;"
+                        th:text="${fake.substring(0,100) + ' ...'}" th:data-title="${fake}"></button>
+                <button th:if="${fake.length() < 100}" class="button-3d" type="submit"
+                        style="width: 300px; max-width: 300px; height: 115px; white-space: normal; word-wrap: break-word; font-size: 18px; color: black;"
+                        th:text="${fake}"></button>
             </form>
             <span style="width: 20px;"></span>
         </div>

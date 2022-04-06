@@ -528,7 +528,6 @@ public class QuizController {
     }
 
 
-
     @GetMapping("/callFriend")
     public String callFriend() {
         return "callfriend";
