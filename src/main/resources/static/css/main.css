@@ -665,7 +665,7 @@ img:hover {
     content: attr(data-title);
     position: absolute;
     bottom: 25px;
-    left: -0px;
+    left: 15px;
     padding: 10px;
     background: #000;
     color: #fff;
@@ -680,6 +680,6 @@ img:hover {
     position: absolute;
     bottom: -12px;
     left: 8px;
-    border: 8px solid transparent;
+    /*border: 8px solid transparent;*/
     border-bottom: 8px solid #000;
 }
