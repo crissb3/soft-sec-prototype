@@ -631,6 +631,9 @@ input[type=checkbox]{
     top: 27%;
     left: 96.5%;
     color: white;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
 }
 .tenPercent {
     box-sizing: border-box; /** this adds the borders into the width **/
