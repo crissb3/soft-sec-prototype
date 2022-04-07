@@ -29,7 +29,7 @@
     <div class="container">
         <input type="hidden" name="testreload" id="testreload" value="">
         <button style="position: absolute; top: 5.5%; left: 8%; padding: 6px; border: 2px solid black" th:if="${page>0}" onclick="popupload()" class="button_5050">Explanation for previous question.</button>
-        <script th:if="${page>0 && call==null && audience == null}">function popupload(){togglePopup();}</script>
+        <script th:if="${page>0}">function popupload(){togglePopup();}</script>
         <div class="popup" id="popup-1" style="float:right;">
             <div class="overlay" th:onClick="togglePopup()"></div>
             <div class="content" style="z-index: 3">
