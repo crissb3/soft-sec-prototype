@@ -25,19 +25,22 @@ public class UserService {
 
     public Userclass userScore(Userclass user, Quiz quiz){
         int score = user.getScore();
-        if(user.getScore()>=30){
-            score = 30;
-            if(user.getScore()>=50){
-                score = 50;
-                if(user.getScore()>=80){
-                    score = 80;
-                    if(user.getScore()==100){
-                        score = 100;
+        if(user.getScore()>=20){
+            score = 20;
+            if(user.getScore()>=40){
+                score = 40;
+                if(user.getScore()>=60){
+                    score = 60;
+                    if(user.getScore()>=80){
+                        score = 80;
+                        if(user.getScore()==100){
+                            score = 100;
+                        }
                     }
                 }
             }
         }
-        if(quiz.getQas().size()>3 && user.getScore()<30){
+        if(quiz.getQas().size()>2 && user.getScore()<20){
             user.setScore(0);
             return user;
         }

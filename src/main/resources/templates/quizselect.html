@@ -41,7 +41,7 @@
                     </tr>
                     <tr th:each="quiz : ${quizzes}">
                         <td align="center" th:text="${quiz.QId}"></td>
-                        <td align="center" style="cursor: pointer" th:text="${quiz.name}"
+                        <td align="left" style="cursor: pointer" th:text="${quiz.name}"
                             th:onClick="'window.location.href= \''+
 						    @{/Quiz/Start/{quizID}(quizID=${quiz.QId})}+'\''"></td>
                     </tr>

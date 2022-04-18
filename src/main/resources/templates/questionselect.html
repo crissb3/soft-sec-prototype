@@ -41,7 +41,7 @@
                     </tr>
                     <tr th:each="qa : ${qas}">
                         <td align="center" th:text="${qa.qaId}"></td>
-                        <td align="center" style="cursor: pointer" th:text="${qa.question}"
+                        <td align="left" style="cursor: pointer" th:text="${qa.question}"
                             th:onClick="'window.location.href= \''+
 						    @{/Question/Edit/{questionID}(questionID=${qa.qaId})}+'\''"></td>
                     </tr>

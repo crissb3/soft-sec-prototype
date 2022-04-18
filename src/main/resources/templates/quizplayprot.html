@@ -114,7 +114,7 @@
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="user" th:value="${user.uid}">
                 <input type="hidden" name="5050" th:value="${user.lifelines}">
-                <button th:if="${user.lifelines.contains('5050')}"
+                <button disabled th:if="${user.lifelines.contains('5050')}"
                         title="If you use this lifeline, two wrong answers will be removed."
                         class="button_5050" type="submit" style="width: 145px;">
                     <strong style="font-size: 26px">50/50</strong>
@@ -133,7 +133,7 @@
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="user" th:value="${user.uid}">
                 <input type="hidden" name="protection" th:value="${user.lifelines}">
-                <button th:if="${user.lifelines.contains('protection')}"
+                <button disabled th:if="${user.lifelines.contains('protection')}"
                         title="If you use this lifeline you will not lose a life if you answer wrong on this question."
                         class="button_5050" type="submit" style="width: 145px;">
                     <i class="fas fa-shield-alt"></i>
@@ -152,7 +152,7 @@
                 <input type="hidden" name="id" th:value="${quiz.QId}">
                 <input type="hidden" name="user" th:value="${user.uid}">
                 <input type="hidden" name="call" th:value="${user.lifelines}">
-                <button th:if="${user.lifelines.contains('call')}"
+                <button disabled th:if="${user.lifelines.contains('call')}"
                         title="If you use this lifeline it will open a site to help you find the answer, and you have 90 seconds to answer before you lose the chance to answer."
                         class="button_5050" type="submit"
                         onclick="window.open('/callFriend',
@@ -173,7 +173,7 @@
                 <input type="hidden" name="user" th:value="${user.uid}">
                 <input type="hidden" name="audience" th:value="${user.lifelines}">
                 <input type="hidden" id="audience_question" th:value="${quiz.QId}">
-                <button th:if="${user.lifelines.contains('audience')}"
+                <button disabled th:if="${user.lifelines.contains('audience')}"
                         title="If you use this lifeline you will ask the audience what they think is the correct answer."
                         class="button_5050" type="submit"
                         onclick="window.open('/askAudience/?id='+document.getElementById('audience_question').value+'&page='+document.getElementById('p').value,
@@ -208,10 +208,10 @@
         <i class="fas fa-coins" style="font-size: 68px; position: absolute; right: 4%; top: 10%; float: right; color: gold;"></i>
         <div class="score_rows">
             <th:block th:each="i: ${#numbers.sequence(quiz.qas.size() - 1, 0, -1)}">
-                <div class="tenPercent" th:if="${i == 3 || i == 5 || i == 8}" th:style="${user.score*1000==i*10000 ? 'background-color: #1cb3df; color: gold;' : 'color: gold'}">
+                <div class="tenPercent" th:if="${i == 2 || i == 4 || i == 6 || i == 8}" th:style="${user.score*1000==i*10000 ? 'background-color: #1cb3df; color: gold;' : 'color: gold'}">
                     <strong th:text="${i*10000}"></strong>
                 </div>
-                <div class="tenPercent" th:if="!${i == 3 || i == 5 || i == 8}" th:style="${user.score*1000==i*10000 ? 'background-color: #1cb3df; color: black;' : ''}">
+                <div class="tenPercent" th:if="!${i == 2 || i == 4 || i == 6 || i == 8}" th:style="${user.score*1000==i*10000 ? 'background-color: #1cb3df; color: black;' : ''}">
                     <strong th:text="${i*10000}"></strong>
                 </div>
 
