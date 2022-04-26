@@ -552,7 +552,10 @@ public class QuizController {
     public String callSO() {
         return "callso";
     }
-
+    @GetMapping("/callWiki")
+    public String callWiki() {
+        return "callwiki";
+    }
     @GetMapping("/askAudience")
     public String askAudience(@RequestParam Long id,
                               @RequestParam int page,

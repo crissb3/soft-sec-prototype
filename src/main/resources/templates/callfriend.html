@@ -26,6 +26,9 @@
 <button class="button_5050" type="submit"
         onclick="whenClickedSO()">Call StackOverflow</button>
 
+<button class="button_5050" type="submit"
+        onclick="whenClickedWiki()">Call Wikipedia</button>
+
 <script>
     function whenClickedSO()
     {
@@ -53,7 +56,15 @@
     function whenClickedJava()
     {
         window.close();
-        window.open('/callJava/?q=' + document.getElementById('search_word').value,'so', 'height=500, width=650, left=0, top=0');
+        window.open('/callJava/?q=' + document.getElementById('search_word').value,'java', 'height=500, width=650, left=0, top=0');
+
+    }
+</script>
+<script>
+    function whenClickedWiki()
+    {
+        window.close();
+        window.open('/callWiki/?q=' + document.getElementById('search_word').value,'wiki', 'height=500, width=650, left=0, top=0');
 
     }
 </script>
