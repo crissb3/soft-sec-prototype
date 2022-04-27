@@ -1,8 +1,10 @@
 package master.prototype.SoftwareSecurity.service;
 
 import master.prototype.SoftwareSecurity.entity.QA;
+import master.prototype.SoftwareSecurity.entity.Quiz;
 import master.prototype.SoftwareSecurity.entity.Tag;
 import master.prototype.SoftwareSecurity.repository.QARepositoryImpl;
+import master.prototype.SoftwareSecurity.repository.QuizRepositoryImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;

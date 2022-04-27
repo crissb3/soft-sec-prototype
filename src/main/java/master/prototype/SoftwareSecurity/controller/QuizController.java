@@ -294,11 +294,10 @@ public class QuizController {
                                @RequestParam(name = "prot", required = false) String prot_used,
                                @RequestParam(name = "call", required = false) String call,
                                @RequestParam(name = "audience", required = false) String audience) {
+        Quiz quiz = quizService.shuffleAnswersPlay(id);
 
-        Quiz quiz = quizService.findByqId(id);
         Userclass userclass = userService.findUserById(uid);
         int score = userclass.getScore();
-
 
         if (answer == null) {
             if (fiftyfifty != null) {

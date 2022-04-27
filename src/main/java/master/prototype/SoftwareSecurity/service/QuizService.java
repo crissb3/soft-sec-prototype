@@ -1,10 +1,13 @@
 package master.prototype.SoftwareSecurity.service;
 
+import master.prototype.SoftwareSecurity.entity.QA;
 import master.prototype.SoftwareSecurity.entity.Quiz;
 import master.prototype.SoftwareSecurity.entity.Userclass;
 import master.prototype.SoftwareSecurity.repository.QuizRepositoryImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -29,4 +32,13 @@ public class QuizService {
     public Quiz findByqId(Long qId){return quizRepository.findByqId(qId);}
 
     public void deleteByqId(Long qId){quizRepository.deleteById(qId);}
+    public Quiz shuffleAnswersPlay(Long quizId){
+        Quiz quiz = quizRepository.findByqId(quizId);
+        for(QA qa : quiz.getQas()){
+            List<String> answers = new ArrayList<>(qa.getAnswers());
+            Collections.shuffle(answers);
+            qa.setAnswers(answers);
+        }
+        return quiz;
+    }
 }
